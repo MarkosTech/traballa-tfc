@@ -1,0 +1,753 @@
+/* 
+ * Traballa - Unified Authentication Styles
+ * 
+ * @copyright 2025 Marcos Núñez Fernández
+ * @license   MIT License
+ * @link      https://github.com/markostech/workhours-tfc
+ * 
+ * This file contains unified styles for all authentication pages:
+ * - login.php
+ * - register.php
+ * - forgot-password.php
+ * - reset-password.php
+ */
+
+:root {
+    --primary-color: #2196F3;
+    --secondary-color: #1976D2;
+    --accent-color: #64B5F6;
+    --success-color: #4ecdc4;
+    --warning-color: #ffe66d;
+    --danger-color: #ff6b6b;
+    --cat-color: #ffd93d;
+    --shadow-light: rgba(33, 150, 243, 0.25);
+    --shadow-medium: rgba(25, 118, 210, 0.35);
+    --shadow-heavy: rgba(33, 150, 243, 0.45);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--accent-color) 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    overflow-x: hidden;
+    padding-bottom: 120px; /* Space for fixed footer */
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Floating background shapes */
+.floating-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    opacity: 0.1;
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape:nth-child(1) {
+    top: 10%;
+    left: 10%;
+    width: 60px;
+    height: 60px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    animation-delay: 0s;
+}
+
+.shape:nth-child(2) {
+    top: 70%;
+    right: 10%;
+    width: 80px;
+    height: 80px;
+    background: var(--warning-color);
+    transform: rotate(45deg);
+    animation-delay: 2s;
+}
+
+.shape:nth-child(3) {
+    bottom: 20%;
+    left: 20%;
+    width: 40px;
+    height: 40px;
+    background: var(--success-color);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    animation-delay: 4s;
+}
+
+.shape:nth-child(4) {
+    top: 25%;
+    right: 25%;
+    width: 45px;
+    height: 45px;
+    background: var(--primary-color);
+    border-radius: 20%;
+    animation-delay: 1s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+/* Main authentication containers */
+.auth-container,
+.login-container,
+.register-container,
+.forgot-password-container,
+.reset-password-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2rem;
+    box-shadow: 
+        0 8px 32px var(--shadow-light),
+        0 16px 64px var(--shadow-medium);
+    padding: 3rem;
+    width: 100%;
+    max-width: 460px;
+    position: relative;
+    z-index: 10;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Register container gets wider */
+.register-container {
+    max-width: 780px; /* Increased from 520px to accommodate 2 columns */
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* Create 2-column layout for registration form on desktop */
+@media (min-width: 992px) { /* Changed from 768px to 992px for better responsive behavior */
+    .register-container form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    
+    /* Make certain elements span 2 columns */
+    .register-container form .mb-4:has(.fw-semibold.mb-3.text-primary), /* Privacy & Data Protection section */
+    .register-container form .d-grid.mb-3, /* Create Account button */
+    .register-container form .text-center, /* Already have an account text */
+    .register-container form .alert { /* Alerts */
+        grid-column: 1 / -1;
+    }
+    
+    .register-container {
+        padding: 2.5rem 3.5rem; /* More horizontal padding on desktop */
+    }
+    
+    .register-container .mb-3,
+    .register-container .mb-4 {
+        margin-bottom: 1rem !important; /* More compact spacing between form elements */
+    }
+    
+    /* Add a subtle divider between columns */
+    .register-container form {
+        position: relative;
+    }
+    
+    /* Improve alert positioning in 2-column layout */
+    .register-container .alert {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Tablets and smaller desktops - adjust layout for medium screens */
+@media (min-width: 768px) and (max-width: 991px) {
+    .register-container {
+        max-width: 650px;
+        padding: 2.5rem 2.5rem;
+    }
+}
+
+/* Custom scrollbar for register container */
+.register-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.register-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.register-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+    border-radius: 4px;
+}
+
+.register-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--secondary-color), var(--primary-color));
+}
+
+/* Headers */
+.auth-header,
+.login-header,
+.register-header,
+.forgot-password-header,
+.reset-password-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-header h2,
+.login-header h2,
+.register-header h2,
+.forgot-password-header h2,
+.reset-password-header h2 {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.auth-header p,
+.login-header p,
+.register-header p,
+.forgot-password-header p,
+.reset-password-header p {
+    color: #6c757d;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+/* Icon containers for forgot-password and reset-password */
+.icon-container {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.icon-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+    100% { transform: rotate(360deg); }
+}
+
+.icon-container i {
+    font-size: 2rem;
+    color: white;
+    position: relative;
+    z-index: 2;
+}
+
+/* Cat mascot for login page */
+.cat-mascot {
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 130px;
+    pointer-events: none;
+    z-index: 11;
+}
+
+.cat-svg {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: bottom center;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.1));
+    transform: translateY(20px);
+}
+
+.cat-body {
+    fill: var(--cat-color);
+    stroke: #2d3748;
+    stroke-width: 2;
+    transition: fill 0.3s ease;
+}
+
+.cat-eye {
+    transition: all 0.3s ease;
+}
+
+.cat-pupil {
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sunglasses {
+    opacity: 0;
+    transition: all 0.4s 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(10px);
+}
+
+.covering-eyes .sunglasses {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.covering-eyes .cat-eye {
+    opacity: 0.2;
+}
+
+.happy-cat .cat-body {
+    fill: var(--success-color);
+}
+
+/* Form controls */
+.form-control {
+    border: 2px solid rgba(102, 126, 234, 0.1);
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-1px);
+}
+
+.input-group-text {
+    border: 2px solid rgba(102, 126, 234, 0.1);
+    border-right: none;
+    border-radius: 1rem 0 0 1rem;
+    background: rgba(102, 126, 234, 0.05);
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.input-group:focus-within .input-group-text {
+    border-color: var(--primary-color);
+    background: rgba(102, 126, 234, 0.1);
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border: none;
+    border-radius: 1rem;
+    padding: 0.875rem 2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-toggle-password {
+    border: 2px solid rgba(102, 126, 234, 0.1);
+    border-left: none;
+    border-radius: 0 1rem 1rem 0;
+    background: rgba(102, 126, 234, 0.05);
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.btn-toggle-password:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: var(--secondary-color);
+}
+
+/* Password strength meter (for register page) */
+.password-strength {
+    margin-top: 0.5rem;
+}
+
+.strength-meter {
+    height: 4px;
+    background-color: #e9ecef;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.25rem;
+}
+
+.strength-meter-fill {
+    height: 100%;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.strength-very-weak { background: linear-gradient(90deg, var(--danger-color), #ff8a8a); width: 20%; }
+.strength-weak { background: linear-gradient(90deg, #ff8a8a, var(--warning-color)); width: 40%; }
+.strength-fair { background: linear-gradient(90deg, var(--warning-color), #ffd93d); width: 60%; }
+.strength-good { background: linear-gradient(90deg, #ffd93d, var(--success-color)); width: 80%; }
+.strength-strong { background: linear-gradient(90deg, var(--success-color), #00d4aa); width: 100%; }
+
+.strength-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.text-very-weak { color: var(--danger-color); }
+.text-weak { color: #ff8a8a; }
+.text-fair { color: var(--warning-color); }
+.text-good { color: #ffd93d; }
+.text-strong { color: var(--success-color); }
+
+/* Alerts */
+.alert {
+    border-radius: 1rem;
+    border: none;
+    backdrop-filter: blur(10px);
+    margin-bottom: 1.5rem;
+}
+
+.alert-danger {
+    background: rgba(255, 107, 107, 0.15);
+    color: var(--danger-color);
+    border-left: 4px solid var(--danger-color);
+}
+
+.alert-success {
+    background: rgba(78, 205, 196, 0.15);
+    color: var(--success-color);
+    border-left: 4px solid var(--success-color);
+}
+
+/* Links */
+.text-decoration-none {
+    color: var(--primary-color);
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.text-decoration-none:hover {
+    color: var(--secondary-color);
+    text-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
+}
+
+.back-link {
+    color: var(--primary-color);
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.back-link:hover {
+    color: var(--secondary-color);
+    text-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
+    transform: translateX(-3px);
+}
+
+/* Animations */
+.shake {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.bounce-in {
+    animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(100px);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-10px);
+    }
+    70% {
+        transform: scale(0.9) translateY(0px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0px);
+    }
+}
+
+/* Floating particles */
+.floating-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.6;
+    animation: floatUp 4s linear forwards;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-100vh) translateX(var(--random-x)) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Minimal footer styles for auth pages */
+.minimal-footer {
+    padding: 1.5rem 0;
+    color: #ffffff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.minimal-footer .footer-link {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.minimal-footer .footer-link:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+.minimal-footer .footer-separator {
+    margin: 0 0.75rem;
+    opacity: 0.6;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.minimal-footer .text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 20px;
+        padding-top: 2rem;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .auth-container,
+    .login-container,
+    .register-container,
+    .forgot-password-container,
+    .reset-password-container {
+        margin: 1rem;
+        padding: 2rem 1.5rem;
+        max-width: 100%;
+        margin-bottom: 2rem;
+    }
+    
+    .register-container {
+        margin: auto;
+        margin-bottom: 2rem;
+        max-height: none;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .cat-mascot {
+        display: none;
+    }
+    
+    .auth-header h2,
+    .login-header h2,
+    .register-header h2,
+    .forgot-password-header h2,
+    .reset-password-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .minimal-footer {
+        position: static;
+        margin-top: auto;
+        padding: 1rem 0;
+        border-radius: 1rem 1rem 0 0;
+        flex-shrink: 0;
+    }
+
+    .minimal-footer .footer-separator {
+        display: none;
+    }
+    
+    .minimal-footer .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    
+    .minimal-footer .footer-links a {
+        display: inline-block;
+        margin: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .minimal-footer .footer-links a:hover,
+    .minimal-footer .footer-links a:active {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+    }
+}
+
+@media (max-width: 576px) {
+    .auth-container,
+    .login-container,
+    .register-container,
+    .forgot-password-container,
+    .reset-password-container {
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+    }
+
+    .btn-primary {
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+    }
+    
+    .minimal-footer .footer-links a {
+        font-size: 0.75rem;
+        margin: 0.2rem 0.3rem;
+        padding: 0.2rem 0.4rem;
+    }
+    
+    .minimal-footer .mt-2 {
+        margin-top: 1rem !important;
+    }
+    
+    .minimal-footer .mt-2 small {
+        font-size: 0.7rem;
+    }
+}
+
+/* Mobile touch improvements */
+@media (hover: none) and (pointer: coarse) {
+    .btn-primary {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .btn-primary:active {
+        transform: scale(0.98) !important;
+        transition: transform 0.1s ease;
+    }
+    
+    .footer-link {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .form-control {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .form-check-input {
+        touch-action: manipulation;
+        transform: scale(1.2);
+        margin-right: 0.75rem;
+    }
+}
+
+/* Animation for new layout */
+.register-container {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
