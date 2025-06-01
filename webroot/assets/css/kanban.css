@@ -1,0 +1,550 @@
+/* Tab Navigation Styles */
+.kanban-tabs-wrapper {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.kanban-tabs {
+    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 0;
+}
+
+.kanban-tab-item {
+    position: relative;
+}
+
+.kanban-tab-item .d-flex {
+    align-items: center;
+}
+
+.kanban-tabs .nav-link {
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #6c757d;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+    margin-right: 0;
+}
+
+.kanban-tabs .nav-link:hover {
+    border-bottom-color: #007bff;
+    color: #007bff;
+    background-color: transparent;
+}
+
+.kanban-tabs .nav-link.active {
+    border-bottom-color: #007bff;
+    color: #007bff;
+    background-color: transparent;
+}
+
+.kanban-tab-actions {
+    margin-left: auto;
+}
+
+.kanban-tab-actions .dropdown-toggle {
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    color: #495057;
+}
+
+.kanban-tab-actions .dropdown-toggle:hover {
+    background-color: #f8f9fa;
+    border-color: #adb5bd;
+}
+
+/* Tab dropdown styles */
+.tab-dropdown {
+    margin-left: 0.25rem;
+    position: relative;
+    z-index: 1000;
+}
+
+.tab-dropdown-toggle {
+    border: none !important;
+    background: transparent !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.875rem;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.tab-dropdown-toggle:hover,
+.tab-dropdown-toggle:focus,
+.tab-dropdown-toggle[aria-expanded="true"] {
+    opacity: 1;
+    background: rgba(0,0,0,0.05) !important;
+}
+
+.tab-dropdown-toggle:focus {
+    box-shadow: none;
+}
+
+.tab-dropdown .dropdown-menu {
+    min-width: 160px;
+    border: 1px solid rgba(0,0,0,0.15);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.tab-dropdown .dropdown-item {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+}
+
+.tab-dropdown .dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.tab-dropdown .dropdown-item.text-danger:hover {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Prevent dropdown from affecting tab navigation */
+.kanban-tab-item:hover .tab-dropdown-toggle {
+    opacity: 1;
+}
+
+/* Enhanced Kanban Board Styles - Fixed to avoid conflicts with sidebar layout */
+.kanban-wrapper {
+    padding: 1rem;
+    height: calc(100vh - 100px);
+}
+
+.kanban-board {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 1rem;
+    height: calc(100vh - 150px);
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+.kanban-container {
+    display: flex;
+    gap: 1rem;
+    min-height: calc(100vh - 250px);
+    padding-bottom: 20px;
+    min-width: 100%;
+    overflow: auto;
+}
+
+.kanban-column {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    width: 300px;
+    min-width: 300px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: 1px solid #e9ecef;
+    height: fit-content;
+    max-height: 100%;
+}
+
+.kanban-column-header {
+    padding: 12px 15px;
+    background-color: #e9ecef;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dee2e6;
+    z-index: 10;
+    position: sticky;
+    top: 0;
+}
+
+.kanban-column-header h5 {
+    margin-bottom: 0;
+    font-weight: 600;
+    color: #495057;
+}
+
+.kanban-tasks {
+    padding: 0.75rem;
+    flex-grow: 1;
+    overflow-y: auto;
+    min-height: 150px;
+    max-height: calc(100vh - 350px);
+}
+
+.kanban-task {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 12px;
+    margin-bottom: 10px;
+    cursor: grab;
+    border-left: 3px solid #3498db;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    touch-action: none; /* Prevents scrolling during drag on touch devices */
+    position: relative;
+}
+
+.kanban-task:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.kanban-task:active {
+    cursor: grabbing;
+}
+
+.kanban-task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.kanban-task-footer {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.kanban-column-footer {
+    padding: 12px;
+    background-color: #e9ecef;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top: 1px solid #dee2e6;
+    z-index: 10;
+    position: sticky;
+    bottom: 0;
+}
+
+.task-dragging {
+    opacity: 0.5;
+}
+
+.task-drag-over {
+    background-color: #e2e6ea;
+}
+
+/* Task status colors */
+.task-status-active {
+    border-left-color: #3498db;
+}
+
+.task-status-pending {
+    border-left-color: #f39c12;
+    background-color: #fffbf4;
+}
+
+.task-status-completed {
+    border-left-color: #2ecc71;
+    text-decoration: line-through;
+    opacity: 0.8;
+    background-color: #f8fff9;
+}
+
+/* Mobile-specific fixes for touch issues */
+@media (max-width: 576px) {
+    /* Ensure all buttons and dropdowns have proper touch targets */
+    .kanban-task .btn,
+    .kanban-task .dropdown-toggle,
+    .kanban-column-header .dropdown-toggle,
+    .add-task-btn,
+    .status-option {
+        min-height: 44px;
+        min-width: 44px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Fix dropdown menu positioning on mobile */
+    .kanban-task .dropdown-menu,
+    .kanban-column-header .dropdown-menu {
+        position: absolute !important;
+        z-index: 1060;
+        transform: none !important;
+    }
+    
+    /* Ensure dropdown items are touchable */
+    .dropdown-item {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        touch-action: manipulation;
+    }
+    
+    /* Fix modal z-index issues on mobile */
+    .modal {
+        z-index: 1055;
+    }
+    
+    .modal-backdrop {
+        z-index: 1050;
+    }
+    
+    /* Improve modal button sizes */
+    .modal .btn {
+        min-height: 44px;
+        padding: 12px 20px;
+    }
+    
+    /* Fix form inputs in modals */
+    .modal input,
+    .modal select,
+    .modal textarea {
+        font-size: 16px; /* Prevent zoom on iOS */
+        min-height: 44px;
+    }
+    
+    /* Enhanced touch feedback for interactive elements */
+    .kanban-task:active,
+    .btn:active,
+    .dropdown-item:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+
+    /* Improve kanban task cards for mobile */
+    .kanban-task {
+        margin-bottom: 12px;
+        padding: 12px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        cursor: pointer;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Enhanced kanban column layout for mobile */
+    .kanban-column {
+        min-width: 280px;
+        margin-right: 16px;
+        flex-shrink: 0;
+    }
+
+    /* Better scrolling behavior for kanban container and board */
+    .kanban-board {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        padding-bottom: 20px;
+    }
+    
+    .kanban-container {
+        overflow-x: visible;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        padding-bottom: 20px;
+        min-width: 100%;
+        overflow: auto;
+    }
+
+    /* Improve tab navigation for mobile */
+    .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+
+    .nav-tabs .nav-link {
+        white-space: nowrap;
+        min-width: 120px;
+        text-align: center;
+        touch-action: manipulation;
+    }
+
+    /* Better spacing for task actions */
+    .task-actions {
+        margin-top: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Improve form labels and inputs spacing */
+    .modal .form-label {
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+    .modal .form-control {
+        margin-bottom: 16px;
+    }
+    
+    /* Improve status button visibility and touch response */
+    .status-option {
+        opacity: 0.7;
+        transition: all 0.2s ease;
+    }
+    
+    .status-option:hover,
+    .status-option:focus,
+    .status-option:active {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    
+    /* Better spacing for touch targets in task cards */
+    .kanban-task-header .dropdown {
+        margin-left: auto;
+        padding-left: 8px;
+    }
+    
+    .kanban-task-header h6 {
+        flex-grow: 1;
+        margin-right: 8px;
+    }
+    
+    /* Improve add task button visibility */
+    .add-task-btn {
+        width: 100%;
+        min-height: 44px;
+        border: 2px dashed #ced4da;
+        background: transparent;
+        color: #6c757d;
+        transition: all 0.2s ease;
+    }
+    
+    .add-task-btn:hover,
+    .add-task-btn:active {
+        border-color: #007bff;
+        color: #007bff;
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+    
+    /* Ensure modal shows above everything */
+    .modal.show {
+        display: block !important;
+    }
+    
+    /* Fix overflow scrolling in modals */
+    .modal-body {
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Better touch scrolling for task containers */
+    .kanban-tasks {
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+}
+
+.completed-tasks-section {
+    margin-top: 1rem;
+    border-top: 1px dashed #ced4da;
+    padding-top: 0.5rem;
+}
+
+.completed-tasks-header {
+    background-color: #e9ecef;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #495057;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.completed-tasks-header:hover {
+    background-color: #dee2e6;
+}
+
+.completed-tasks-header .collapse-icon {
+    transition: transform 0.2s ease;
+    margin-right: 0.5rem;
+}
+
+.completed-tasks-header[aria-expanded="false"] .collapse-icon {
+    transform: rotate(-90deg);
+}
+
+/* Column dragging styles */
+.column-dragging {
+    opacity: 0.6;
+    cursor: grabbing;
+}
+
+.column-drag-handle {
+    cursor: grab;
+    margin-right: 8px;
+    color: #6c757d;
+}
+
+.column-drag-handle:hover {
+    color: #343a40;
+}
+
+/* Toast notifications for feedback */
+.toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1050;
+}
+
+.kanban-task.sortable-ghost {
+    opacity: 0.5;
+    background-color: #e2e6ea;
+}
+
+.task-status-buttons {
+    display: flex;
+    gap: 0.25rem;
+    margin-left: 8px;
+}
+
+.btn-status {
+    border: none !important;
+    padding: 0 !important;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    margin: 0;
+    background: transparent;
+    border-radius: 3px;
+}
+
+.btn-status:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.status-btn-active {
+    color: #3498db;
+}
+
+.status-btn-pending {
+    color: #f39c12;
+}
+
+.status-btn-completed {
+    color: #2ecc71;
+}
+
+.status-btn-active:hover {
+    color: #2980b9;
+}
+
+.status-btn-pending:hover {
+    color: #e67e22;
+}
+
+.status-btn-completed:hover {
+    color: #27ae60;
+}

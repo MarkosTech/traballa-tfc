@@ -1,10 +1,10 @@
 <?php
 /**
- * Traballa - User Registration Page
+ * Traballa - Registration
  * 
  * @copyright 2025 Marcos Núñez Fernández
  * @license   MIT License
- * @link      https://github.com/markostech/workhours-tfc
+ * @link      https://github.com/markostech/traballa-tfc
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,8 +40,8 @@ $success = '';
 
 // Process registration form
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = sanitize($pdo, $_POST['name']);
-    $email = sanitize($pdo, $_POST['email']);
+    $name = sanitize($_POST['name']);
+    $email = sanitize($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     $privacy_consent = isset($_POST['privacy_consent']) ? 1 : 0;
@@ -250,7 +250,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input class="form-check-input" type="checkbox" id="privacy_consent" name="privacy_consent" required>
                     <label class="form-check-label" for="privacy_consent">
                         I have read and accept the 
-                        <a href="privacy-policy.php" target="_blank" class="text-primary text-decoration-none">
+                        <a href="privacy-policy" target="_blank" class="text-primary text-decoration-none">
                             <strong>Privacy Policy</strong>
                         </a> <span class="text-danger">*</span>
                     </label>
@@ -801,7 +801,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <footer class="minimal-footer text-center">
         <div class="container">
             <div class="footer-links">
-                <a href="privacy-policy.php" class="footer-link text-white">
+                <a href="privacy-policy" class="footer-link text-white">
                     <i class="fas fa-shield-alt me-1"></i>Privacy policy
                 </a>
                 <span class="footer-separator">•</span>
@@ -809,7 +809,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <i class="fas fa-user-shield me-1"></i>Terms of service
                 </a>
                 <span class="footer-separator">•</span>
-                <a href="https://github.com/markostech/workhours-tfc" target="_blank" class="footer-link text-white">
+                <a href="https://github.com/markostech/traballa-tfc" target="_blank" class="footer-link text-white">
                     <i class="fab fa-github me-1"></i>Source code
                 </a>
             </div>

@@ -4,7 +4,7 @@
  * 
  * @copyright 2025 Marcos Núñez Fernández
  * @license   MIT License
- * @link      https://github.com/markostech/workhours-tfc
+ * @link      https://github.com/markostech/traballa-tfc
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -56,6 +56,111 @@ class Router {
             'file' => 'reset-password.php',
             'auth' => false,
             'title' => 'Reset Password - Traballa'
+        ]);
+        
+        $this->addRoute('gdpr', [
+            'file' => 'gdpr.php',
+            'auth' => false,
+            'title' => 'GDPR - Traballa'
+        ]);
+        
+        // Protected routes (authentication required)
+        $this->addRoute('dashboard', [
+            'file' => 'dashboard.php',
+            'auth' => true,
+            'title' => 'Dashboard - Traballa',
+            'css' => ['pomodoro.css'],
+            'js' => ['pomodoro.js']
+        ]);
+        
+        $this->addRoute('profile', [
+            'file' => 'profile.php',
+            'auth' => true,
+            'title' => 'Profile - Traballa'
+        ]);
+        
+        $this->addRoute('work-hours', [
+            'file' => 'work-hours.php',
+            'auth' => true,
+            'title' => 'Work Hours - Traballa'
+        ]);
+        
+        $this->addRoute('reports', [
+            'file' => 'reports.php',
+            'auth' => true,
+            'title' => 'Reports - Traballa'
+        ]);
+        
+        $this->addRoute('calendar', [
+            'file' => 'calendar.php',
+            'auth' => true,
+            'title' => 'Calendar - Traballa'
+        ]);
+        
+        $this->addRoute('kanban', [
+            'file' => 'kanban.php',
+            'auth' => true,
+            'title' => 'Kanban - Traballa'
+        ]);
+        
+        $this->addRoute('settings', [
+            'file' => 'settings.php',
+            'auth' => true,
+            'title' => 'Settings - Traballa'
+        ]);
+        
+        // Management routes (require management permissions)
+        $this->addRoute('projects', [
+            'file' => 'projects.php',
+            'auth' => true,
+            'permission' => 'management',
+            'title' => 'Projects - Traballa'
+        ]);
+        
+        $this->addRoute('organizations', [
+            'file' => 'organizations.php',
+            'auth' => true,
+            'permission' => 'management',
+            'title' => 'Organizations - Traballa'
+        ]);
+        
+        $this->addRoute('project-details', [
+            'file' => 'project-details.php',
+            'auth' => true,
+            'title' => 'Project Details - Traballa'
+        ]);
+        
+        $this->addRoute('organization-details', [
+            'file' => 'organization-details.php',
+            'auth' => true,
+            'title' => 'Organization Details - Traballa'
+        ]);
+        
+        // Admin routes (require admin permissions)
+        $this->addRoute('users', [
+            'file' => 'users.php',
+            'auth' => true,
+            'permission' => 'admin',
+            'title' => 'Users - Traballa'
+        ]);
+        
+        $this->addRoute('smtp-settings', [
+            'file' => 'smtp-settings.php',
+            'auth' => true,
+            'permission' => 'admin',
+            'title' => 'SMTP Settings - Traballa'
+        ]);
+
+        // Terms of service and privacy policy
+        $this->addRoute('terms-of-service', [
+            'file' => 'terms-of-service.php',
+            'auth' => false,
+            'title' => 'Terms of Service - Traballa'
+        ]);
+        $this->addRoute('privacy-policy', [
+            'file' => 'privacy-policy',
+            'auth' => false,
+            'title' => 'Privacy Policy - Traballa'
         ]);
     }
     
@@ -212,7 +317,11 @@ class Router {
      */
     public function isActionRequest() {
         $no_navbar_actions = [
-            'test_action',
+            'end_break',
+            'start_break',
+            'clock_out',
+            'clock_in',
+            'get_event',
         ];
         
         return (isset($_POST['action']) && in_array($_POST['action'], $no_navbar_actions)) || 
@@ -278,7 +387,15 @@ class Router {
     private function getRouteIcon($route) {
         $icons = [
             'dashboard' => 'fas fa-tachometer-alt',
-
+            'kanban' => 'fas fa-columns',
+            'work-hours' => 'fas fa-clock',
+            'reports' => 'fas fa-chart-bar',
+            'calendar' => 'fas fa-calendar-alt',
+            'projects' => 'fas fa-project-diagram',
+            'organizations' => 'fas fa-building',
+            'users' => 'fas fa-users',
+            'profile' => 'fas fa-id-card',
+            'settings' => 'fas fa-cog',
         ];
         
         return $icons[$route] ?? 'fas fa-file';

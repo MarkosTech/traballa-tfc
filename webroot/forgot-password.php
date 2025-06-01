@@ -1,4 +1,26 @@
 <?php
+/**
+ * Traballa - Forgot password
+ * 
+ * @copyright 2025 Marcos Núñez Fernández
+ * @license   MIT License
+ * @link      https://github.com/markostech/traballa-tfc
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ */
+
 define('INDEX_EXEC', true); // Allow execution of child scripts
 require_once '../config/database.php';
 require_once '../includes/Session.php';
@@ -18,7 +40,7 @@ $success = '';
 
 // Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = sanitize($pdo, $_POST['email']);
+    $email = sanitize($_POST['email']);
     
     if (empty($email)) {
         $error = "Please enter your email address";
@@ -331,7 +353,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <footer class="minimal-footer text-center">
         <div class="container">
             <div class="footer-links">
-                <a href="privacy-policy.php" class="footer-link text-white">
+                <a href="privacy-policy" class="footer-link text-white">
                     <i class="fas fa-shield-alt me-1"></i>Privacy policy
                 </a>
                 <span class="footer-separator">•</span>
@@ -339,7 +361,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <i class="fas fa-user-shield me-1"></i>Terms of service
                 </a>
                 <span class="footer-separator">•</span>
-                <a href="https://github.com/markostech/workhours-tfc" target="_blank" class="footer-link text-white">
+                <a href="https://github.com/markostech/traballa-tfc" target="_blank" class="footer-link text-white">
                     <i class="fab fa-github me-1"></i>Source code
                 </a>
             </div>

@@ -1,0 +1,172 @@
+/* 
+ * Traballa - Pomodoro styles
+ * 
+ * @copyright 2025 Marcos Núñez Fernández
+ * @license   MIT License
+ * @link      https://github.com/markostech/traballa-tfc
+ * 
+ */
+
+.pomodoro-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.pomodoro-container:hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.pomodoro-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  padding: 15px;
+  text-align: center;
+}
+
+.pomodoro-header h5 {
+  margin: 0;
+  color: #495057;
+}
+
+.pomodoro-timer {
+  text-align: center;
+  padding: 20px 15px;
+}
+
+.pomodoro-time {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #343a40;
+  margin-bottom: 5px;
+  font-family: 'Courier New', monospace;
+}
+
+.pomodoro-status {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 15px;
+}
+
+.pomodoro-cycles {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.cycle-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.cycle-indicator.active {
+  background-color: #0d6efd;
+}
+
+.pomodoro-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 15px 15px;
+}
+
+.pomodoro-settings {
+  padding: 15px;
+  border-top: 1px solid #e9ecef;
+  text-align: center;
+}
+
+.pomodoro-settings-panel {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  text-align: left;
+}
+
+/* Estilos específicos para el modo trabajo */
+/* .pomodoro-mode-work .pomodoro-time {
+  color: #0d6efd;
+} */
+
+/* Estilos específicos para descanso corto */
+.pomodoro-mode-shortBreak .pomodoro-time {
+  color: #20c997;
+}
+
+/* Estilos específicos para descanso largo */
+.pomodoro-mode-longBreak .pomodoro-time {
+  color: #6f42c1;
+}
+
+/* Animación del temporizador cuando queda poco tiempo */
+@keyframes timeWarning {
+  0% {
+    color: inherit;
+  }
+  50% {
+    color: #dc3545;
+  }
+  100% {
+    color: inherit;
+  }
+}
+
+.pomodoro-time.warning {
+  animation: timeWarning 1s infinite;
+}
+
+/* Modo expandido del Pomodoro */
+.pomodoro-expanded {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1250px;
+  max-height: 90%;
+  max-width: 90%;
+  z-index: 1050;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.pomodoro-expanded .pomodoro-time {
+  font-size: 4rem;
+}
+
+.pomodoro-expanded .cycle-indicator {
+  width: 16px;
+  height: 16px;
+}
+
+/* Fondo del pomodoro expandido */
+.pomodoro-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1040;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .pomodoro-time {
+    font-size: 2.5rem;
+  }
+  
+  .pomodoro-controls {
+    flex-direction: column;
+  }
+  
+  .pomodoro-expanded .pomodoro-time {
+    font-size: 3rem;
+  }
+}

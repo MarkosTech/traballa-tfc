@@ -1,10 +1,24 @@
 <?php
 /**
- * Traballa - Router Helper Functions
+ * Traballa - Router helpers
  * 
  * @copyright 2025 Marcos Núñez Fernández
  * @license   MIT License
- * @link      https://github.com/markostech/workhours-tfc
+ * @link      https://github.com/markostech/traballa-tfc
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
  */
 
 if (!function_exists('route_url')) {
@@ -123,5 +137,62 @@ if (!function_exists('navigation_items')) {
         }
         
         return [];
+    }
+}
+
+if (!function_exists('breadcrumb')) {
+    /**
+     * Get breadcrumb instance
+     * 
+     * @return Breadcrumb Breadcrumb instance
+     */
+    function breadcrumb() {
+        global $breadcrumb;
+        
+        if (!isset($breadcrumb)) {
+            global $router;
+            require_once __DIR__ . '/Breadcrumb.php';
+            $breadcrumb = new Breadcrumb($router);
+        }
+        
+        return $breadcrumb;
+    }
+}
+
+if (!function_exists('render_breadcrumb')) {
+    /**
+     * Render breadcrumbs for current route
+     * 
+     * @param array $customItems Additional breadcrumb items
+     * @return string HTML breadcrumbs
+     */
+    function render_breadcrumb($customItems = []) {
+        $route = current_route();
+        return breadcrumb()->render($route, $customItems);
+    }
+}
+
+if (!function_exists('set_breadcrumb')) {
+    /**
+     * Set custom breadcrumbs for current route
+     * 
+     * @param array $breadcrumbs Breadcrumb items
+     */
+    function set_breadcrumb($breadcrumbs) {
+        $route = current_route();
+        breadcrumb()->set($route, $breadcrumbs);
+    }
+}
+
+if (!function_exists('add_breadcrumb')) {
+    /**
+     * Add a breadcrumb item to current route
+     * 
+     * @param string $title Breadcrumb title
+     * @param string $url Breadcrumb URL (optional)
+     */
+    function add_breadcrumb($title, $url = null) {
+        $route = current_route();
+        breadcrumb()->add($route, $title, $url);
     }
 }

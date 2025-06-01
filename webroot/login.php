@@ -1,10 +1,10 @@
 <?php
 /**
- * Traballa - Login Page
+ * Traballa - Login
  * 
  * @copyright 2025 Marcos Núñez Fernández
  * @license   MIT License
- * @link      https://github.com/markostech/workhours-tfc
+ * @link      https://github.com/markostech/traballa-tfc
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ $error = '';
 
 // Process login form
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = sanitize($pdo, $_POST['email']);
+    $email = sanitize($_POST['email']);
     $password = $_POST['password'];
     
     if (empty($email) || empty($password)) {
@@ -248,7 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <footer class="minimal-footer text-center">
         <div class="container">
             <div class="footer-links">
-                <a href="privacy-policy.php" class="footer-link text-white">
+                <a href="privacy-policy" class="footer-link text-white">
                     <i class="fas fa-shield-alt me-1"></i>Privacy policy
                 </a>
                 <span class="footer-separator">•</span>
@@ -256,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <i class="fas fa-user-shield me-1"></i>Terms of service
                 </a>
                 <span class="footer-separator">•</span>
-                <a href="https://github.com/markostech/workhours-tfc" target="_blank" class="footer-link text-white">
+                <a href="https://github.com/markostech/traballa-tfc" target="_blank" class="footer-link text-white">
                     <i class="fab fa-github me-1"></i>Source code
                 </a>
             </div>

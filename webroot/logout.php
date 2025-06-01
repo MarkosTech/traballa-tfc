@@ -1,10 +1,10 @@
 <?php
 /**
- * Traballa - Logout Handler
+ * Traballa - Logout
  * 
  * @copyright 2025 Marcos Núñez Fernández
  * @license   MIT License
- * @link      https://github.com/markostech/workhours-tfc
+ * @link      https://github.com/markostech/traballa-tfc
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

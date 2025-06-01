@@ -1,0 +1,599 @@
+/* 
+ * Traballa - Sidebar styles
+ * 
+ * @copyright 2025 Marcos Núñez Fernández
+ * @license   MIT License
+ * @link      https://github.com/markostech/traballa-tfc
+ * 
+ */
+
+/* Modern layout styles */
+.modern-layout {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background: #2c3e50;
+    color: white;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1030;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+    overscroll-behavior: contain;
+}
+
+.sidebar.collapsed {
+    width: 60px;
+}
+
+/* Hover-expand functionality */
+.sidebar.collapsed:hover {
+    width: 250px;
+}
+
+.sidebar-header {
+    padding: 15px;
+    background: #1a2530;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #3d5366;
+    min-height: 60px;
+}
+
+.sidebar-header h4 {
+    font-size: 1.1rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-logo {
+    height: 30px;
+    width: auto;
+    max-width: 120px;
+    transition: opacity 0.3s ease;
+    object-fit: contain;
+}
+
+.sidebar.collapsed .sidebar-header h4,
+.sidebar.collapsed .sidebar-logo {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+.sidebar.collapsed:hover .sidebar-header h4,
+.sidebar.collapsed:hover .sidebar-logo {
+    opacity: 1;
+    width: auto;
+}
+
+.sidebar-toggle {
+    color: white;
+    padding: 5px;
+    background: none !important;
+    border: none !important;
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+    transform: scale(1.1);
+}
+
+.sidebar-toggle:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.sidebar-content {
+    overflow-y: auto;
+    flex: 1;
+    padding-top: 10px;
+}
+
+.sidebar .nav-item {
+    width: 100%;
+}
+
+.sidebar .nav-link {
+    color: #ecf0f1;
+    padding: 12px 15px;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: all 0.3s;
+    min-height: 44px;
+    text-decoration: none;
+}
+
+.sidebar .nav-link i {
+    margin-right: 15px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar.collapsed .nav-link i {
+    margin-right: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar.collapsed:hover .nav-link i {
+    margin-right: 15px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Hide text in collapsed state */
+.sidebar.collapsed .nav-link span {
+    display: none !important;
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Show text when hovering over collapsed sidebar */
+.sidebar.collapsed:hover .nav-link span {
+    display: inline-block !important;
+    opacity: 1;
+    visibility: visible;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #3d5366;
+    color: white;
+}
+
+.sidebar .nav-link.active {
+    background-color: #3498db;
+    color: white;
+}
+
+/* Better control for hiding/showing elements in collapsed state */
+.sidebar.collapsed .organization-selector,
+.sidebar.collapsed .nav-section,
+.sidebar.collapsed .sidebar-logo {
+    display: none !important;
+}
+
+.sidebar.collapsed:hover .organization-selector,
+.sidebar.collapsed:hover .nav-section,
+.sidebar.collapsed:hover .sidebar-logo {
+    display: block !important;
+}
+
+.nav-section {
+    color: #95a5a6;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    padding: 20px 15px 5px;
+    pointer-events: none;
+}
+
+/* When sidebar is collapsed */
+.sidebar.collapsed + .main-content {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+}
+
+/* Prevent content from jumping when hovering sidebar */
+.sidebar.collapsed:hover + .main-content {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+}
+
+/* Organization selector */
+.organization-selector {
+    border-top: 1px solid #3d5366;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 60px;
+    }
+    
+    .sidebar .nav-link i {
+        margin-right: 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .sidebar .nav-link span,
+    .sidebar .organization-selector,
+    .sidebar .nav-section,
+    .sidebar .sidebar-logo {
+        display: none !important;
+    }
+    
+    .sidebar .sidebar-header h4 {
+        opacity: 0;
+        width: 0;
+    }
+    
+    .sidebar.expanded {
+        width: 250px;
+    }
+    
+    .sidebar.expanded .nav-link i {
+        margin-right: 15px;
+        width: 20px;
+        text-align: center;
+    }
+    
+    .sidebar.expanded .nav-link span,
+    .sidebar.expanded .organization-selector,
+    .sidebar.expanded .nav-section,
+    .sidebar.expanded .sidebar-logo {
+        display: inline-block !important;
+    }
+    
+    .sidebar.expanded .sidebar-header h4 {
+        opacity: 1;
+        width: auto;
+    }
+    
+    .main-content {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+    }
+    
+    .sidebar.expanded + .main-content {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+    }
+    
+    /* On tablet and smaller screens, hover doesn't expand the sidebar */
+    .sidebar.collapsed:hover {
+        width: 60px;
+    }
+    
+    .sidebar.collapsed:hover .nav-link span,
+    .sidebar.collapsed:hover .organization-selector,
+    .sidebar.collapsed:hover .nav-section,
+    .sidebar.collapsed:hover .sidebar-logo {
+        display: none !important;
+    }
+    
+    .sidebar.collapsed:hover .sidebar-header h4 {
+        opacity: 0;
+        width: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Ensure mobile toggle is always created */
+    body:not(.mobile-toggle-ready) {
+        position: relative;
+    }
+    
+    body:not(.mobile-toggle-ready):before {
+        content: "☰";
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 1050;
+        background-color: #3498db;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.4);
+        cursor: pointer;
+        pointer-events: auto;
+    }
+    
+    .sidebar {
+        width: 0;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1040;
+    }
+    
+    .sidebar.expanded {
+        width: 250px;
+        transform: translateX(0);
+        z-index: 1040;
+    }
+    
+    /* Hide the sidebar header toggle button on mobile */
+    .sidebar-toggle {
+        display: none !important;
+    }
+    
+    /* Show all content when expanded on mobile */
+    .sidebar.expanded .nav-link span,
+    .sidebar.expanded .organization-selector,
+    .sidebar.expanded .nav-section,
+    .sidebar.expanded .sidebar-logo {
+        display: inline-block !important;
+    }
+    
+    .sidebar.expanded .sidebar-header h4 {
+        opacity: 1 !important;
+        width: auto !important;
+    }
+    
+    .sidebar.expanded .nav-link i {
+        margin-right: 15px;
+        width: 20px;
+        text-align: center;
+    }
+    
+    /* Ensure nav links are touchable on mobile */
+    .sidebar.expanded .nav-link {
+        pointer-events: auto;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+        touch-action: manipulation;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .sidebar.expanded + .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    /* Add a toggle button that's visible on small screens */
+    .mobile-sidebar-toggle {
+        display: block !important;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 1050;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.4);
+        font-size: 20px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        pointer-events: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Hide mobile toggle when sidebar is expanded */
+    body.sidebar-open .mobile-sidebar-toggle {
+        display: none !important;
+    }
+    
+    .mobile-sidebar-toggle:hover,
+    .mobile-sidebar-toggle:active,
+    .mobile-sidebar-toggle:focus {
+        background-color: #2980b9;
+        transform: scale(1.1);
+        color: white;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+    }
+    
+    /* Ensure touch events work properly */
+    .mobile-sidebar-toggle:active {
+        transform: scale(0.95);
+    }
+    
+    /* Overlay for sidebar when opened on mobile */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1030;
+        transition: opacity 0.3s ease;
+    }
+    
+    .sidebar-overlay.active {
+        display: block;
+    }
+    
+    /* Disable hover expansion on mobile */
+    .sidebar.collapsed:hover {
+        width: 0;
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.collapsed:hover .nav-link span,
+    .sidebar.collapsed:hover .organization-selector,
+    .sidebar.collapsed:hover .nav-section {
+        display: none !important;
+    }
+    
+    .sidebar.collapsed:hover .sidebar-header h4 {
+        opacity: 0;
+        width: 0;
+    }
+}
+
+/* Additional mobile fixes */
+@media (max-width: 576px) {
+    /* Ensure text is always visible when sidebar is expanded */
+    .sidebar.expanded .nav-link {
+        display: flex;
+        align-items: center;
+        pointer-events: auto;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+        touch-action: manipulation;
+        min-height: 44px;
+        position: relative;
+        z-index: 1041;
+    }
+    
+    .sidebar.expanded .nav-link span {
+        display: inline-block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        margin-left: 10px;
+    }
+    
+    /* Ensure logo is visible when sidebar is expanded on mobile */
+    .sidebar.expanded .sidebar-logo {
+        display: inline-block !important;
+        opacity: 1 !important;
+        width: auto !important;
+    }
+    
+    /* Hide mobile toggle when sidebar is expanded */
+    .sidebar.expanded ~ .mobile-sidebar-toggle {
+        display: none;
+    }
+    
+    /* Ensure proper z-index for mobile sidebar */
+    .sidebar.expanded {
+        z-index: 1040;
+    }
+    
+    /* Ensure sidebar content is touchable */
+    .sidebar.expanded .sidebar-content {
+        pointer-events: auto;
+        z-index: 1041;
+    }
+    
+    /* Fix for organization dropdown on mobile */
+    .sidebar.expanded .organization-selector .dropdown-menu {
+        z-index: 1042;
+        position: absolute;
+    }
+    
+    /* Ensure dropdown items are touchable */
+    .sidebar.expanded .dropdown-item {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Ensure text wrapping and visibility */
+.sidebar .nav-link span {
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+/* Fix for organization selector display */
+.sidebar.expanded .organization-selector {
+    display: block !important;
+}
+
+.sidebar.collapsed .organization-selector {
+    display: none !important;
+}
+
+/* Mobile-specific organization selector fix */
+@media (max-width: 992px) {
+    .sidebar.expanded .organization-selector {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+}
+
+/* Additional mobile touch fixes */
+@media (max-width: 576px) {
+    /* Prevent iOS Safari from zooming on form inputs */
+    .sidebar input, .sidebar select, .sidebar textarea {
+        font-size: 16px;
+    }
+    
+    /* Ensure all clickable elements have proper touch targets */
+    .sidebar .nav-link,
+    .sidebar .dropdown-item,
+    .sidebar .btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Improve tap targets for dropdown */
+    .sidebar .dropdown-toggle {
+        min-height: 44px;
+        padding: 12px 15px;
+    }
+    
+    /* Prevent text selection on touch elements */
+    .sidebar .nav-link,
+    .sidebar .dropdown-item,
+    .mobile-sidebar-toggle {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+    /* Improve scrolling on mobile */
+    .sidebar-content {
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+    }
+    
+    /* Fix for potential layout shifts */
+    .sidebar.expanded {
+        will-change: transform;
+        backface-visibility: hidden;
+    }
+    
+    /* On mobile, make kanban link behave as normal link */
+    .sidebar .nav-link[data-bs-target="#kanbanProjectModal"] {
+        pointer-events: auto;
+    }
+}
+
+/* Main content area */
+.main-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+}
+
+.content-wrapper {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Ensure footer stays at bottom */
+.app-footer {
+    margin-top: auto;
+}

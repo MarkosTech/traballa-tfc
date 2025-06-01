@@ -1,0 +1,9 @@
+# Traballa robots.txt
+User-agent: *
+Allow: /
+Disallow: /ajax/
+Disallow: /assets/js/
+Disallow: /assets/css/
+
+# Sitemaps
+Sitemap: https://traballa.com/sitemap.xml
