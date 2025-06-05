@@ -21,8 +21,6 @@
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
  */
 
-define('INDEX_EXEC', true); // Allow execution of child scripts
-
 require_once '../config/database.php';
 require_once '../includes/Session.php';
 require_once '../includes/functions.php';

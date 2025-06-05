@@ -171,6 +171,29 @@ class Router {
             'css' => ['landing.css'],
             'js' => ['landing.js']
         ]);
+
+        // Login, register, and other auth pages
+        $this->addRoute('login', [
+            'file' => 'login.php',
+            'auth' => false,
+            'title' => 'Login - Traballa'
+        ]);
+        $this->addRoute('register', [
+            'file' => 'register.php',
+            'auth' => false,
+            'title' => 'Register - Traballa'
+        ]);
+        $this->addRoute('forgot-password', [
+            'file' => 'forgot-password.php',
+            'auth' => false,
+            'title' => 'Forgot Password - Traballa'
+        ]);
+        $this->addRoute('reset-password', [
+            'file' => 'reset-password.php',
+            'auth' => false,
+            'title' => 'Reset Password - Traballa'
+        ]);
+        
     }
     
     /**
