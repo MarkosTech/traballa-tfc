@@ -533,7 +533,7 @@
                 <h3 class="section-title">11. Updates to this policy</h3>
                 <div class="ps-3">
                     <p>This privacy policy may be updated to reflect changes in our data processing practices or applicable legislation.</p>
-                    <p><strong>Last update:</strong> June 8, 2025</p>
+                    <p><strong>Last update:</strong> June 1, 2025</p>
                     <p><strong>Change notification:</strong> We will notify you by email of any significant changes to this policy.</p>
                 </div>
 
@@ -868,7 +868,7 @@
             <h3 class="section-title">11. Actualizaciones de esta política</h3>
             <div class="ps-3">
                 <p>Esta política de privacidad puede actualizarse para reflejar cambios en nuestras prácticas de tratamiento de datos o en la legislación aplicable.</p>
-                <p><strong>Última actualización:</strong> 8 de junio de 2025</p>
+                <p><strong>Última actualización:</strong> 1 de junio de 2025</p>
                 <p><strong>Notificación de cambios:</strong> Te notificaremos por email cualquier cambio significativo en esta política.</p>
             </div>
 

@@ -31,7 +31,8 @@ $session = new Session($pdo);
 
 // Redirect if already logged in
 if ($session->get('user_id')) {
-    header("Location: index.php");
+    $redirect_url = getDashboardUrl('index.php');
+    header("Location: " . $redirect_url);
     exit();
 }
 
@@ -91,7 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $session->set('user_name', $name);
                 $session->set('user_email', $email);
                 $session->set('user_role', 'employee');
-                header("Location: index.php");
+                $redirect_url = getDashboardUrl('index.php');
+                header("Location: " . $redirect_url);
                 exit();
             } else {
                 $error = "Error creating account. Please try again.";
@@ -149,8 +151,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <!-- Home Link -->
-    <a href="landing.php" class="home-link">
-        <i class="fas fa-home me-2"></i> Back to Home
+    <a href="landing" class="home-link">
+        <i class="fas fa-home me-2"></i> Back to home
     </a>
     
     <!-- Floating background shapes -->
@@ -243,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- GDPR Consent Section - full width across columns -->
             <div class="mb-4">
                 <h6 class="fw-semibold mb-3 text-primary">
-                    <i class="fas fa-shield-alt me-2"></i>Privacy & Data Protection
+                    <i class="fas fa-shield-alt me-2"></i>Privacy & data protection
                 </h6>
                 
                 <div class="form-check mb-3">
@@ -251,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label class="form-check-label" for="privacy_consent">
                         I have read and accept the 
                         <a href="privacy-policy" target="_blank" class="text-primary text-decoration-none">
-                            <strong>Privacy Policy</strong>
+                            <strong>privacy policy</strong>
                         </a> <span class="text-danger">*</span>
                     </label>
                     <div class="invalid-feedback" id="privacyError"></div>
@@ -260,17 +262,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-check mb-3">
                     <input class="form-check-input" type="checkbox" id="data_processing_consent" name="data_processing_consent" required>
                     <label class="form-check-label" for="data_processing_consent">
-                        I consent to the processing of my personal data for account management and service provision 
+                        I accept the <a href="terms-of-service" target="_blank" class="text-primary text-decoration-none"> <strong>terms of service</strong></a> and consent to the processing of my data for account creation and management purposes.
                         <span class="text-danger">*</span>
                     </label>
                     <div class="invalid-feedback" id="dataProcessingError"></div>
                 </div>
                 
-                <small class="text-muted">
-                    <i class="fas fa-info-circle me-1"></i>
-                    You can review and modify your consent preferences anytime in your 
-                    <a href="gdpr.php" class="text-primary text-decoration-none">GDPR Rights</a> settings.
-                </small>
             </div>
             
             <div class="d-grid mb-3">

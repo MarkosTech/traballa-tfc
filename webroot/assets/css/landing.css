@@ -1,0 +1,554 @@
+/* Landing Page Styles */
+
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2980b9;
+    --accent-color: #1abc9c;
+    --light-bg: #f8f9fa;
+    --dark-bg: #2c3e50;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Hero section */
+.hero {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: white;
+    clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
+}
+
+.hero h1 {
+    font-weight: 700;
+    font-size: 3.2rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+}
+
+/* Video in hero section */
+.hero-video-container {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.hero-device-frame {
+    position: relative;
+    background: #fff;
+    padding: 2px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.hero-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+}
+
+.hero-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.hero-play-button:hover {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.hero-play-button i {
+    color: var(--primary-color);
+    font-size: 24px;
+}
+
+/* Features section */
+.features {
+    padding: 80px 0;
+    background-color: white;
+}
+
+.feature-icon {
+    background-color: var(--light-bg);
+    color: var(--primary-color);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem auto;
+    font-size: 30px;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-5px);
+}
+
+/* Pricing section */
+.pricing {
+    background-color: var(--light-bg);
+    padding: 80px 0;
+}
+
+.pricing-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.pricing-header {
+    padding: 25px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.pricing-popular .pricing-header {
+    background: linear-gradient(135deg, var(--accent-color), #16a085);
+}
+
+.pricing-body {
+    padding: 25px;
+}
+
+.pricing-price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 20px 0;
+}
+
+.pricing-price small {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.pricing-features {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0;
+}
+
+.pricing-features li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.pricing-features li i {
+    color: var(--primary-color);
+    margin-right: 10px;
+}
+
+.pricing-popular .pricing-features li i {
+    color: var(--accent-color);
+}
+
+/* Self-host section */
+.self-host {
+    padding: 80px 0;
+    background-color: white;
+}
+
+.self-host-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Custom classes for elements that had inline styles */
+.self-host-placeholder {
+    background: #e9f5ff;
+    border-radius: 8px;
+}
+
+.footer-divider {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* CTA section */
+.cta {
+    background: linear-gradient(135deg, var(--accent-color), #16a085);
+    color: white;
+    padding: 120px 0;
+    position: relative;
+}
+
+.cta::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: white;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 100%);
+}
+
+/* Client logos section */
+.client-logo {
+    max-height: 40px;
+    transition: all 0.3s ease;
+}
+
+.client-logo.grayscale {
+    filter: grayscale(100%) opacity(0.7);
+}
+
+.client-logo.grayscale:hover {
+    filter: grayscale(0%) opacity(1);
+}
+
+/* How it works section */
+.how-it-works-card {
+    position: relative;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    padding: 30px;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.how-it-works-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.step-number {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: var(--primary-color);
+    color: white;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    border-radius: 50%;
+    font-size: 18px;
+}
+
+.icon-container {
+    font-size: 40px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+/* Blog section */
+.blog-card {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+}
+
+.blog-card .card-img-top {
+    height: 180px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.blog-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.blog-meta {
+    font-size: 0.85rem;
+}
+
+/* FAQ Section */
+.accordion-button:not(.collapsed) {
+    background-color: rgba(52, 152, 219, 0.05);
+    color: var(--primary-color);
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border-color: rgba(52, 152, 219, 0.5);
+}
+
+.accordion-item {
+    border: 1px solid rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.accordion-button {
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* Footer */
+footer {
+    background-color: var(--dark-bg);
+    color: white;
+    padding: 50px 0 20px;
+}
+
+.footer-logo-container {
+    margin-bottom: 1rem;
+}
+
+.footer-logo {
+    height: 45px;
+    width: auto;
+    /* We're now using the white SVG directly, so no need for filter */
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.social-icons a {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+/* Navigation */
+.navbar {
+    transition: all 0.3s ease;
+    padding: 15px 0;
+}
+
+.navbar.scrolled {
+    background-color: #fff !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo {
+    height: 40px;
+    width: auto;
+    transition: all 0.3s ease;
+    filter: brightness(0) invert(1); /* Make the logo white for transparent navbar */
+}
+
+.navbar.scrolled .navbar-logo {
+    filter: none; /* Return to original colors when navbar has background */
+    height: 35px; /* Slightly smaller when scrolled */
+    content: url('../img/svg/traballa-logo-noBgColor.svg'); /* Switch to colored logo when scrolled */
+}
+
+.nav-link {
+    font-weight: 500;
+    margin-left: 15px;
+}
+
+.navbar.scrolled .nav-link {
+    color: #333 !important;
+}
+
+.navbar.scrolled .nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+/* Buttons */
+.btn {
+    font-weight: 600;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    padding: 10px 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    padding: 10px 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-accent {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    padding: 10px 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-accent:hover {
+    background-color: #16a085;
+    border-color: #16a085;
+    transform: translateY(-2px);
+}
+
+/* Animation classes */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease;
+}
+
+.animate-on-scroll.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Animation for elements when scrolling */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.animate-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .navbar-logo {
+        height: 35px; /* Slightly smaller on mobile */
+    }
+    
+    .navbar-collapse {
+        background-color: white;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin-top: 10px;
+    }
+    
+    .navbar-light .navbar-toggler {
+        border: none;
+        padding: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 80px 0;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .features, .pricing, .self-host, .cta {
+        padding: 80px 0;
+    }
+    
+    .pricing-card {
+        margin-bottom: 30px;
+    }
+    
+    .footer-logo {
+        height: 40px; /* Slightly smaller on tablets */
+    }
+}

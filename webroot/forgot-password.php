@@ -31,7 +31,8 @@ $session = new Session($pdo);
 
 // Redirect if already logged in
 if ($session->get('user_id')) {
-    header("Location: index.php");
+    $redirect_url = getDashboardUrl('index.php');
+    header("Location: " . $redirect_url);
     exit();
 }
 

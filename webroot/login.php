@@ -32,7 +32,8 @@ $session = new Session($pdo);
 
 // Redirect if already logged in
 if ($session->get('user_id')) {
-    header("Location: index.php");
+    $redirect_url = getDashboardUrl('index.php');
+    header("Location: " . $redirect_url);
     exit();
 }
 
@@ -61,7 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $session->set('user_email', $user['email']);
                     $session->set('user_role', $user['role']);
                     
-                    header("Location: index.php");
+                    $redirect_url = getDashboardUrl('index.php');
+                    header("Location: " . $redirect_url);
                     exit();
                 } else {
                     $error = "Invalid password";
@@ -121,8 +123,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <!-- Home Link -->
-    <a href="landing.php" class="home-link">
-        <i class="fas fa-home me-2"></i> Back to Home
+    <a href="landing" class="home-link">
+        <i class="fas fa-home me-2"></i> Back to home
     </a>
 
     <!-- Floating background shapes -->

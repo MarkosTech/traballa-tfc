@@ -124,7 +124,7 @@ body {
     box-shadow: 
         0 8px 32px var(--shadow-light),
         0 16px 64px var(--shadow-medium);
-    padding: 3rem;
+    padding: 2.5rem; /* Reduced from 3rem */
     width: 100%;
     max-width: 460px;
     position: relative;
@@ -134,9 +134,10 @@ body {
 
 /* Register container gets wider */
 .register-container {
-    max-width: 780px; /* Increased from 520px to accommodate 2 columns */
-    max-height: 80vh;
+    max-width: 680px; /* Reduced from 780px to make it more compact */
+    max-height: 75vh; /* Reduced height slightly */
     overflow-y: auto;
+    padding: 2rem 2.5rem; /* Reduced padding for more compact design */
 }
 
 /* Create 2-column layout for registration form on desktop */
@@ -144,7 +145,7 @@ body {
     .register-container form {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
+        gap: 1rem; /* Reduced gap from 1.5rem to 1rem */
     }
     
     /* Make certain elements span 2 columns */
@@ -156,12 +157,12 @@ body {
     }
     
     .register-container {
-        padding: 2.5rem 3.5rem; /* More horizontal padding on desktop */
+        padding: 2rem 3rem; /* Reduced padding from 2.5rem 3.5rem */
     }
     
     .register-container .mb-3,
     .register-container .mb-4 {
-        margin-bottom: 1rem !important; /* More compact spacing between form elements */
+        margin-bottom: 0.75rem !important; /* Reduced spacing from 1rem to 0.75rem */
     }
     
     /* Add a subtle divider between columns */
@@ -171,15 +172,33 @@ body {
     
     /* Improve alert positioning in 2-column layout */
     .register-container .alert {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem; /* Reduced from 1.5rem */
     }
 }
 
 /* Tablets and smaller desktops - adjust layout for medium screens */
 @media (min-width: 768px) and (max-width: 991px) {
     .register-container {
-        max-width: 650px;
-        padding: 2.5rem 2.5rem;
+        max-width: 580px; /* Reduced from 650px */
+        padding: 2rem 2rem; /* More compact padding */
+    }
+}
+
+/* Mobile-specific optimizations for register container */
+@media (max-width: 767px) {
+    .register-container {
+        max-width: 95vw;
+        padding: 1.5rem;
+        max-height: 85vh;
+    }
+    
+    .register-container .mb-3,
+    .register-container .mb-4 {
+        margin-bottom: 0.75rem !important;
+    }
+    
+    .register-header h2 {
+        font-size: 1.75rem; /* Slightly smaller heading on mobile */
     }
 }
 
@@ -209,7 +228,7 @@ body {
 .forgot-password-header,
 .reset-password-header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem; /* Reduced from 2rem */
 }
 
 .auth-header h2,

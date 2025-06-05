@@ -49,6 +49,55 @@ function sanitize($data) {
   return htmlspecialchars(trim($data));
 }
 
+/**
+ * Generate dashboard redirect URL based on SYSTEM_URL configuration
+ * 
+ * @param string $fallback_url Default URL to use if SYSTEM_URL is not defined or is 'none'
+ * @return string The redirect URL to use
+ */
+function getDashboardUrl($fallback_url = 'index.php') {
+    // Check if SYSTEM_URL is defined and not 'none'
+    if (defined('SYSTEM_URL') && SYSTEM_URL !== 'none' && !empty(trim(SYSTEM_URL))) {
+        $system_url = trim(SYSTEM_URL);
+        
+        // Add protocol if not present
+        if (!preg_match('/^https?:\/\//', $system_url)) {
+            // Use HTTPS by default for security
+            $system_url = 'https://' . $system_url;
+        }
+        
+        return $system_url;
+    }
+    
+    // Return fallback URL if SYSTEM_URL is not configured or is 'none'
+    return $fallback_url;
+}
+
+/**
+ * Generate login redirect URL based on SYSTEM_URL configuration
+ * 
+ * @param string $fallback_url Default URL to use if SYSTEM_URL is not defined or is 'none'
+ * @return string The login URL to use
+ */
+function getLoginUrl($fallback_url = 'login.php') {
+    // Check if SYSTEM_URL is defined and not 'none'
+    if (defined('SYSTEM_URL') && SYSTEM_URL !== 'none' && !empty(trim(SYSTEM_URL))) {
+        $system_url = trim(SYSTEM_URL);
+        
+        // Add protocol if not present
+        if (!preg_match('/^https?:\/\//', $system_url)) {
+            // Use HTTPS by default for security
+            $system_url = 'https://' . $system_url;
+        }
+        
+        // Append login.php to the system URL
+        return rtrim($system_url, '/') . '/login.php';
+    }
+    
+    // Return fallback URL if SYSTEM_URL is not configured or is 'none'
+    return $fallback_url;
+}
+
 // Function to get SMTP settings from config
 function getSMTPSettings() {
     return [

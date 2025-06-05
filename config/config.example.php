@@ -15,6 +15,8 @@ define('DB_NAME', 'work_hours_counter');
 define('APP_NAME', 'Traballa Counter');
 define('APP_VERSION', '1.0.0');
 define('TIMEZONE', 'America/New_York'); // Set your timezone
+define('MAIN_WEBSITE_URL', 'example.com'); // Main website URL (without protocol)
+define('SYSTEM_URL', 'none'); // System URL for dashboard redirects (without protocol) or none
 
 // Set timezone
 date_default_timezone_set(TIMEZONE);

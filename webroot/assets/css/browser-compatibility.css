@@ -1,0 +1,126 @@
+/* Browser Compatibility CSS for Traballa Landing Page */
+
+/* Firefox-specific styles */
+@-moz-document url-prefix() {
+    .pricing-card {
+        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+    
+    .feature-icon {
+        box-shadow: 0 4px 10px rgba(52, 152, 219, 0.15);
+    }
+}
+
+/* Edge and IE-specific styles */
+@supports (-ms-ime-align: auto) {
+    .hero::after {
+        content: none;
+    }
+    
+    .hero {
+        position: relative;
+    }
+    
+    .hero::before {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 100px;
+        background: white;
+        clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
+    }
+    
+    .btn {
+        transition: all 0.1s ease;
+    }
+}
+
+/* Safari-specific styles */
+@media not all and (min-resolution:.001dpcm) { 
+    @supports (-webkit-appearance:none) {
+        .feature-card:hover .feature-icon {
+            transform: translateY(-3px);
+        }
+        
+        .hero {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+    }
+}
+
+/* iOS fixes */
+@supports (-webkit-touch-callout: none) {
+    .btn-lg {
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
+    }
+    
+    input, select, textarea {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+    
+    /* Fix for iOS momentum scrolling */
+    .navbar-collapse {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Improve print styles */
+@media print {
+    .navbar, .cta, footer, .cookie-banner, .accessibility-widget-btn, .accessibility-panel {
+        display: none !important;
+    }
+    
+    body {
+        color: #000 !important;
+        background: #fff !important;
+    }
+    
+    .container {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: #000 !important;
+        page-break-after: avoid;
+    }
+    
+    p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+    }
+    
+    .pricing-card, .feature-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+    
+    a.btn {
+        border: 1px solid #000 !important;
+        color: #000 !important;
+        background: none !important;
+        text-decoration: none !important;
+    }
+    
+    a[href]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+    }
+    
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+    
+    a[href^="#"]:after, 
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+    
+    img {
+        max-width: 100% !important;
+    }
+}

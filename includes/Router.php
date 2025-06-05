@@ -155,12 +155,21 @@ class Router {
         $this->addRoute('terms-of-service', [
             'file' => 'terms-of-service.php',
             'auth' => false,
-            'title' => 'Terms of Service - Traballa'
+            'title' => 'Terms of service - Traballa'
         ]);
         $this->addRoute('privacy-policy', [
-            'file' => 'privacy-policy',
+            'file' => 'privacy-policy.php',
             'auth' => false,
-            'title' => 'Privacy Policy - Traballa'
+            'title' => 'Privacy policy - Traballa'
+        ]);
+
+        // Landing page
+        $this->addRoute('landing', [
+            'file' => 'landing.php',
+            'auth' => false,
+            'title' => 'Traballa - Time tracking made easy',
+            'css' => ['landing.css'],
+            'js' => ['landing.js']
         ]);
     }
     
@@ -169,6 +178,24 @@ class Router {
      */
     public function addRoute($name, $config) {
         $this->routes[$name] = $config;
+    }
+    
+    /**
+     * Check if request comes from main website URL
+     */
+    private function isMainWebsite() {
+        if (!defined('MAIN_WEBSITE_URL')) {
+            return false;
+        }
+        
+        $currentHost = $_SERVER['HTTP_HOST'] ?? '';
+        $mainUrl = MAIN_WEBSITE_URL;
+        
+        // Remove protocol if accidentally included
+        $mainUrl = preg_replace('/^https?:\/\//', '', $mainUrl);
+        
+        // Check exact match or www alias
+        return $currentHost === $mainUrl || $currentHost === 'www.' . $mainUrl;
     }
     
     /**
@@ -233,6 +260,11 @@ class Router {
      */
     public function resolve() {
         $currentRoute = $this->getCurrentRoute();
+        
+        // Special handling for home page (dashboard) when not logged in from main website
+        if ($currentRoute === 'dashboard' && !$this->session->get('user_id') && $this->isMainWebsite()) {
+            $currentRoute = 'landing';
+        }
         
         // Check if route exists
         if (!$this->routeExists($currentRoute)) {

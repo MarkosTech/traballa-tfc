@@ -1,0 +1,202 @@
+/* Enhanced Mobile Responsiveness for Landing Page */
+
+/* Extra small devices (tiny phones) */
+@media (max-width: 359px) {
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+    
+    .hero p {
+        font-size: 0.9rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+    
+    .navbar-logo {
+        height: 30px; /* Even smaller logo on tiny screens */
+    }
+    
+    .footer-logo {
+        height: 35px;
+    }
+    
+    /* Make badges stack on very small screens */
+    .badge {
+        display: block;
+        width: 80%;
+        margin: 0.25rem auto !important;
+    }
+    
+    /* Adjust spacing in modal for very small screens */
+    .modal-body {
+        padding: 0.75rem;
+    }
+    
+    .modal-header h5 {
+        font-size: 1rem;
+    }
+    
+    /* Adjust footer content on very small screens */
+    footer h3 {
+        font-size: 1.25rem;
+    }
+    
+    footer h5 {
+        font-size: 1rem;
+    }
+}
+
+/* Smaller devices (phones) */
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 1.8rem;
+        margin-top: 1rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .hero {
+        padding: 70px 0 90px;
+    }
+    
+    .btn-lg {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .feature-card {
+        margin-bottom: 1.5rem;
+    }
+    
+    .pricing-card {
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Make testimonial cards full width on small devices */
+    .testimonials .card {
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Adjust footer columns on mobile */
+    footer h5 {
+        margin-top: 1.5rem;
+    }
+    
+    /* Better spacing for the self-host section on mobile */
+    .self-host .btn {
+        margin-bottom: 0.5rem;
+        display: block;
+        width: 100%;
+    }
+    
+    /* Improve navbar on small screens */
+    .navbar-collapse {
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 8px;
+    }
+    
+    /* Make CTA buttons stack on very small screens */
+    .cta .btn {
+        display: block;
+        margin: 0.5rem auto;
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    /* Maintain good CTA spacing on mobile */
+    .cta {
+        padding: 100px 0;
+    }
+    
+    /* Improve accessibility widget positioning */
+    .accessibility-widget-btn {
+        bottom: 70px; /* Move up to avoid overlap with cookie banner */
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    /* Ensure accessibility panel is properly positioned */
+    .accessibility-panel {
+        right: 10px;
+        bottom: 120px;
+        width: 250px;
+    }
+}
+
+/* Medium devices (tablets) */
+@media (max-width: 768px) and (min-width: 577px) {
+    .hero {
+        padding: 80px 0 100px;
+    }
+    
+    /* Better spacing for self-host button group on tablets */
+    .self-host .btn {
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Two-column layout for features on tablets */
+    .features .col-md-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+/* Fix for navbar on all mobile devices */
+@media (max-width: 992px) {
+    .navbar.scrolled .navbar-collapse {
+        background-color: white;
+    }
+    
+    .navbar .navbar-collapse {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    .navbar-toggler {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 4px;
+    }
+    
+    /* Make buttons in navbar stack properly */
+    .navbar .btn {
+        margin: 0.5rem 0;
+        width: 100%;
+    }
+    
+    /* Fix for navbar links on mobile */
+    .navbar-nav .nav-link {
+        padding: 0.5rem 0;
+    }
+}
+
+/* Fix spacing between sections on all screen sizes */
+.section-gap {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+/* Fix for testimonial avatars on all screen sizes */
+.testimonial-avatar {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+/* Improve accessibility - touch targets for mobile */
+@media (max-width: 992px) {
+    .nav-link, .btn, .footer-links a {
+        padding: 0.5rem;
+    }
+    
+    .social-icons a {
+        margin: 0 0.5rem 0.5rem 0;
+    }
+}

@@ -56,8 +56,21 @@ if ($router->isActionRequest()) {
     exit();
 }
 
-// Resolve the current route
+// Check if this is a standalone page (like landing) that has its own HTML structure
 $routeInfo = $router->resolve();
+if (isset($routeInfo['page']) && $routeInfo['page'] === 'landing') {
+    // Handle redirects for standalone pages
+    if (isset($routeInfo['redirect'])) {
+        header("Location: " . $routeInfo['redirect']);
+        exit();
+    }
+    
+    // Include the landing page directly without HTML wrapper
+    if ($routeInfo['file']) {
+        include $routeInfo['file'];
+    }
+    exit();
+}
 
 // Handle redirects
 if (isset($routeInfo['redirect'])) {
