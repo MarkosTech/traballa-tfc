@@ -189,6 +189,46 @@ The system includes AJAX endpoints for dynamic functionality:
 
 ## 🧪 Testing
 
+The project includes a comprehensive test suite built with PHPUnit to ensure code quality and reliability.
+
+### Running Tests
+
+**Run all tests:**
+```bash
+./vendor/bin/phpunit
+```
+
+**Run specific test file:**
+```bash
+./vendor/bin/phpunit tests/Unit/BasicTest.php
+```
+
+**Run tests with coverage (requires Xdebug):**
+```bash
+./vendor/bin/phpunit --coverage-html tests/coverage
+```
+
+**Using the test script:**
+```bash
+./run-tests.sh
+```
+
+### Test Structure
+
+- `tests/Unit/` - Unit tests for individual components
+- `tests/Integration/` - Integration tests for system workflows
+- `tests/bootstrap.php` - Test environment setup
+- `phpunit.xml` - PHPUnit configuration
+
+### Writing Tests
+
+The project follows PHPUnit best practices:
+
+- Test classes extend `PHPUnit\Framework\TestCase`
+- Test methods start with `test` prefix
+- Comprehensive assertions for validation
+- Mock objects for external dependencies
+
 The system includes comprehensive error handling and validation:
 
 - Input sanitization and validation

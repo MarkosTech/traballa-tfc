@@ -3,6 +3,16 @@
         "phpmailer/phpmailer": "^6.10"
     },
     "require-dev": {
-        "phpdocumentor/phpdocumentor": "^2.9"
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "includes/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
     }
 }
