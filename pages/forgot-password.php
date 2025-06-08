@@ -40,6 +40,9 @@ $success = '';
 
 // Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate CSRF token
+    check_csrf();
+    
     $email = sanitize($_POST['email']);
     
     if (empty($email)) {
@@ -194,6 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
         
         <form method="post" action="" id="forgotPasswordForm" novalidate>
+            <?php echo csrf_field(); ?>
             <div class="mb-4">
                 <label for="email" class="form-label fw-semibold">Email Address</label>
                 <div class="input-group">

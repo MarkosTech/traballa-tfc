@@ -185,6 +185,7 @@ try {
                     <form method="POST" class="add-event-form" id="event-form">
                         <input type="hidden" name="action" value="add_event" id="form-action">
                         <input type="hidden" name="event_id" id="event-id">
+                        <?php echo csrf_field(); ?>
                         
                         <div class="form-group">
                             <label for="title">Title</label>
@@ -210,7 +211,7 @@ try {
                             <select id="project_id" name="project_id" class="form-control">
                                 <option value="">Select project</option>
                                 <?php foreach ($projects as $project): ?>
-                                    <option value="<?php echo $project['id']; ?>"><?php echo htmlspecialchars($project['name']); ?></option>
+                                    <option value="<?php echo (int)$project['id']; ?>"><?php echo sanitize_output($project['name']); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -220,8 +221,8 @@ try {
                             <select id="organization_id" name="organization_id" class="form-control">
                                 <option value="">Select organization</option>
                                 <?php foreach ($organizations as $org): ?>
-                                    <option value="<?php echo $org['id']; ?>" <?php echo ($org['id'] == $organization_id) ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars($org['name']); ?>
+                                    <option value="<?php echo (int)$org['id']; ?>" <?php echo ($org['id'] == $organization_id) ? 'selected' : ''; ?>>
+                                        <?php echo sanitize_output($org['name']); ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>

@@ -36,6 +36,9 @@ if (!hasManagementPermissions()) {
 
 // Process organization actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+   // Validate CSRF token
+   check_csrf();
+   
    if (isset($_POST['action'])) {
        $action = $_POST['action'];
        
@@ -386,6 +389,7 @@ echo $breadcrumb->render(current_route());
            <form method="post" action="">
                <div class="modal-body">
                    <input type="hidden" name="action" value="add_organization">
+                   <?php echo csrf_field(); ?>
                    <div class="mb-3">
                        <label for="name" class="form-label">Organization name</label>
                        <input type="text" class="form-control" id="name" name="name" required>
@@ -416,6 +420,7 @@ echo $breadcrumb->render(current_route());
                <div class="modal-body">
                    <input type="hidden" name="action" value="update_organization">
                    <input type="hidden" name="organization_id" id="edit_organization_id">
+                   <?php echo csrf_field(); ?>
                    <div class="mb-3">
                        <label for="edit_name" class="form-label">Organization name</label>
                        <input type="text" class="form-control" id="edit_name" name="name" required>
@@ -489,6 +494,7 @@ echo $breadcrumb->render(current_route());
                        <form method="post" action="" id="addMemberForm">
                            <input type="hidden" name="action" value="add_member">
                            <input type="hidden" name="organization_id" id="manage_organization_id">
+                           <?php echo csrf_field(); ?>
                            
                            <div class="row mb-3">
                                <div class="col-md-6">
@@ -564,6 +570,7 @@ echo $breadcrumb->render(current_route());
                <form method="post" action="">
                    <input type="hidden" name="action" value="delete_organization">
                    <input type="hidden" name="organization_id" id="delete_organization_id">
+                   <?php echo csrf_field(); ?>
                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                    <button type="submit" class="btn btn-danger">Delete</button>
                </form>

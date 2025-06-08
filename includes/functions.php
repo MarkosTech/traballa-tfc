@@ -46,7 +46,170 @@ function getSessionObject() {
 
 // Function to sanitize user input
 function sanitize($data) {
-  return htmlspecialchars(trim($data));
+  return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
+}
+
+/**
+ * Enhanced XSS protection functions
+ */
+
+// Sanitize for HTML output with proper encoding
+function sanitize_output($data, $allow_html = false) {
+    if ($data === null || $data === '') {
+        return '';
+    }
+    
+    $data = trim($data);
+    
+    if ($allow_html) {
+        // Allow only safe HTML tags and remove dangerous attributes
+        return filter_var($data, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+    
+    return htmlspecialchars($data, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+}
+
+// Sanitize for HTML attributes
+function sanitize_attribute($data) {
+    if ($data === null || $data === '') {
+        return '';
+    }
+    return htmlspecialchars(trim($data), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+}
+
+// Sanitize for JavaScript output
+function sanitize_js($data) {
+    if ($data === null || $data === '') {
+        return '';
+    }
+    return json_encode(trim($data), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+}
+
+// Sanitize URLs
+function sanitize_url($url) {
+    if ($url === null || $url === '') {
+        return '';
+    }
+    return filter_var(trim($url), FILTER_SANITIZE_URL);
+}
+
+// Validate and sanitize email
+function sanitize_email($email) {
+    if ($email === null || $email === '') {
+        return '';
+    }
+    $email = trim($email);
+    return filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : '';
+}
+
+// Deep sanitize arrays (for form data)
+function sanitize_array($data) {
+    if (!is_array($data)) {
+        return sanitize($data);
+    }
+    
+    $sanitized = [];
+    foreach ($data as $key => $value) {
+        $clean_key = sanitize($key);
+        if (is_array($value)) {
+            $sanitized[$clean_key] = sanitize_array($value);
+        } else {
+            $sanitized[$clean_key] = sanitize($value);
+        }
+    }
+    return $sanitized;
+}
+
+// Strip dangerous tags and attributes
+function strip_dangerous_tags($data) {
+    if ($data === null || $data === '') {
+        return '';
+    }
+    
+    // Remove script tags and other dangerous elements
+    $dangerous_tags = [
+        'script', 'iframe', 'object', 'embed', 'applet', 'meta', 'link',
+        'style', 'form', 'input', 'button', 'textarea', 'select', 'option'
+    ];
+    
+    foreach ($dangerous_tags as $tag) {
+        $data = preg_replace('/<' . $tag . '[^>]*>.*?<\/' . $tag . '>/si', '', $data);
+        $data = preg_replace('/<' . $tag . '[^>]*\/>/si', '', $data);
+        $data = preg_replace('/<' . $tag . '[^>]*>/si', '', $data);
+    }
+    
+    // Remove dangerous attributes
+    $data = preg_replace('/\s*on\w+\s*=\s*["\'][^"\']*["\']/i', '', $data);
+    $data = preg_replace('/\s*javascript\s*:/i', '', $data);
+    $data = preg_replace('/\s*vbscript\s*:/i', '', $data);
+    $data = preg_replace('/\s*data\s*:/i', '', $data);
+    
+    return $data;
+}
+
+/**
+ * CSRF Protection Functions
+ */
+
+// Generate CSRF token
+function generate_csrf_token() {
+    if (!isset($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+// Validate CSRF token
+function validate_csrf_token($token) {
+    if (!isset($_SESSION['csrf_token'])) {
+        return false;
+    }
+    return hash_equals($_SESSION['csrf_token'], $token);
+}
+
+// Generate CSRF hidden input field
+function csrf_field() {
+    $token = generate_csrf_token();
+    return '<input type="hidden" name="csrf_token" value="' . sanitize_attribute($token) . '">';
+}
+
+// Validate CSRF for forms
+function check_csrf() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (!isset($_POST['csrf_token']) || !validate_csrf_token($_POST['csrf_token'])) {
+            die('CSRF token mismatch. Please refresh the page and try again.');
+        }
+    }
+}
+
+/**
+ * Content Security Policy Helper
+ */
+function set_security_headers() {
+    // XSS Protection
+    header('X-XSS-Protection: 1; mode=block');
+    
+    // Content Type Options
+    header('X-Content-Type-Options: nosniff');
+    
+    // Frame Options
+    header('X-Frame-Options: SAMEORIGIN');
+    
+    // Referrer Policy
+    header('Referrer-Policy: strict-origin-when-cross-origin');
+    
+    // Content Security Policy
+    $csp = "default-src 'self'; " .
+           "script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; " .
+           "style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com 'unsafe-inline'; " .
+           "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; " .
+           "img-src 'self' data: https:; " .
+           "connect-src 'self'; " .
+           "frame-ancestors 'self'; " .
+           "base-uri 'self'; " .
+           "form-action 'self';";
+    
+    header('Content-Security-Policy: ' . $csp);
 }
 
 /**

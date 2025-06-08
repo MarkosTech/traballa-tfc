@@ -39,6 +39,15 @@ if (!$session->get('user_id')) {
     exit();
 }
 
+// Validate CSRF token for POST requests
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $token = $_POST['csrf_token'] ?? $_SERVER['HTTP_X_CSRFTOKEN'] ?? '';
+    if (!validate_csrf_token($token)) {
+        echo json_encode(['success' => false, 'error' => 'CSRF token validation failed']);
+        exit();
+    }
+}
+
 $user_id = (int)$session->get('user_id');
 
 // Check if action is provided

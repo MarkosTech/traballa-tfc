@@ -164,7 +164,7 @@ if (isset($_SESSION['user_id'])) {
                         <?php 
                         $current_org = isset($_SESSION['current_organization_id']) ? 
                             getOrganizationById($pdo, $_SESSION['current_organization_id']) : null;
-                        echo $current_org ? $current_org['name'] : 'Select organization';
+                        echo sanitize_output($current_org ? $current_org['name'] : 'Select organization');
                         ?>
                     </button>
                     <ul class="dropdown-menu w-100" aria-labelledby="orgDropdown">
@@ -182,7 +182,7 @@ if (isset($_SESSION['user_id'])) {
                                href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) 
                                       ? '/' . ($page != 'dashboard' ? $page : '') . '?set_organization=' . $org['id'] 
                                       : 'index.php?page=' . $page . '&set_organization=' . $org['id']; ?>">
-                                <?php echo $org['name']; ?>
+                                <?php echo sanitize_output($org['name']); ?>
                                 <?php if ($org['is_admin']): ?>
                                     <span class="badge bg-primary ms-1">Admin</span>
                                 <?php endif; ?>
@@ -248,7 +248,7 @@ if (isset($_SESSION['user_id'])) {
                                ? '/kanban/' . $project['id'] 
                                : 'index.php?page=kanban&id=' . $project['id'];
                         echo '<a href="' . $url . '" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">';
-                        echo htmlspecialchars($project['name']);
+                        echo sanitize_output($project['name']);
                         
                         // Mostrar badge si el usuario es manager del proyecto
                         if (isset($project['is_manager']) && $project['is_manager']) {

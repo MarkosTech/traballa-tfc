@@ -25,15 +25,28 @@ define('INDEX_EXEC', true);
 /*ini_set('display_errors', 1);
 error_reporting(E_ALL);*/     
 
-session_start();
 require_once '../../config/database.php';
+require_once '../../includes/Session.php';
 require_once '../../includes/functions.php';
 
+// Initialize our session handler
+$session = new Session($pdo);
+
 // Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
+if (!$session->get('user_id')) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Unauthorized']);
     exit();
+}
+
+// Validate CSRF token for POST requests
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $token = $_POST['csrf_token'] ?? $_SERVER['HTTP_X_CSRFTOKEN'] ?? '';
+    if (!validate_csrf_token($token)) {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'message' => 'CSRF token validation failed']);
+        exit();
+    }
 }
 
 // Handle GET requests (fetching break data)
@@ -43,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
         
         // Verify that the user owns this work hour entry
         $check_stmt = $pdo->prepare("SELECT * FROM work_hours WHERE id = ? AND user_id = ?");
-        $check_stmt->execute([$work_hour_id, $_SESSION['user_id']]);
+        $check_stmt->execute([$work_hour_id, $session->get('user_id')]);
         
         if ($check_stmt->rowCount() === 0) {
             header('Content-Type: application/json');
@@ -87,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         
         // Verify that the user owns this work hour entry
         $check_stmt = $pdo->prepare("SELECT * FROM work_hours WHERE id = ? AND user_id = ? AND status = 'working'");
-        $check_stmt->execute([$work_hour_id, $_SESSION['user_id']]);
+        $check_stmt->execute([$work_hour_id, $session->get('user_id')]);
         
         if ($check_stmt->rowCount() === 0) {
             header('Content-Type: application/json');
@@ -126,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $check_stmt = $pdo->prepare("SELECT b.* FROM breaks b 
                                     JOIN work_hours wh ON b.work_hour_id = wh.id 
                                     WHERE b.id = ? AND wh.user_id = ? AND b.status = 'active'");
-        $check_stmt->execute([$break_id, $_SESSION['user_id']]);
+        $check_stmt->execute([$break_id, $session->get('user_id')]);
         
         if ($check_stmt->rowCount() === 0) {
             header('Content-Type: application/json');

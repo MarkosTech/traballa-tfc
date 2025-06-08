@@ -36,6 +36,9 @@ if (!isAdmin()) {
 
 // Process user actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate CSRF token
+    check_csrf();
+    
     if (isset($_POST['action'])) {
         $action = $_POST['action'];
         
@@ -132,9 +135,9 @@ echo $breadcrumb->render(current_route());
                     <?php else: ?>
                         <?php foreach ($users as $user): ?>
                             <tr>
-                                <td><?php echo $user['id']; ?></td>
-                                <td><?php echo $user['name']; ?></td>
-                                <td><?php echo $user['email']; ?></td>
+                                <td><?php echo (int)$user['id']; ?></td>
+                                <td><?php echo sanitize_output($user['name']); ?></td>
+                                <td><?php echo sanitize_output($user['email']); ?></td>
                                 <td>
                                     <?php if ($user['role'] === 'admin'): ?>
                                         <span class="badge bg-danger">Admin</span>
@@ -149,18 +152,18 @@ echo $breadcrumb->render(current_route());
                                     <div class="btn-group btn-group-sm">
                                         <button type="button" class="btn btn-outline-primary view-user-btn" 
                                                 data-bs-toggle="modal" data-bs-target="#viewUserModal"
-                                                data-id="<?php echo $user['id']; ?>"
-                                                data-name="<?php echo $user['name']; ?>"
-                                                data-email="<?php echo $user['email']; ?>"
-                                                data-role="<?php echo $user['role']; ?>"
-                                                data-created="<?php echo date('M d, Y', strtotime($user['created_at'])); ?>">
+                                                data-id="<?php echo (int)$user['id']; ?>"
+                                                data-name="<?php echo sanitize_attribute($user['name']); ?>"
+                                                data-email="<?php echo sanitize_attribute($user['email']); ?>"
+                                                data-role="<?php echo sanitize_attribute($user['role']); ?>"
+                                                data-created="<?php echo sanitize_attribute(date('M d, Y', strtotime($user['created_at']))); ?>">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                         <button type="button" class="btn btn-outline-danger delete-user-btn"
                                                 data-bs-toggle="modal" data-bs-target="#deleteUserModal"
-                                                data-id="<?php echo $user['id']; ?>"
-                                                data-name="<?php echo $user['name']; ?>"
-                                                data-role="<?php echo $user['role']; ?>">
+                                                data-id="<?php echo (int)$user['id']; ?>"
+                                                data-name="<?php echo sanitize_attribute($user['name']); ?>"
+                                                data-role="<?php echo sanitize_attribute($user['role']); ?>">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
@@ -185,6 +188,7 @@ echo $breadcrumb->render(current_route());
             <form method="post" action="">
                 <div class="modal-body">
                     <input type="hidden" name="action" value="add_user">
+                    <?php echo csrf_field(); ?>
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" name="name" required>
@@ -265,6 +269,7 @@ echo $breadcrumb->render(current_route());
                 <form method="post" action="">
                     <input type="hidden" name="action" value="delete_user">
                     <input type="hidden" name="user_id" id="delete-user-id">
+                    <?php echo csrf_field(); ?>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>

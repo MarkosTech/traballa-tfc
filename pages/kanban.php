@@ -116,6 +116,9 @@ if (!isset($_GET['id'])) {
 
 // Process task actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $project_id) {
+    // Validate CSRF token
+    check_csrf();
+    
     $action = $_POST['action'];
     
     if ($action === 'add_task' && isset($_POST['column_id']) && isset($_POST['title'])) {
@@ -346,7 +349,7 @@ echo $breadcrumb->render(current_route());
                 <?php foreach ($columns as $column): ?>
                     <div class="kanban-column" data-column-id="<?php echo $column['id']; ?>">
                         <div class="kanban-column-header">
-                            <h5><?php echo $column['name']; ?></h5>
+                            <h5><?php echo sanitize_output($column['name']); ?></h5>
                             <?php if ($is_project_manager || isAdmin()): ?>
                                 <div class="dropdown">
                                     <button class="btn btn-sm btn-link text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -355,15 +358,15 @@ echo $breadcrumb->render(current_route());
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
                                             <button class="dropdown-item edit-column-btn" data-bs-toggle="modal" data-bs-target="#editColumnModal"
-                                                data-column-id="<?php echo $column['id']; ?>"
-                                                data-name="<?php echo $column['name']; ?>">
+                                                data-column-id="<?php echo (int)$column['id']; ?>"
+                                                data-name="<?php echo sanitize_attribute($column['name']); ?>">
                                                 <i class="fas fa-edit me-1"></i> Edit column
                                             </button>
                                         </li>
                                         <li>
                                             <button class="dropdown-item text-danger delete-column-btn" data-bs-toggle="modal" data-bs-target="#deleteColumnModal"
-                                                data-column-id="<?php echo $column['id']; ?>"
-                                                data-name="<?php echo $column['name']; ?>">
+                                                data-column-id="<?php echo (int)$column['id']; ?>"
+                                                data-name="<?php echo sanitize_attribute($column['name']); ?>">
                                                 <i class="fas fa-trash me-1"></i> Delete column
                                             </button>
                                         </li>
@@ -390,9 +393,9 @@ echo $breadcrumb->render(current_route());
                             foreach ($activeTasks as $task): 
                                 $taskStatusClass = isset($task['status']) ? 'task-status-' . $task['status'] : 'task-status-active';
                             ?>
-                                <div class="kanban-task <?php echo $taskStatusClass; ?>" data-task-id="<?php echo $task['id']; ?>" data-status="<?php echo isset($task['status']) ? $task['status'] : 'active'; ?>">
+                                <div class="kanban-task <?php echo sanitize_attribute($taskStatusClass); ?>" data-task-id="<?php echo (int)$task['id']; ?>" data-status="<?php echo sanitize_attribute(isset($task['status']) ? $task['status'] : 'active'); ?>">
                                     <div class="kanban-task-header">
-                                        <h6 class="mb-0"><?php echo $task['title']; ?></h6>
+                                        <h6 class="mb-0"><?php echo sanitize_output($task['title']); ?></h6>
                                         <div class="dropdown">
                                             <button class="btn btn-sm btn-link p-0 text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="fas fa-ellipsis-v"></i>
@@ -400,11 +403,11 @@ echo $breadcrumb->render(current_route());
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <li>
                                                     <button class="dropdown-item edit-task-btn" data-bs-toggle="modal" data-bs-target="#editTaskModal"
-                                                        data-task-id="<?php echo $task['id']; ?>"
-                                                        data-title="<?php echo $task['title']; ?>"
-                                                        data-description="<?php echo $task['description']; ?>"
-                                                        data-assigned-to="<?php echo $task['assigned_to']; ?>"
-                                                        data-due-date="<?php echo $task['due_date']; ?>"
+                                                        data-task-id="<?php echo (int)$task['id']; ?>"
+                                                        data-title="<?php echo sanitize_attribute($task['title']); ?>"
+                                                        data-description="<?php echo sanitize_attribute($task['description']); ?>"
+                                                        data-assigned-to="<?php echo (int)$task['assigned_to']; ?>"
+                                                        data-due-date="<?php echo sanitize_attribute($task['due_date']); ?>"
                                                         data-status="<?php echo isset($task['status']) ? $task['status'] : 'active'; ?>">
                                                         <i class="fas fa-edit me-1"></i> Edit task
                                                     </button>
@@ -743,6 +746,7 @@ echo $breadcrumb->render(current_route());
                 <div class="modal-body">
                     <input type="hidden" name="action" value="update_column">
                     <input type="hidden" name="column_id" id="edit_column_id">
+                    <?php echo csrf_field(); ?>
                     
                     <div class="mb-3">
                         <label for="edit_column_name" class="form-label">Column name</label>
@@ -774,6 +778,7 @@ echo $breadcrumb->render(current_route());
                 <form method="post" action="">
                     <input type="hidden" name="action" value="delete_column">
                     <input type="hidden" name="column_id" id="delete_column_id">
+                    <?php echo csrf_field(); ?>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
@@ -793,6 +798,7 @@ echo $breadcrumb->render(current_route());
             <form id="addTabForm" method="post" action="">
                 <div class="modal-body">
                     <input type="hidden" name="action" value="add_tab">
+                    <?php echo csrf_field(); ?>
                     
                     <div class="mb-3">
                         <label for="tab_name" class="form-label">Tab name</label>
@@ -820,6 +826,7 @@ echo $breadcrumb->render(current_route());
                 <div class="modal-body">
                     <input type="hidden" name="action" value="update_tab">
                     <input type="hidden" name="tab_id" id="edit_tab_id">
+                    <?php echo csrf_field(); ?>
                     
                     <div class="mb-3">
                         <label for="edit_tab_name" class="form-label">Tab name</label>
@@ -851,6 +858,7 @@ echo $breadcrumb->render(current_route());
                 <form method="post" action="">
                     <input type="hidden" name="action" value="delete_tab">
                     <input type="hidden" name="tab_id" id="delete_tab_id">
+                    <?php echo csrf_field(); ?>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-danger">Delete Tab</button>
                 </form>

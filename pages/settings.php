@@ -156,7 +156,7 @@ echo $breadcrumb->render(current_route());
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
                         <span>IP Address</span>
-                        <span><?php echo $_SERVER['REMOTE_ADDR']; ?></span>
+                        <span><?php echo sanitize_output($_SERVER['REMOTE_ADDR']); ?></span>
                     </li>
                 </ul>
             </div>

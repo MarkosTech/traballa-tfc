@@ -58,6 +58,13 @@ try {
             exit();
         }
         
+        // Validate CSRF token
+        if (!isset($_POST['csrf_token']) || !validate_csrf_token($_POST['csrf_token'])) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'message' => 'CSRF token mismatch']);
+            exit();
+        }
+        
         if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case 'add_event':
@@ -70,8 +77,8 @@ try {
                     
                     try {
                         $result = $calendar->addEvent(
-                            sanitize($_POST['title']),
-                            sanitize($_POST['description'] ?? ''),
+                            sanitize_output($_POST['title']),
+                            sanitize_output($_POST['description'] ?? ''),
                             sanitize($_POST['start_date']),
                             sanitize($_POST['end_date']),
                             sanitize($_POST['event_type']),

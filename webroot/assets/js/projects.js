@@ -159,9 +159,15 @@ function loadProjectMembers(projectId) {
                                 userIdInput.name = 'user_id';
                                 userIdInput.value = member.user_id;
                                 
+                                // Add CSRF token
+                                const csrfField = CSRFUtils.createField();
+                                
                                 form.appendChild(actionInput);
                                 form.appendChild(projectIdInput);
                                 form.appendChild(userIdInput);
+                                if (csrfField) {
+                                    form.appendChild(csrfField);
+                                }
                                 
                                 document.body.appendChild(form);
                                 form.submit();

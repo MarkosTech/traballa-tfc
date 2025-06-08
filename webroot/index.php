@@ -33,6 +33,9 @@ require_once '../includes/functions.php';
 require_once '../includes/Router.php';
 require_once '../includes/router-helpers.php';
 
+// Set security headers
+set_security_headers();
+
 // Initialize our session handler
 $session = new Session($pdo);
 
@@ -103,7 +106,8 @@ $auth_required = $routeInfo['auth_required'];
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php echo $page_title; ?></title>
+  <title><?php echo sanitize_output($page_title); ?></title>
+  <meta name="csrf-token" content="<?php echo sanitize_attribute(generate_csrf_token()); ?>">
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome for icons -->
@@ -144,6 +148,8 @@ $auth_required = $routeInfo['auth_required'];
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Custom JS -->
   <script src="<?php echo rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/'; ?>assets/js/script.js"></script>
+  <!-- CSRF Protection -->
+  <script src="<?php echo rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/'; ?>assets/js/csrf-utils.js"></script>
   <!-- Help System JS -->
   <script src="<?php echo rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/'; ?>assets/js/help-system.js"></script>
   <?php 

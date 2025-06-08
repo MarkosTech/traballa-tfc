@@ -33,6 +33,9 @@ $user = getUserById($pdo, $_SESSION['user_id']);
 
 // Process profile update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+    // Validate CSRF token
+    check_csrf();
+    
     $action = $_POST['action'];
     
     if ($action === 'update_profile' && isset($_POST['name']) && isset($_POST['email'])) {
@@ -123,21 +126,22 @@ echo $breadcrumb->render(current_route());
                 
                 <form method="post" action="">
                     <input type="hidden" name="action" value="update_profile">
+                    <?php echo csrf_field(); ?>
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" value="<?php echo $user['name']; ?>" required>
+                        <input type="text" class="form-control" id="name" name="name" value="<?php echo sanitize_attribute($user['name']); ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="<?php echo $user['email']; ?>" required>
+                        <input type="email" class="form-control" id="email" name="email" value="<?php echo sanitize_attribute($user['email']); ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="role" class="form-label">Role</label>
-                        <input type="text" class="form-control" id="role" value="<?php echo ucfirst($user['role']); ?>" readonly>
+                        <input type="text" class="form-control" id="role" value="<?php echo sanitize_attribute(ucfirst($user['role'])); ?>" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="created_at" class="form-label">Member since</label>
-                        <input type="text" class="form-control" id="created_at" value="<?php echo date('M d, Y', strtotime($user['created_at'])); ?>" readonly>
+                        <input type="text" class="form-control" id="created_at" value="<?php echo sanitize_attribute(date('M d, Y', strtotime($user['created_at']))); ?>" readonly>
                     </div>
                     <button type="submit" class="btn btn-primary">Update profile</button>
                 </form>
@@ -162,6 +166,7 @@ echo $breadcrumb->render(current_route());
                 
                 <form method="post" action="">
                     <input type="hidden" name="action" value="change_password">
+                    <?php echo csrf_field(); ?>
                     <div class="mb-3">
                         <label for="current_password" class="form-label">Current password</label>
                         <input type="password" class="form-control" id="current_password" name="current_password" required>

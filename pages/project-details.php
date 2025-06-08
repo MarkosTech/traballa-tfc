@@ -310,14 +310,15 @@ echo $breadcrumb->render(current_route(), $customItems);
             <form method="post" action="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/projects' : 'index.php?page=projects'; ?>">
                 <div class="modal-body">
                     <input type="hidden" name="action" value="update_project">
-                    <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
+                    <input type="hidden" name="project_id" value="<?php echo (int)$project_id; ?>">
+                    <?php echo csrf_field(); ?>
                     <div class="mb-3">
                         <label for="name" class="form-label">Project name</label>
-                        <input type="text" class="form-control" id="name" name="name" value="<?php echo $project['name']; ?>" required>
+                        <input type="text" class="form-control" id="name" name="name" value="<?php echo sanitize_attribute($project['name']); ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="3"><?php echo $project['description']; ?></textarea>
+                        <textarea class="form-control" id="description" name="description" rows="3"><?php echo sanitize_output($project['description']); ?></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
@@ -354,7 +355,8 @@ echo $breadcrumb->render(current_route(), $customItems);
                     <div class="card-body">
                         <form method="post" action="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/projects' : 'index.php?page=projects'; ?>">
                             <input type="hidden" name="action" value="add_member">
-                            <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
+                            <input type="hidden" name="project_id" value="<?php echo (int)$project_id; ?>">
+                            <?php echo csrf_field(); ?>
                             
                             <div class="row mb-3">
                                 <div class="col-md-6">
@@ -417,9 +419,10 @@ echo $breadcrumb->render(current_route(), $customItems);
                                                     <?php if ($member['id'] != $_SESSION['user_id']): ?>
                                                         <form method="post" action="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/projects' : 'index.php?page=projects'; ?>" class="d-inline">
                                                             <input type="hidden" name="action" value="remove_member">
-                                                            <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
-                                                            <input type="hidden" name="user_id" value="<?php echo $member['id']; ?>">
-                                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to remove this member?')">
+                                                            <input type="hidden" name="project_id" value="<?php echo (int)$project_id; ?>">
+                                                            <input type="hidden" name="user_id" value="<?php echo (int)$member['id']; ?>">
+                                                            <?php echo csrf_field(); ?>
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to remove this member?')">>
                                                                 <i class="fas fa-user-minus"></i>
                                                             </button>
                                                         </form>

@@ -36,6 +36,9 @@ if (!hasManagementPermissions()) {
 
 // Process project actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+   // Validate CSRF token
+   check_csrf();
+   
    if (isset($_POST['action'])) {
        $action = $_POST['action'];
        
@@ -410,6 +413,7 @@ echo $breadcrumb->render(current_route());
            <form method="post" action="">
                <div class="modal-body">
                    <input type="hidden" name="action" value="add_project">
+                   <?php echo csrf_field(); ?>
                    
                    <?php if (!isset($_SESSION['current_organization_id'])): ?>
                    <div class="alert alert-warning">
@@ -455,6 +459,7 @@ echo $breadcrumb->render(current_route());
                <div class="modal-body">
                    <input type="hidden" name="action" value="update_project">
                    <input type="hidden" name="project_id" id="edit_project_id">
+                   <?php echo csrf_field(); ?>
                    <div class="mb-3">
                        <label for="edit_name" class="form-label">Project name</label>
                        <input type="text" class="form-control" id="edit_name" name="name" required>
@@ -544,6 +549,7 @@ echo $breadcrumb->render(current_route());
                        <form method="post" action="" id="addMemberForm">
                            <input type="hidden" name="action" value="add_member">
                            <input type="hidden" name="project_id" id="manage_project_id">
+                           <?php echo csrf_field(); ?>
                            
                            <div class="row mb-3">
                                <div class="col-md-6">
@@ -619,6 +625,7 @@ echo $breadcrumb->render(current_route());
                <form method="post" action="">
                    <input type="hidden" name="action" value="delete_project">
                    <input type="hidden" name="project_id" id="delete_project_id">
+                   <?php echo csrf_field(); ?>
                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                    <button type="submit" class="btn btn-danger">Delete</button>
                </form>

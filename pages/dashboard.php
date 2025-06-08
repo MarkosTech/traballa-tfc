@@ -252,7 +252,7 @@ echo $breadcrumb->render(current_route());
                               Started at: <?php echo formatDateTime($current_status['clock_in']); ?>
                           </p>
                           <p class="card-text">
-                              Project: <strong><?php echo $current_status['project_name']; ?></strong>
+                              Project: <strong><?php echo sanitize_output($current_status['project_name']); ?></strong>
                           </p>
                           <div id="working-time" data-start="<?php echo strtotime($current_status['clock_in']); ?>">
                               Working for: <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
@@ -269,6 +269,7 @@ echo $breadcrumb->render(current_route());
                   </div>
                   <div class="col-md-6 text-md-end mt-3 mt-md-0">
                       <form method="post" action="">
+                          <?php echo csrf_field(); ?>
                           <?php if ($is_working): ?>
                           
                                 <?php if ($active_break): ?>
@@ -306,7 +307,7 @@ echo $breadcrumb->render(current_route());
                                       <select class="form-select mb-3" id="project_id" name="project_id" required>
                                           <option value="">-- Select project --</option>
                                           <?php foreach ($user_projects as $project): ?>
-                                              <option value="<?php echo $project['id']; ?>"><?php echo $project['name']; ?></option>
+                                              <option value="<?php echo (int)$project['id']; ?>"><?php echo sanitize_output($project['name']); ?></option>
                                           <?php endforeach; ?>
                                       </select>
                                   </div>
@@ -379,7 +380,7 @@ echo $breadcrumb->render(current_route());
                               <?php foreach ($recent_work_hours as $work): ?>
                                   <tr>
                                       <td><?php echo date('M d, Y', strtotime($work['clock_in'])); ?></td>
-                                      <td><?php echo $work['project_name']; ?></td>
+                                      <td><?php echo sanitize_output($work['project_name']); ?></td>
                                       <td><?php echo date('h:i A', strtotime($work['clock_in'])); ?></td>
                                       <td>
                                           <?php if ($work['status'] === 'completed'): ?>
@@ -436,8 +437,8 @@ echo $breadcrumb->render(current_route());
               <?php else: ?>
                   <div class="list-group">
                       <?php foreach ($user_projects as $project): ?>
-                          <a href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/project-details/' . $project['id'] : 'index.php?page=project-details&id=' . $project['id']; ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                              <?php echo $project['name']; ?>
+                          <a href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/project-details/' . (int)$project['id'] : 'index.php?page=project-details&id=' . (int)$project['id']; ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                              <?php echo sanitize_output($project['name']); ?>
                               <?php if (isset($project['is_manager']) && $project['is_manager']): ?>
                                   <span class="badge bg-primary rounded-pill">Manager</span>
                               <?php endif; ?>
@@ -504,6 +505,7 @@ echo $breadcrumb->render(current_route());
                 <div class="modal-body">
                     <input type="hidden" name="action" value="edit_work_hours">
                     <input type="hidden" name="work_id" id="edit_work_id">
+                    <?php echo csrf_field(); ?>
                     
                     <div class="mb-3">
                         <label for="edit_clock_in" class="form-label">Clock in</label>
@@ -540,6 +542,7 @@ echo $breadcrumb->render(current_route());
             <form method="post" action="">
                 <div class="modal-body">
                     <input type="hidden" name="action" value="start_break">
+                    <?php echo csrf_field(); ?>
                     
                     <div class="mb-3">
                         <label for="break_type" class="form-label">Break Type</label>

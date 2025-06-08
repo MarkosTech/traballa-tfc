@@ -53,6 +53,9 @@ if ($organization_id) {
 
 // Process edit Traballa form
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+    // Validate CSRF token
+    check_csrf();
+    
     $action = $_POST['action'];
     
     if ($action === 'edit_work_hours' && isset($_POST['work_id'])) {
@@ -182,8 +185,8 @@ echo $breadcrumb->render(current_route());
                <select class="form-select" id="project_id" name="project_id">
                    <option value="">All projects</option>
                    <?php foreach ($user_projects as $project): ?>
-                       <option value="<?php echo $project['id']; ?>" <?php echo ($project_id == $project['id']) ? 'selected' : ''; ?>>
-                           <?php echo $project['name']; ?>
+                       <option value="<?php echo (int)$project['id']; ?>" <?php echo ($project_id == $project['id']) ? 'selected' : ''; ?>>
+                           <?php echo sanitize_output($project['name']); ?>
                        </option>
                    <?php endforeach; ?>
                </select>
@@ -261,8 +264,8 @@ echo $breadcrumb->render(current_route());
                        <?php foreach ($work_hours as $work): ?>
                            <tr>
                                <td><?php echo date('M d, Y', strtotime($work['clock_in'])); ?></td>
-                               <td><?php echo $work['project_name']; ?></td>
-                               <td><?php echo $work['organization_name']; ?></td>
+                               <td><?php echo sanitize_output($work['project_name']); ?></td>
+                               <td><?php echo sanitize_output($work['organization_name']); ?></td>
                                <td><?php echo date('h:i A', strtotime($work['clock_in'])); ?></td>
                                <td>
                                    <?php if ($work['status'] === 'completed'): ?>
@@ -290,24 +293,24 @@ echo $breadcrumb->render(current_route());
                                        <div class="btn-group">
                                            <button type="button" class="btn btn-sm btn-outline-info break-btn" 
                                                   data-bs-toggle="modal" data-bs-target="#breakModal"
-                                                  data-id="<?php echo $work['id']; ?>"
+                                                  data-id="<?php echo (int)$work['id']; ?>"
                                             >
                                                <i class="fas fa-coffee me-1"></i>
                                            </button>
                                            <button type="button" class="btn btn-sm btn-outline-primary edit-hours-btn" 
                                                   data-bs-toggle="modal" data-bs-target="#editHoursModal"
-                                                  data-id="<?php echo $work['id']; ?>"
-                                                  data-clock-in="<?php echo $work['clock_in']; ?>"
-                                                  data-clock-out="<?php echo $work['clock_out']; ?>"
-                                                  data-notes="<?php echo isset($work['notes']) ? htmlspecialchars($work['notes']) : ''; ?>"
+                                                  data-id="<?php echo (int)$work['id']; ?>"
+                                                  data-clock-in="<?php echo sanitize_attribute($work['clock_in']); ?>"
+                                                  data-clock-out="<?php echo sanitize_attribute($work['clock_out']); ?>"
+                                                  data-notes="<?php echo isset($work['notes']) ? sanitize_attribute($work['notes']) : ''; ?>"
                                             >
                                                <i class="fas fa-edit"></i>
                                            </button>
                                            <button type="button" class="btn btn-sm btn-outline-danger delete-hours-btn"
                                                   data-bs-toggle="modal" data-bs-target="#deleteHoursModal"
-                                                  data-id="<?php echo $work['id']; ?>"
-                                                  data-date="<?php echo date('M d, Y', strtotime($work['clock_in'])); ?>"
-                                                  data-project="<?php echo $work['project_name']; ?>"
+                                                  data-id="<?php echo (int)$work['id']; ?>"
+                                                  data-date="<?php echo sanitize_attribute(date('M d, Y', strtotime($work['clock_in']))); ?>"
+                                                  data-project="<?php echo sanitize_attribute($work['project_name']); ?>"
                                             >
                                                <i class="fas fa-trash"></i>
                                            </button>
@@ -315,7 +318,7 @@ echo $breadcrumb->render(current_route());
                                    <?php else: ?>
                                        <button type="button" class="btn btn-sm btn-outline-warning break-btn"
                                                data-bs-toggle="modal" data-bs-target="#breakModal"
-                                               data-id="<?php echo $work['id']; ?>">
+                                               data-id="<?php echo (int)$work['id']; ?>">
                                            <i class="fas fa-coffee"></i>
                                        </button>
                                    <?php endif; ?>
@@ -341,6 +344,7 @@ echo $breadcrumb->render(current_route());
                 <form method="post" action="">
                     <input type="hidden" name="action" value="edit_work_hours">
                     <input type="hidden" name="work_id" id="edit_work_id">
+                    <?php echo csrf_field(); ?>
                     
                     <div class="mb-3">
                         <label for="edit_clock_in" class="form-label">Clock in</label>
@@ -384,6 +388,7 @@ echo $breadcrumb->render(current_route());
                 <form method="post" action="">
                     <input type="hidden" name="action" value="delete_work_hours">
                     <input type="hidden" name="work_id" id="delete_work_id">
+                    <?php echo csrf_field(); ?>
                     
                     <div class="d-flex justify-content-between">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
