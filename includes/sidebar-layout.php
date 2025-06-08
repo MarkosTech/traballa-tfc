@@ -134,6 +134,13 @@ if (isset($_SESSION['user_id'])) {
                         <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
                     </a>
                 </li>
+                
+                <!-- Global Help Button -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="global-help-btn" title="Ayuda (F1)">
+                        <i class="fas fa-question-circle"></i> <span>Ayuda</span>
+                    </a>
+                </li>
             </ul>
 
             <?php if (isAdmin()): ?>

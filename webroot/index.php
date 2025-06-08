@@ -56,16 +56,28 @@ if ($router->isActionRequest()) {
     exit();
 }
 
-// Check if this is a standalone page (like landing) that has its own HTML structure
+// Check if this is a standalone page that has its own HTML structure
 $routeInfo = $router->resolve();
-if (isset($routeInfo['page']) && $routeInfo['page'] === 'landing') {
+$standalonePage = isset($routeInfo['page']) && in_array($routeInfo['page'], [
+    'landing', 
+    'terms-of-service', 
+    'login', 
+    'register', 
+    'reset-password',
+    'terms-of-service',
+    'privacy-policy',
+    'user-docs',
+    'logout'
+]);
+
+if ($standalonePage) {
     // Handle redirects for standalone pages
     if (isset($routeInfo['redirect'])) {
         header("Location: " . $routeInfo['redirect']);
         exit();
     }
     
-    // Include the landing page directly without HTML wrapper
+    // Include the standalone page directly without HTML wrapper
     if ($routeInfo['file']) {
         include $routeInfo['file'];
     }
@@ -132,6 +144,8 @@ $auth_required = $routeInfo['auth_required'];
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Custom JS -->
   <script src="<?php echo rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/'; ?>assets/js/script.js"></script>
+  <!-- Help System JS -->
+  <script src="<?php echo rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/'; ?>assets/js/help-system.js"></script>
   <?php 
   // Include page-specific JS files
   foreach($page_js as $js_file): 

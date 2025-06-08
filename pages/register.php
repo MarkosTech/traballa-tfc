@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Hash password and create user
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 
-                $insert_stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'employee')");
+                $insert_stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'user')");
                 if ($insert_stmt->execute([$name, $email, $hashed_password])) {
                     $user_id = $pdo->lastInsertId();
                 

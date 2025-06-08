@@ -259,9 +259,14 @@ echo $breadcrumb->render(current_route());
 
 <div class="d-flex justify-content-between align-items-center mb-4">
    <h1 class="h3 mb-0">Organization Management</h1>
-   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addOrganizationModal">
-       <i class="fas fa-plus me-1"></i> Add Organization
-   </button>
+   <div class="d-flex gap-2">
+       <button class="btn btn-outline-info help-btn" data-help-context="account-settings">
+           <i class="fas fa-question-circle me-1"></i>Help
+       </button>
+       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addOrganizationModal">
+           <i class="fas fa-plus me-1"></i> Add organization
+       </button>
+   </div>
 </div>
 
 <?php if (isset($error)): ?>

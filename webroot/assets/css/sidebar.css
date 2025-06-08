@@ -597,3 +597,48 @@
 .app-footer {
     margin-top: auto;
 }
+
+/* Global Help Button Styling */
+#global-help-btn {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+#global-help-btn:hover {
+    background-color: #3498db !important;
+    transform: translateY(-1px);
+}
+
+#global-help-btn i {
+    color: #3498db;
+    transition: color 0.3s ease;
+}
+
+#global-help-btn:hover i {
+    color: white;
+}
+
+/* Help button pulse animation for first-time users */
+@keyframes helpPulse {
+    0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
+}
+
+.help-btn-pulse {
+    animation: helpPulse 2s infinite;
+}
+
+/* General help button styling */
+.help-btn, .btn-help {
+    border-color: #3498db;
+    color: #3498db;
+    transition: all 0.3s ease;
+}
+
+.help-btn:hover, .btn-help:hover {
+    background-color: #3498db;
+    border-color: #3498db;
+    color: white;
+    transform: translateY(-1px);
+}

@@ -109,6 +109,12 @@ class Router {
             'title' => 'Settings - Traballa'
         ]);
         
+        $this->addRoute('user-docs', [
+            'file' => 'user-docs.php',
+            'auth' => false,
+            'title' => 'User Documentation - Traballa'
+        ]);
+        
         // Management routes (require management permissions)
         $this->addRoute('projects', [
             'file' => 'projects.php',

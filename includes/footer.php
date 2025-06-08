@@ -29,7 +29,8 @@ if (!defined('INDEX_EXEC')) {
 <!-- Footer -->
 <footer class="footer mt-auto py-3">
     <div class="container text-md-center">
-        <a href="<?php echo rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/'; ?>privacy-policy" class="text-decoration-none me-3">Política de privacidad</a>
-        <a href="<?php echo rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/'; ?>terms-of-service" class="text-decoration-none">Términos de servicio</a>
+        <a href="/privacy-policy" class="text-decoration-none me-3">Política de privacidad</a>
+        <a href="/terms-of-service" class="text-decoration-none">Términos de servicio</a>
+        <a href="/user-docs" class="text-decoration-none ms-3">Manual de usuario</a>
     </div>
 </footer>

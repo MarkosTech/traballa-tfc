@@ -88,9 +88,14 @@ echo $breadcrumb->render(current_route());
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="h3 mb-0">User management</h1>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
-        <i class="fas fa-user-plus me-1"></i> Add user
-    </button>
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-info help-btn" data-help-context="account-settings">
+            <i class="fas fa-question-circle me-1"></i>Help
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+            <i class="fas fa-user-plus me-1"></i> Add user
+        </button>
+    </div>
 </div>
 
 <?php if (isset($error)): ?>

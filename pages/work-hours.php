@@ -144,7 +144,10 @@ echo $breadcrumb->render(current_route());
 
 <div class="content-header">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Traballa</h1>
+        <h1 class="h3 mb-0">Work Hours</h1>
+        <button class="btn btn-outline-info help-btn" data-help-context="work-hours">
+            <i class="fas fa-question-circle me-1"></i>Help
+        </button>
     </div>
 </div>
 <?php if (isset($success)): ?>
