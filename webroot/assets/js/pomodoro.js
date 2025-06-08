@@ -48,7 +48,7 @@ class PomodoroTimer {
     this.onComplete = options.onComplete || function() {};
     this.onStateChange = options.onStateChange || function() {};
     
-    // Elementos del DOM
+    // Elementos del DOM usando jQuery
     this.initUI();
     
     // Si estaba corriendo cuando se guardó el estado, reiniciar el temporizador
@@ -137,13 +137,14 @@ class PomodoroTimer {
   }
   
   initUI() {
-    // Crear contenedor principal
-    this.container = document.createElement('div');
-    this.container.id = 'pomodoro-container';
-    this.container.className = 'pomodoro-container';
+    // Crear contenedor principal usando jQuery
+    this.$container = $('<div>', {
+      id: 'pomodoro-container',
+      class: 'pomodoro-container'
+    });
     
     // Crear el HTML para el temporizador
-    this.container.innerHTML = `
+    this.$container.html(`
       <div class="pomodoro-header">
         <h5>Pomodoro timer</h5>
       </div>
@@ -186,10 +187,10 @@ class PomodoroTimer {
           <button class="btn btn-primary" id="pomodoro-save-settings">Save</button>
         </div>
       </div>
-    `;
+    `);
     
-    // Añadir al body o a un contenedor específico
-    document.body.appendChild(this.container);
+    // Añadir al body o a un contenedor específico usando jQuery
+    $('body').append(this.$container);
     
     // Configurar eventos
     this.setupEventListeners();
@@ -199,27 +200,26 @@ class PomodoroTimer {
     this.updateCycleIndicators();
     
     // Actualizar los botones según el estado
-    document.getElementById('pomodoro-start').disabled = this.isRunning && !this.isPaused;
-    document.getElementById('pomodoro-pause').disabled = !this.isRunning || this.isPaused;
+    $('#pomodoro-start').prop('disabled', this.isRunning && !this.isPaused);
+    $('#pomodoro-pause').prop('disabled', !this.isRunning || this.isPaused);
   }
   
   setupEventListeners() {
-    // Botones de control
-    document.getElementById('pomodoro-start').addEventListener('click', () => this.start());
-    document.getElementById('pomodoro-pause').addEventListener('click', () => this.pause());
-    document.getElementById('pomodoro-reset').addEventListener('click', () => this.reset());
+    // Botones de control usando jQuery
+    $('#pomodoro-start').on('click', () => this.start());
+    $('#pomodoro-pause').on('click', () => this.pause());
+    $('#pomodoro-reset').on('click', () => this.reset());
     
-    // Configuración
-    document.getElementById('pomodoro-settings-toggle').addEventListener('click', () => {
-      const panel = document.getElementById('pomodoro-settings-panel');
-      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    // Configuración usando jQuery
+    $('#pomodoro-settings-toggle').on('click', () => {
+      $('#pomodoro-settings-panel').toggle();
     });
     
-    document.getElementById('pomodoro-save-settings').addEventListener('click', () => {
-      const workTime = parseInt(document.getElementById('pomodoro-work-time').value, 10) * 60;
-      const shortBreakTime = parseInt(document.getElementById('pomodoro-short-break').value, 10) * 60;
-      const longBreakTime = parseInt(document.getElementById('pomodoro-long-break').value, 10) * 60;
-      const cycles = parseInt(document.getElementById('pomodoro-cycles').value, 10);
+    $('#pomodoro-save-settings').on('click', () => {
+      const workTime = parseInt($('#pomodoro-work-time').val(), 10) * 60;
+      const shortBreakTime = parseInt($('#pomodoro-short-break').val(), 10) * 60;
+      const longBreakTime = parseInt($('#pomodoro-long-break').val(), 10) * 60;
+      const cycles = parseInt($('#pomodoro-cycles').val(), 10);
       
       this.updateSettings({
         workTime,
@@ -228,34 +228,34 @@ class PomodoroTimer {
         cycles
       });
       
-      document.getElementById('pomodoro-settings-panel').style.display = 'none';
+      $('#pomodoro-settings-panel').hide();
     });
     
-    // Guardado automático cuando el navegador se va a cerrar
-    window.addEventListener('beforeunload', () => {
+    // Guardado automático cuando el navegador se va a cerrar usando jQuery
+    $(window).on('beforeunload', () => {
       this.saveStateToStorage();
     });
   }
   
   toggleExpandedMode() {
-    if (this.container.classList.contains('pomodoro-expanded')) {
-      // Contraer
-      this.container.classList.remove('pomodoro-expanded');
-      document.getElementById('pomodoro-expand').innerHTML = '<i class="fas fa-expand"></i>';
+    if (this.$container.hasClass('pomodoro-expanded')) {
+      // Contraer usando jQuery
+      this.$container.removeClass('pomodoro-expanded');
+      $('#pomodoro-expand').html('<i class="fas fa-expand"></i>');
       
-      // Eliminar el backdrop
-      const backdrop = document.querySelector('.pomodoro-backdrop');
-      if (backdrop) backdrop.remove();
+      // Eliminar el backdrop usando jQuery
+      $('.pomodoro-backdrop').remove();
     } else {
-      // Expandir
-      this.container.classList.add('pomodoro-expanded');
-      document.getElementById('pomodoro-expand').innerHTML = '<i class="fas fa-compress"></i>';
+      // Expandir usando jQuery
+      this.$container.addClass('pomodoro-expanded');
+      $('#pomodoro-expand').html('<i class="fas fa-compress"></i>');
       
-      // Añadir backdrop
-      const backdrop = document.createElement('div');
-      backdrop.className = 'pomodoro-backdrop';
-      backdrop.addEventListener('click', () => this.toggleExpandedMode());
-      document.body.appendChild(backdrop);
+      // Añadir backdrop usando jQuery
+      const $backdrop = $('<div>', {
+        class: 'pomodoro-backdrop'
+      });
+      $backdrop.on('click', () => this.toggleExpandedMode());
+      $('body').append($backdrop);
     }
   }
   
@@ -279,15 +279,16 @@ class PomodoroTimer {
   }
   
   updateCycleIndicators() {
-    // Eliminar indicadores existentes
-    const cyclesContainer = document.getElementById('pomodoro-cycles');
-    cyclesContainer.innerHTML = '';
+    // Eliminar indicadores existentes usando jQuery
+    const $cyclesContainer = $('#pomodoro-cycles');
+    $cyclesContainer.empty();
     
-    // Crear nuevos indicadores basados en el número de ciclos
+    // Crear nuevos indicadores basados en el número de ciclos usando jQuery
     for (let i = 1; i <= this.cycles; i++) {
-      const indicator = document.createElement('span');
-      indicator.className = 'cycle-indicator' + (i === this.currentCycle ? ' active' : '');
-      cyclesContainer.appendChild(indicator);
+      const $indicator = $('<span>', {
+        class: 'cycle-indicator' + (i === this.currentCycle ? ' active' : '')
+      });
+      $cyclesContainer.append($indicator);
     }
   }
   
@@ -309,9 +310,9 @@ class PomodoroTimer {
     // Guardar estado en localStorage
     this.saveStateToStorage();
     
-    // Actualizar UI
-    document.getElementById('pomodoro-start').disabled = true;
-    document.getElementById('pomodoro-pause').disabled = false;
+    // Actualizar UI usando jQuery
+    $('#pomodoro-start').prop('disabled', true);
+    $('#pomodoro-pause').prop('disabled', false);
     
     // Iniciar el temporizador
     this.timer = setInterval(() => this.tick(), 1000);
@@ -328,10 +329,10 @@ class PomodoroTimer {
     // Guardar estado en localStorage
     this.saveStateToStorage();
     
-    // Actualizar UI
-    document.getElementById('pomodoro-start').disabled = false;
-    document.getElementById('pomodoro-pause').disabled = true;
-    document.getElementById('pomodoro-status').textContent = 'Paused';
+    // Actualizar UI usando jQuery
+    $('#pomodoro-start').prop('disabled', false);
+    $('#pomodoro-pause').prop('disabled', true);
+    $('#pomodoro-status').text('Paused');
   }
   
   reset() {
@@ -346,10 +347,10 @@ class PomodoroTimer {
     // Guardar estado en localStorage
     this.saveStateToStorage();
     
-    // Actualizar UI
-    document.getElementById('pomodoro-start').disabled = false;
-    document.getElementById('pomodoro-pause').disabled = true;
-    document.getElementById('pomodoro-status').textContent = 'Ready';
+    // Actualizar UI usando jQuery
+    $('#pomodoro-start').prop('disabled', false);
+    $('#pomodoro-pause').prop('disabled', true);
+    $('#pomodoro-status').text('Ready');
     this.updateDisplay();
     this.updateCycleIndicators();
   }
@@ -364,11 +365,11 @@ class PomodoroTimer {
       this.saveStateToStorage();
     }
     
-    // Añadir clase de advertencia cuando queden menos de 30 segundos
+    // Añadir clase de advertencia cuando queden menos de 30 segundos usando jQuery
     if (this.timeLeft <= 30) {
-      document.getElementById('pomodoro-time').classList.add('warning');
+      $('#pomodoro-time').addClass('warning');
     } else {
-      document.getElementById('pomodoro-time').classList.remove('warning');
+      $('#pomodoro-time').removeClass('warning');
     }
     
     if (this.timeLeft <= 0) {
@@ -400,8 +401,8 @@ class PomodoroTimer {
       this.timeLeft = this.workTime;
     }
     
-    // Quitar clase de advertencia
-    document.getElementById('pomodoro-time').classList.remove('warning');
+    // Quitar clase de advertencia usando jQuery
+    $('#pomodoro-time').removeClass('warning');
     
     this.updateCycleIndicators();
     this.onComplete(this.mode);
@@ -409,10 +410,11 @@ class PomodoroTimer {
     // Guardar estado en localStorage
     this.saveStateToStorage();
     
-    // Actualizar UI
-    document.getElementById('pomodoro-status').textContent = 
+    // Actualizar UI usando jQuery
+    $('#pomodoro-status').text(
       this.mode === 'work' ? 'Working' : 
-      this.mode === 'shortBreak' ? 'Short Break' : 'Long Break';
+      this.mode === 'shortBreak' ? 'Short Break' : 'Long Break'
+    );
     
     // Auto-iniciar el siguiente ciclo
     setTimeout(() => {
@@ -428,19 +430,21 @@ class PomodoroTimer {
   updateDisplay() {
     const minutes = Math.floor(this.timeLeft / 60);
     const seconds = this.timeLeft % 60;
-    document.getElementById('pomodoro-time').textContent = 
-      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    $('#pomodoro-time').text(
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+    );
     
-    // Actualizar también el estado del temporizador y la clase CSS
-    document.getElementById('pomodoro-status').textContent = 
+    // Actualizar también el estado del temporizador y la clase CSS usando jQuery
+    $('#pomodoro-status').text(
       this.isRunning ? 
         (this.mode === 'work' ? 'Working' : 
         this.mode === 'shortBreak' ? 'Short Break' : 'Long Break') : 
-        (this.isPaused ? 'Paused' : 'Ready');
+        (this.isPaused ? 'Paused' : 'Ready')
+    );
     
-    let expanded = this.container.classList.contains('pomodoro-expanded');
-    // Actualizar la clase del container según el modo
-    this.container.className = `pomodoro-container pomodoro-mode-${this.mode} ${expanded ? 'pomodoro-expanded' : ''}`;
+    let expanded = this.$container.hasClass('pomodoro-expanded');
+    // Actualizar la clase del container según el modo usando jQuery
+    this.$container.attr('class', `pomodoro-container pomodoro-mode-${this.mode} ${expanded ? 'pomodoro-expanded' : ''}`);
   }
   
   playNotificationSound() {
@@ -484,16 +488,16 @@ class PomodoroTimer {
     setTimeout(() => notification.close(), 5000);
   }
   
-  // Método para añadir el Pomodoro a un contenedor específico
+  // Método para añadir el Pomodoro a un contenedor específico usando jQuery
   attachTo(containerId) {
-    const container = document.getElementById(containerId);
-    if (container) {
+    const $container = $('#' + containerId);
+    if ($container.length) {
       // Remover del DOM actual si ya está añadido
-      if (this.container.parentNode) {
-        this.container.parentNode.removeChild(this.container);
+      if (this.$container.parent().length) {
+        this.$container.detach();
       }
       
-      container.appendChild(this.container);
+      $container.append(this.$container);
     }
   }
 }
