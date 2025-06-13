@@ -70,6 +70,7 @@ $standalonePage = isset($routeInfo['page']) && in_array($routeInfo['page'], [
     'terms-of-service',
     'privacy-policy',
     'user-docs',
+    'documentation',
     'logout'
 ]);
 

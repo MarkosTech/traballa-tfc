@@ -1,0 +1,123 @@
+/* Estilos específicos para diagramas */
+.diagram-container {
+  margin: 30px 0;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.diagram-container:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: box-shadow 0.3s ease;
+}
+
+.diagram-title {
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #2c3e50;
+  font-size: 1.1em;
+}
+
+/* Botón para descargar diagramas */
+.download-diagram-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 0.8em;
+  cursor: pointer;
+  opacity: 0.7;
+  z-index: 10;
+}
+
+.download-diagram-btn:hover {
+  opacity: 1;
+  background-color: #45a049;
+}
+
+/* Estilos generales para todos los SVGs de diagramas */
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Estilos específicos para cada tipo de diagrama */
+/* Estilos para diagramas de arquitectura */
+.architecture-diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Estilos para diagramas ER */
+.er-diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Estilos para diagramas de comunicación */
+.communication-diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Estilos para diagramas de flujo de arquitectura */
+.architecture-flow-diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Estilos para diagramas de modelo de datos */
+.data-model-diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Estilos para diagramas Gantt */
+.gantt-diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Mejoras para diagramas en pantallas pequeñas */
+@media (max-width: 768px) {
+  .diagram-container {
+    padding: 10px;
+    overflow-x: auto;
+  }
+  
+  .download-diagram-btn {
+    position: static;
+    display: block;
+    margin: 10px 0;
+    width: 100%;
+  }
+}
+
+/* Estilos para diagramas en impresión */
+@media print {
+  .diagram-container {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    background-color: white !important;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  
+  .download-diagram-btn {
+    display: none;
+  }
+  
+  .mermaid svg {
+    max-width: 100%;
+  }
+}

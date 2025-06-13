@@ -1,0 +1,618 @@
+/* Estilos unificados para documentación de Traballa */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto+Slab:wght@400;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+/* Estilos base */
+body {
+    font-family: 'Lato', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+/* Maximizar uso del espacio disponible */
+.container-fluid {
+    max-width: 100% !important;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.documentation-container {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Ajustar el sidebar de tabla de contenidos */
+#tableOfContents {
+    min-width: 280px;
+}
+
+/* Asegurar que el contenido principal use todo el espacio disponible */
+#documentationContent {
+    flex: 1;
+    max-width: 100%;
+}
+
+/* Mejorar la distribución en pantallas grandes */
+@media (min-width: 1200px) {
+    .container-fluid {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    
+    #tableOfContents {
+        max-width: 300px;
+    }
+}
+
+/* Optimización para pantallas ultraanchas */
+@media (min-width: 1600px) {
+    .container-fluid {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    
+    #tableOfContents {
+        min-width: 320px;
+        max-width: 350px;
+    }
+    
+    .documentation-container {
+        font-size: 1.1rem;
+        line-height: 1.7;
+    }
+}
+
+/* Ajustes para pantallas 4K */
+@media (min-width: 2560px) {
+    .container-fluid {
+        padding-left: 80px;
+        padding-right: 80px;
+    }
+    
+    .documentation-container {
+        font-size: 1.2rem;
+        line-height: 1.8;
+    }
+    
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2.5rem; }
+    h3 { font-size: 2rem; }
+}
+
+/* Estilos para diagramas */
+.mermaid {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.mermaid.er-diagram svg {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.mermaid.er-diagram .node rect,
+.mermaid.er-diagram .node ellipse {
+    rx: 10;
+    ry: 10;
+}
+
+.mermaid.er-diagram .node text {
+    font-size: 1.25em;
+    line-height: 1.8em;
+}
+
+.mermaid.er-diagram .edgeLabel {
+    font-size: 1.1em;
+    background: #fff;
+    padding: 0.2em 0.5em;
+}
+
+/* Estilos específicos para impresión */
+@media print {
+    body {
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 15px !important;
+        background-color: white !important;
+        font-size: 11pt;
+        line-height: 1.4;
+    }
+    
+    .page-break {
+        page-break-before: always;
+    }
+    
+    .no-print {
+        display: none !important;
+    }
+    
+    h1, h2 {
+        page-break-after: avoid;
+    }
+    
+    h3, h4, h5, h6 {
+        page-break-after: avoid;
+        page-break-inside: avoid;
+    }
+    
+    img, table, pre, blockquote {
+        page-break-inside: avoid;
+    }
+    
+    .btn {
+        display: none;
+    }
+    
+    a {
+        color: black;
+        text-decoration: none;
+    }
+    
+    .toc {
+        background-color: white;
+        border: 1px solid #ddd;
+    }
+    
+    .section-description {
+        background-color: white;
+        border-left: 2px solid #333;
+    }
+}
+
+/* Estilos de tipografía */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto Slab', serif;
+    color: #2980b9;
+    margin-top: 1.5em;
+}
+
+h1 {
+    font-size: 2.5em;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 2em;
+    border-bottom: 1px solid #e1e1e1;
+    padding-bottom: 5px;
+}
+
+h3 {
+    font-size: 1.5em;
+    color: #34495e;
+}
+
+a {
+    color: #2980b9;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+blockquote {
+    border-left: 4px solid #2980b9;
+    padding-left: 15px;
+    margin-left: 0;
+    color: #555;
+    font-style: italic;
+}
+
+code {
+    background-color: #f5f5f5;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+pre {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    font-family: 'Roboto Mono', monospace;
+    white-space: pre;
+    font-size: 0.9em;
+}
+
+/* Estilos de la portada */
+.cover-page {
+    text-align: center;
+    padding: 60px 0;
+    margin-bottom: 50px;
+    border-bottom: 1px solid #ddd;
+}
+
+.cover-page h1 {
+    font-size: 2.8em;
+    margin-bottom: 10px;
+    color: #2980b9;
+    border-bottom: none;
+}
+
+.cover-page h2 {
+    font-size: 1.8em;
+    font-weight: normal;
+    margin-bottom: 40px;
+    color: #555;
+    border-bottom: none;
+}
+
+.cover-page h3 {
+    font-size: 1.5em;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.cover-page .author {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.cover-page .center {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.cover-page .date {
+    font-size: 1.1em;
+    color: #666;
+}
+
+/* Estilos del índice */
+.toc {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0 40px 0;
+}
+
+.toc h2 {
+    margin-top: 0;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.toc ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.toc ul ul {
+    padding-left: 20px;
+}
+
+.toc li {
+    margin-bottom: 8px;
+}
+
+.toc a {
+    text-decoration: none;
+    color: #2980b9;
+}
+
+.toc a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos de secciones */
+.section {
+    margin-bottom: 50px;
+}
+
+.section h2 {
+    border-bottom: 2px solid #2980b9;
+    padding-bottom: 10px;
+    color: #2980b9;
+}
+
+.section-description {
+    background-color: #eef6fb;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border-left: 4px solid #2980b9;
+}
+
+/* Estilos de botones */
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #2980b9;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+}
+
+.btn:hover {
+    background-color: #3498db;
+}
+
+/* Estilos de tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.9em;
+}
+
+th {
+    background-color: #f2f2f2;
+    text-align: left;
+    padding: 12px;
+    border: 1px solid #ddd;
+    color: #333;
+    font-weight: bold;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+}
+
+tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* Estilos de diagrama */
+.diagram {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-family: 'Roboto Mono', monospace;
+    margin: 20px 0;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+/* Estilos para figuras e imágenes */
+figure {
+    margin: 20px 0;
+    text-align: center;
+}
+
+figcaption {
+    font-size: 0.9em;
+    color: #666;
+    font-style: italic;
+    margin-top: 8px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Estilos del pie de página */
+.footer {
+    margin-top: 100px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Estilos responsive */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    .cover-page {
+        padding: 30px 0;
+    }
+
+    .cover-page h1 {
+        font-size: 2.2em;
+    }
+
+    .cover-page h2 {
+        font-size: 1.4em;
+    }
+
+    .btn {
+        display: block;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
+
+/* Estilos para saltos de página */
+.page-break {
+    page-break-after: always;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Mejoras para diagramas */
+.enhanced-diagram {
+    border-radius: 10px;
+    margin: 20px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border: 1px solid #d1d8e0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+}
+
+/* Estilos para gráficos y visualizaciones */
+.chart-container {
+    margin: 30px 0;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Mejoras adicionales para tablas de datos */
+.data-table {
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.data-table thead th {
+    background-color: #2980b9;
+    color: white;
+    text-align: left;
+    padding: 12px;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f1f9ff;
+}
+
+/* Estilos para notas y advertencias */
+.note {
+    background-color: #f8f9fa;
+    border-left: 4px solid #3498db;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.warning {
+    background-color: #fff5f5;
+    border-left: 4px solid #e74c3c;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.tip {
+    background-color: #f0fff4;
+    border-left: 4px solid #2ecc71;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Ajustes para accesibilidad */
+:focus {
+    outline: 3px solid #2980b9;
+    outline-offset: 2px;
+}
+
+button:focus, a:focus {
+    outline: 3px solid #2980b9;
+    outline-offset: 2px;
+}
+
+/* Soporte para modo oscuro */
+@media (prefers-color-scheme: dark) {
+    body.dark-mode {
+        background-color: #1a1a1a;
+        color: #f0f0f0;
+    }
+    
+    body.dark-mode h1, 
+    body.dark-mode h2, 
+    body.dark-mode h3, 
+    body.dark-mode h4, 
+    body.dark-mode h5, 
+    body.dark-mode h6 {
+        color: #3498db;
+    }
+    
+    body.dark-mode a {
+        color: #5dade2;
+    }
+    
+    body.dark-mode pre, 
+    body.dark-mode code {
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        border-color: #34495e;
+    }
+    
+    body.dark-mode .toc,
+    body.dark-mode .section-description {
+        background-color: #2c3e50;
+        border-color: #3498db;
+    }
+    
+    body.dark-mode table th {
+        background-color: #34495e;
+        color: #ecf0f1;
+        border-color: #2c3e50;
+    }
+    
+    body.dark-mode table td {
+        border-color: #2c3e50;
+    }
+    
+    body.dark-mode tr:nth-child(even) {
+        background-color: #2a3c4e;
+    }
+}
+
+/* Mejorar el uso del espacio para tablas y diagramas */
+.table-responsive {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* Ajustar diagramas para usar todo el ancho disponible */
+.mermaid {
+    width: 100%;
+    max-width: 100%;
+    margin: 20px 0;
+}
+
+.mermaid svg {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Mejorar el responsive para dispositivos móviles */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    #tableOfContents {
+        position: relative !important;
+        width: 100% !important;
+        margin-bottom: 2rem;
+    }
+    
+    .sticky-top {
+        position: relative !important;
+    }
+}

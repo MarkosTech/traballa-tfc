@@ -114,6 +114,18 @@ class Router {
             'auth' => false,
             'title' => 'User Documentation - Traballa'
         ]);
+
+        $this->addRoute('documentation', [
+            'file' => 'documentation.php',
+            'auth' => false,
+            'title' => 'Documentation - Traballa'
+        ]);
+
+        $this->addRoute('technical-documentation', [
+            'file' => 'technical-documentation.php',
+            'auth' => false,
+            'title' => 'Technical documentation - Traballa'
+        ]);
         
         // Management routes (require management permissions)
         $this->addRoute('projects', [
@@ -167,6 +179,18 @@ class Router {
             'file' => 'privacy-policy.php',
             'auth' => false,
             'title' => 'Privacy policy - Traballa'
+        ]);
+
+        $this->addRoute('cookies-policy', [
+            'file' => 'cookies-policy.php',
+            'auth' => false,
+            'title' => 'Cookies policy - Traballa'
+        ]);
+        
+        $this->addRoute('legal-advice', [
+            'file' => 'legal-advice.php',
+            'auth' => false,
+            'title' => 'Legal advice - Traballa'
         ]);
 
         // Landing page

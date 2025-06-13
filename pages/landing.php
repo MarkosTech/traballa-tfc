@@ -520,19 +520,6 @@ if ($session->get('user_id')) {
                             </div>
                         </div>
                         
-                        <!-- Question 5 -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingFive">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                    Can I integrate Traballa with other tools?
-                                </button>
-                            </h2>
-                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    <p>Yes, Traballa offers integrations with popular tools including project management software, calendars, accounting systems, and more. Our Enterprise plan also includes API access for custom integrations with your existing workflow. Check our documentation for the full list of available integrations.</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     
                     <div class="text-center mt-4 animate-on-scroll">

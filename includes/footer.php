@@ -27,10 +27,13 @@ if (!defined('INDEX_EXEC')) {
 }
 ?>
 <!-- Footer -->
-<footer class="footer mt-auto py-3">
+<footer class="footer mt-auto text-center" style="margin-bottom: 65px;">
     <div class="container text-md-center">
         <a href="/privacy-policy" class="text-decoration-none me-3">Política de privacidad</a>
+        <a href="/cookies-policy" class="text-decoration-none me-3">Política de cookies</a>
         <a href="/terms-of-service" class="text-decoration-none">Términos de servicio</a>
+        <a href="/legal-advice" class="text-decoration-none ms-3">Aviso legal</a>
         <a href="/user-docs" class="text-decoration-none ms-3">Manual de usuario</a>
+        <a href="/documentation" class="text-decoration-none ms-3">Documentación</a>
     </div>
 </footer>
