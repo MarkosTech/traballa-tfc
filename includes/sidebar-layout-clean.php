@@ -130,7 +130,7 @@ if (isset($_SESSION['user_id'])) {
                 </li>
                 
                 <li class="nav-item">
-                    <a href="logout.php" class="nav-link">
+                    <a href="logout" class="nav-link">
                         <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
                     </a>
                 </li>

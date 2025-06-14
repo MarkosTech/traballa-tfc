@@ -38,6 +38,10 @@ try {
     $user_id = $_SESSION['user_id'];
     $organization_id = isset($_SESSION['current_organization_id']) ? $_SESSION['current_organization_id'] : null;
 
+    // Check subscription permissions for calendar integration
+    $canAccessCalendarIntegration = $organization_id ? canPerformAction($organization_id, 'calendar_integration') : false;
+    $currentPlan = $organization_id ? getOrganizationPlan($organization_id) : null;
+
     // Get current month and year from query parameters or use current date
     $month = isset($_GET['month']) ? intval($_GET['month']) : date('n');
     $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
@@ -131,6 +135,28 @@ try {
             $breadcrumb = new Breadcrumb($router);
             echo $breadcrumb->render(current_route());
             ?>
+            
+            <!-- Subscription upgrade prompt for calendar integration -->
+            <?php if (!$canAccessCalendarIntegration && $currentPlan): ?>
+                <div class="alert alert-info mb-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h6 class="mb-1">
+                                <i class="fas fa-calendar-plus me-2"></i>Enhanced Calendar Features Available
+                            </h6>
+                            <p class="mb-0 small">
+                                Upgrade to unlock calendar integrations, recurring events, and team scheduling with Pro or Enterprise plans.
+                                Currently on <strong><?php echo htmlspecialchars($currentPlan['name']); ?></strong> plan.
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <a href="<?php echo route_url('subscription'); ?>" class="btn btn-info btn-sm">
+                                <i class="fas fa-arrow-up me-1"></i>Upgrade
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
             
             <div class="calendar-header">
                 <div class="calendar-nav">

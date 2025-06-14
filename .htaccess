@@ -1,3 +1,8 @@
+#Redirect to traballa.me
+RewriteEngine on
+RewriteCond %{HTTP_HOST} !^traballa\.me$ [NC]
+RewriteRule ^(.*)$ https://traballa.me/$1 [L,R=301]
+
 DirectoryIndex index.php
 
 # No directory listings

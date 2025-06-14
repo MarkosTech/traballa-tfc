@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $valid_token) {
         <?php if ($success): ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
             <div class="text-center mt-3">
-                <a href="login.php" class="btn btn-primary">Go to Login</a>
+                <a href="login" class="btn btn-primary">Go to Login</a>
             </div>
         <?php elseif ($valid_token): ?>
             <form method="post" action="">
@@ -180,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $valid_token) {
         <?php endif; ?>
         
         <div class="text-center mt-4">
-            <a href="login.php" class="text-decoration-none">
+            <a href="login" class="text-decoration-none">
                 <i class="fas fa-arrow-left me-2"></i>Back to Login
             </a>
         </div>

@@ -218,7 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             
             <div class="text-center">
-                <a href="login.php" class="back-link">
+                <a href="login" class="back-link">
                     <i class="fas fa-arrow-left"></i>
                     Back to Login
                 </a>
@@ -347,7 +347,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (successAlert) {
                 // Auto-redirect to login after 5 seconds
                 setTimeout(() => {
-                    window.location.href = 'login.php';
+                    window.location.href = 'login';
                 }, 5000);
             }
         });

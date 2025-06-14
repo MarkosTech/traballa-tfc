@@ -31,6 +31,6 @@ $session = new Session($pdo);
 $session->destroy();
 
 // Redirect to login page
-header("Location: login.php");
+header("Location: /login");
 exit();
 

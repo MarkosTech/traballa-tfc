@@ -18,6 +18,10 @@ define('TIMEZONE', 'America/New_York'); // Set your timezone
 define('MAIN_WEBSITE_URL', 'example.com'); // Main website URL (without protocol)
 define('SYSTEM_URL', 'none'); // System URL for dashboard redirects (without protocol) or none
 
+// URL configuration - set to subfolder if installed in one
+define('BASE_PATH', ''); // e.g., '/traballa' if installed in a subfolder
+define('BASE_URL', 'https://' . $_SERVER['HTTP_HOST'] . BASE_PATH);
+
 // Set timezone
 date_default_timezone_set(TIMEZONE);
 

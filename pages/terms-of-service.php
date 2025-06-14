@@ -377,7 +377,7 @@ require_once '../includes/functions.php';
             </div>
 
             <div class="text-center mt-4">
-                <a href="login.php" class="back-btn">
+                <a href="login" class="back-btn">
                     <i class="fas fa-arrow-left"></i>
                     Back
                 </a>
@@ -527,7 +527,7 @@ require_once '../includes/functions.php';
             </div>
 
             <div class="text-center mt-4">
-                <a href="login.php" class="back-btn">
+                <a href="login" class="back-btn">
                     <i class="fas fa-arrow-left"></i>
                     Volver
                 </a>

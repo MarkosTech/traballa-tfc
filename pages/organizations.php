@@ -56,7 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                $stmt = $pdo->prepare("INSERT INTO organization_members (organization_id, user_id, is_admin) VALUES (?, ?, 1)");
                $stmt->execute([$organization_id, $user_id]);
                
-               $success = "Organization added successfully";
+               // Assign Free plan by default
+               $subscriptionManager = getSubscriptionManager();
+               $freePlan = $subscriptionManager->getPlanByName('Free');
+               if ($freePlan) {
+                   $subscriptionManager->assignPlan($organization_id, $freePlan['id']);
+               }
+               
+               $success = "Organization added successfully with Free plan assigned";
            } else {
                $error = "Error adding organization";
            }

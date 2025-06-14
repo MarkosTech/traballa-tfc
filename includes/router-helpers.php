@@ -37,15 +37,16 @@ if (!function_exists('route_url')) {
         }
         
         // Fallback to old method if router not available
+        $basePath = defined('BASE_PATH') ? BASE_PATH : '';
         $useFriendlyUrls = function_exists('apache_get_modules') && 
                           in_array('mod_rewrite', apache_get_modules());
-        
+    
         if ($useFriendlyUrls && $route !== 'dashboard') {
-            $url = '/' . $route;
+            $url = $basePath . '/' . $route;
         } else if ($route === 'dashboard') {
-            $url = '/';
+            $url = $basePath . '/';
         } else {
-            $url = 'index.php?page=' . $route;
+            $url = $basePath . '/index.php?page=' . $route;
         }
         
         // Add parameters

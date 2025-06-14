@@ -99,9 +99,27 @@
 }
 
 .sidebar-content {
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
     flex: 1;
     padding-top: 10px;
+    overflow: hidden;
+}
+
+/* Scrollable navigation area */
+.sidebar-nav-scrollable {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 10px;
+}
+
+/* Fixed bottom navigation area */
+.sidebar-nav-fixed {
+    border-top: 1px solid #3d5366;
+    padding-top: 10px;
+    margin-top: auto;
+    background: #2c3e50;
 }
 
 .sidebar .nav-item {
@@ -163,18 +181,7 @@
     color: white;
 }
 
-/* Better control for hiding/showing elements in collapsed state */
-.sidebar.collapsed .organization-selector,
-.sidebar.collapsed .nav-section,
-.sidebar.collapsed .sidebar-logo {
-    display: none !important;
-}
-
-.sidebar.collapsed:hover .organization-selector,
-.sidebar.collapsed:hover .nav-section,
-.sidebar.collapsed:hover .sidebar-logo {
-    display: block !important;
-}
+/* Better control for hiding/showing elements in collapsed state - handled in main rules below */
 
 .nav-section {
     color: #95a5a6;
@@ -198,7 +205,54 @@
 
 /* Organization selector */
 .organization-selector {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+}
+
+/* Subscription status */
+.subscription-status {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
     border-top: 1px solid #3d5366;
+}
+
+.subscription-status .badge {
+    font-size: 0.7rem;
+}
+
+.subscription-status .btn-sm {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+}
+
+/* Sidebar text handling in collapsed state */
+.sidebar-text {
+    transition: opacity 0.3s ease;
+}
+
+/* Hide text and elements in collapsed state */
+.sidebar.collapsed .organization-selector,
+.sidebar.collapsed .subscription-status,
+.sidebar.collapsed .nav-section,
+.sidebar.collapsed .sidebar-logo,
+.sidebar.collapsed .sidebar-text {
+    display: none !important;
+    opacity: 0;
+}
+
+/* Show elements when hovering over collapsed sidebar */
+.sidebar.collapsed:hover .organization-selector,
+.sidebar.collapsed:hover .subscription-status,
+.sidebar.collapsed:hover .nav-section,
+.sidebar.collapsed:hover .sidebar-logo,
+.sidebar.collapsed:hover .sidebar-text {
+    display: block !important;
+    opacity: 1;
+}
+
+/* Special handling for inline elements */
+.sidebar.collapsed:hover .sidebar-text {
+    display: inline-block !important;
 }
 
 /* Media queries for responsive design */

@@ -568,7 +568,7 @@
                 </div>
 
                 <div class="text-center mt-4">
-                    <a href="login.php" class="back-btn">
+                    <a href="login" class="back-btn">
                         <i class="fas fa-arrow-left"></i>
                         Back
                     </a>
@@ -903,9 +903,9 @@
             </div>
 
             <div class="text-center mt-4">
-                <a href="login.php" class="back-btn">
+                <a href="login" class="back-btn">
                     <i class="fas fa-arrow-left"></i>
-                    Volver al sistema
+                    Volver
                 </a>
                 <a href="gdpr.php" class="back-btn ms-2">
                     <i class="fas fa-user-shield"></i>

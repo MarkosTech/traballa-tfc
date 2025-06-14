@@ -541,3 +541,132 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- Subscription system for Traballa
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subscription_plans`
+--
+
+CREATE TABLE `subscription_plans` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `description` text,
+  `price` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `billing_cycle` enum('monthly','yearly') NOT NULL DEFAULT 'monthly',
+  `max_users` int(11) DEFAULT 1,
+  `max_projects` int(11) DEFAULT 3,
+  `features` json DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `organization_subscriptions`
+--
+
+CREATE TABLE `organization_subscriptions` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
+  `plan_id` int(11) NOT NULL,
+  `status` enum('active','expired','cancelled','trial') NOT NULL DEFAULT 'trial',
+  `start_date` datetime NOT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `trial_end_date` datetime DEFAULT NULL,
+  `auto_renew` tinyint(1) NOT NULL DEFAULT 1,
+  `payment_method` varchar(50) DEFAULT NULL,
+  `payment_id` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  
+  FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`plan_id`) REFERENCES `subscription_plans` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subscription_usage`
+--
+
+CREATE TABLE `subscription_usage` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
+  `month` date NOT NULL,
+  `users_count` int(11) NOT NULL DEFAULT 0,
+  `projects_count` int(11) NOT NULL DEFAULT 0,
+  `api_calls` int(11) NOT NULL DEFAULT 0,
+  `storage_used` bigint(20) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  
+  UNIQUE KEY `unique_org_month` (`organization_id`, `month`),
+  FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+-- Insert default subscription plans
+--
+
+INSERT INTO `subscription_plans` (`name`, `description`, `price`, `billing_cycle`, `max_users`, `max_projects`, `features`) VALUES
+('Free', 'Perfect for individuals', 0.00, 'monthly', 1, 3, JSON_OBJECT(
+    'time_tracking', true,
+    'basic_reports', true,
+    'team_collaboration', false,
+    'advanced_reports', false,
+    'api_access', false,
+    'priority_support', false,
+    'calendar_integration', false,
+    'custom_branding', false
+)),
+('Pro', 'Ideal for small teams', 9.00, 'monthly', 10, -1, JSON_OBJECT(
+    'time_tracking', true,
+    'basic_reports', true,
+    'team_collaboration', true,
+    'advanced_reports', true,
+    'api_access', false,
+    'priority_support', false,
+    'calendar_integration', true,
+    'custom_branding', false
+)),
+('Enterprise', 'Built for organizations', 15.00, 'monthly', -1, -1, JSON_OBJECT(
+    'time_tracking', true,
+    'basic_reports', true,
+    'team_collaboration', true,
+    'advanced_reports', true,
+    'api_access', true,
+    'priority_support', true,
+    'calendar_integration', true,
+    'custom_branding', true
+));
+
+-- Add plan_id to organizations table to track current plan
+ALTER TABLE `organizations` ADD COLUMN `current_plan_id` int(11) DEFAULT 1 AFTER `description`;
+ALTER TABLE `organizations` ADD FOREIGN KEY (`current_plan_id`) REFERENCES `subscription_plans` (`id`) ON DELETE SET NULL;
+
+-- Add subscription status to organizations table
+ALTER TABLE `organizations` ADD COLUMN `subscription_status` enum('active','trial','expired','cancelled') DEFAULT 'trial' AFTER `current_plan_id`;
+ALTER TABLE `organizations` ADD COLUMN `trial_ends_at` datetime DEFAULT NULL AFTER `subscription_status`;
+
+-- Create indexes for better performance
+CREATE INDEX `idx_subscription_status` ON `organization_subscriptions` (`status`);
+CREATE INDEX `idx_subscription_dates` ON `organization_subscriptions` (`start_date`, `end_date`);
+CREATE INDEX `idx_organization_plan` ON `organizations` (`current_plan_id`);
+
+-- Insert default admin user
+INSERT IGNORE INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`) VALUES
+(1, 'Admin', 'admin@traballa.local', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', NOW());
+-- Default password is 'password' - change immediately after setup
+
+-- Create default organization for admin
+INSERT IGNORE INTO `organizations` (`id`, `name`, `description`, `current_plan_id`, `subscription_status`, `created_at`) VALUES
+(1, 'Default Organization', 'Default organization for initial setup', 1, 'active', NOW());
+
+-- Add admin as organization admin
+INSERT IGNORE INTO `organization_members` (`organization_id`, `user_id`, `is_admin`, `joined_at`) VALUES
+(1, 1, 1, NOW());

@@ -109,6 +109,12 @@ class Router {
             'title' => 'Settings - Traballa'
         ]);
         
+        $this->addRoute('subscription', [
+            'file' => 'subscription.php',
+            'auth' => true,
+            'title' => 'Subscription - Traballa'
+        ]);
+        
         $this->addRoute('user-docs', [
             'file' => 'user-docs.php',
             'auth' => false,
@@ -212,6 +218,11 @@ class Router {
             'file' => 'register.php',
             'auth' => false,
             'title' => 'Register - Traballa'
+        ]);
+        $this->addRoute('logout', [
+            'file' => 'logout.php',
+            'auth' => false,
+            'title' => 'Logout - Traballa'
         ]);
         $this->addRoute('forgot-password', [
             'file' => 'forgot-password.php',
@@ -417,16 +428,19 @@ class Router {
      * Generate URL for a route
      */
     public function url($route, $params = []) {
+        // Get base path from config
+        $basePath = defined('BASE_PATH') ? BASE_PATH : '';
+        
         // Check if using mod_rewrite (friendly URLs)
         $useFriendlyUrls = function_exists('apache_get_modules') && 
                           in_array('mod_rewrite', apache_get_modules());
         
         if ($useFriendlyUrls && $route !== 'dashboard') {
-            $url = '/' . $route;
+            $url = $basePath . '/' . $route;
         } else if ($route === 'dashboard') {
-            $url = '/';
+            $url = $basePath . '/';
         } else {
-            $url = 'index.php?page=' . $route;
+            $url = $basePath . '/index.php?page=' . $route;
         }
         
         // Add parameters
@@ -481,6 +495,8 @@ class Router {
             'users' => 'fas fa-users',
             'profile' => 'fas fa-id-card',
             'settings' => 'fas fa-cog',
+            'subscription' => 'fas fa-credit-card',
+            'billing' => 'fas fa-receipt',
         ];
         
         return $icons[$route] ?? 'fas fa-file';

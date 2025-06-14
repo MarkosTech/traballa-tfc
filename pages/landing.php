@@ -126,7 +126,7 @@ if ($session->get('user_id')) {
                         <a class="nav-link text-white" href="#faq">FAQ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="<?php echo getLoginUrl('login.php'); ?>">Log in</a>
+                        <a class="nav-link text-white" href="<?php echo getLoginUrl('login'); ?>">Log in</a>
                     </li>
                     <li class="nav-item">
                         <a class="btn btn-light rounded-pill ms-lg-3" href="register.php">Sign up free</a>
@@ -541,7 +541,7 @@ if ($session->get('user_id')) {
                         <h2 class="fw-bold text-white mb-3">Ready to transform your productivity?</h2>
                         <p class="text-white mb-4">Join thousands of teams already using Traballa to track time, manage projects, and boost productivity.</p>
                         <a href="register.php" class="btn btn-light btn-lg rounded-pill me-3 mb-3 mb-md-0">Start for free</a>
-                        <a href="<?php echo getLoginUrl('login.php'); ?>" class="btn btn-outline-light btn-lg rounded-pill">Sign in</a>
+                        <a href="<?php echo getLoginUrl('login'); ?>" class="btn btn-outline-light btn-lg rounded-pill">Sign in</a>
                     </div>
                 </div>
             </div>

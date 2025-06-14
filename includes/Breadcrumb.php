@@ -84,6 +84,10 @@ class Breadcrumb {
                 ['title' => 'Dashboard', 'url' => 'dashboard'],
                 ['title' => 'Settings', 'url' => null]
             ],
+            'subscription' => [
+                ['title' => 'Dashboard', 'url' => 'dashboard'],
+                ['title' => 'Subscription', 'url' => null]
+            ],
             'gdpr' => [
                 ['title' => 'Dashboard', 'url' => 'dashboard'],
                 ['title' => 'GDPR', 'url' => null]

@@ -71,134 +71,199 @@ if (isset($_SESSION['user_id'])) {
             </button>
         </div>
         <div class="sidebar-content">
-            <ul class="nav flex-column">
-                
-                <li class="nav-item">
-                    <a href="<?php echo route_url('dashboard'); ?>" class="nav-link <?php echo is_current_route('dashboard') ? 'active' : ''; ?>">
-                        <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?php echo route_url('kanban'); ?>" class="nav-link <?php echo is_current_route('kanban') ? 'active' : ''; ?>" data-bs-toggle="modal" data-bs-target="#kanbanProjectModal">
-                        <i class="fas fa-columns"></i> <span>Kanban</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?php echo route_url('work-hours'); ?>" class="nav-link <?php echo is_current_route('work-hours') ? 'active' : ''; ?>">
-                        <i class="fas fa-clock"></i> <span>Work hours</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?php echo route_url('reports'); ?>" class="nav-link <?php echo is_current_route('reports') ? 'active' : ''; ?>">
-                        <i class="fas fa-chart-bar"></i> <span>Reports</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?php echo route_url('calendar'); ?>" class="nav-link <?php echo is_current_route('calendar') ? 'active' : ''; ?>">
-                        <i class="fas fa-calendar-alt"></i> <span>Calendar</span>
-                    </a>
-                </li>
-                
-                <?php if (hasManagementPermissions()): ?>
-                <li class="nav-item nav-section">
-                    <span>Management</span>
-                </li>
-                <li class="nav-item">
-                    <a href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/projects' : 'index.php?page=projects'; ?>" class="nav-link <?php echo ($page == 'projects') ? 'active' : ''; ?>">
-                        <i class="fas fa-project-diagram"></i> <span>Projects</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/organizations' : 'index.php?page=organizations'; ?>" class="nav-link <?php echo ($page == 'organizations') ? 'active' : ''; ?>">
-                        <i class="fas fa-building"></i> <span>Organizations</span>
-                    </a>
-                </li>
+            <!-- Scrollable navigation items -->
+            <div class="sidebar-nav-scrollable">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="<?php echo route_url('dashboard'); ?>" class="nav-link <?php echo is_current_route('dashboard') ? 'active' : ''; ?>">
+                            <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo route_url('kanban'); ?>" class="nav-link <?php echo is_current_route('kanban') ? 'active' : ''; ?>" data-bs-toggle="modal" data-bs-target="#kanbanProjectModal">
+                            <i class="fas fa-columns"></i> <span>Kanban</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo route_url('work-hours'); ?>" class="nav-link <?php echo is_current_route('work-hours') ? 'active' : ''; ?>">
+                            <i class="fas fa-clock"></i> <span>Work hours</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo route_url('reports'); ?>" class="nav-link <?php echo is_current_route('reports') ? 'active' : ''; ?>">
+                            <i class="fas fa-chart-bar"></i> <span>Reports</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo route_url('calendar'); ?>" class="nav-link <?php echo is_current_route('calendar') ? 'active' : ''; ?>">
+                            <i class="fas fa-calendar-alt"></i> <span>Calendar</span>
+                        </a>
+                    </li>
+                    
+                    <?php if (hasManagementPermissions()): ?>
+                    <li class="nav-item nav-section">
+                        <span>Management</span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/projects' : 'index.php?page=projects'; ?>" class="nav-link <?php echo ($page == 'projects') ? 'active' : ''; ?>">
+                            <i class="fas fa-project-diagram"></i> <span>Projects</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/organizations' : 'index.php?page=organizations'; ?>" class="nav-link <?php echo ($page == 'organizations') ? 'active' : ''; ?>">
+                            <i class="fas fa-building"></i> <span>Organizations</span>
+                        </a>
+                    </li>
+                    <?php endif; ?>
+                    
+                    <?php if (isAdmin()): ?>
+                    <li class="nav-item nav-section">
+                        <span>Administration</span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/users' : 'index.php?page=users'; ?>" class="nav-link <?php echo ($page == 'users') ? 'active' : ''; ?>">
+                            <i class="fas fa-users"></i> <span>User management</span>
+                        </a>
+                    </li>
+                    <?php endif; ?>
+                    
+                    <li class="nav-item nav-section">
+                        <span>User</span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/profile' : 'index.php?page=profile'; ?>" class="nav-link <?php echo ($page == 'profile') ? 'active' : ''; ?>">
+                            <i class="fas fa-id-card"></i> <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/subscription' : 'index.php?page=subscription'; ?>" class="nav-link <?php echo ($page == 'subscription') ? 'active' : ''; ?>">
+                            <i class="fas fa-credit-card"></i> <span>Subscription</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Organization selector and subscription status -->
+                <?php if (!empty($user_organizations)): ?>
+                <div class="organization-selector mt-3 p-3">
+                    <small class="text-muted d-block mb-2">Current organization</small>
+                    <div class="dropdown w-100">
+                        <button class="btn btn-sm btn-outline-light dropdown-toggle w-100 text-start" type="button" id="orgDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-building me-1"></i> 
+                            <?php 
+                            $current_org = isset($_SESSION['current_organization_id']) ? 
+                                getOrganizationById($pdo, $_SESSION['current_organization_id']) : null;
+                            echo sanitize_output($current_org ? $current_org['name'] : 'Select organization');
+                            ?>
+                        </button>
+                        <ul class="dropdown-menu w-100" aria-labelledby="orgDropdown">
+                            <li>
+                                <a class="dropdown-item <?php echo (!isset($_SESSION['current_organization_id'])) ? 'active' : ''; ?>" 
+                                   href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) 
+                                          ? '/' . ($page != 'dashboard' ? $page : '') . '?set_organization=-1' 
+                                          : 'index.php?page=' . $page . '&set_organization=-1'; ?>">
+                                    All organizations
+                                </a>
+                            </li>
+                            <?php foreach ($user_organizations as $org): ?>
+                            <li>
+                                <a class="dropdown-item <?php echo (isset($_SESSION['current_organization_id']) && $_SESSION['current_organization_id'] == $org['id']) ? 'active' : ''; ?>" 
+                                   href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) 
+                                          ? '/' . ($page != 'dashboard' ? $page : '') . '?set_organization=' . $org['id'] 
+                                          : 'index.php?page=' . $page . '&set_organization=' . $org['id']; ?>">
+                                    <?php echo sanitize_output($org['name']); ?>
+                                    <?php if ($org['is_admin']): ?>
+                                        <span class="badge bg-primary ms-1">Admin</span>
+                                    <?php endif; ?>
+                                </a>
+                            </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
                 <?php endif; ?>
                 
-                <li class="nav-item nav-section">
-                    <span>User</span>
-                </li>
-                <li class="nav-item">
-                    <a href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/profile' : 'index.php?page=profile'; ?>" class="nav-link <?php echo ($page == 'profile') ? 'active' : ''; ?>">
-                        <i class="fas fa-id-card"></i> <span>Profile</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/settings' : 'index.php?page=settings'; ?>" class="nav-link <?php echo ($page == 'settings') ? 'active' : ''; ?>">
-                        <i class="fas fa-cog"></i> <span>Settings</span>
-                    </a>
-                </li>
-                
-                <li class="nav-item">
-                    <a href="logout.php" class="nav-link">
-                        <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
-                    </a>
-                </li>
-                
-                <!-- Global Help Button -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" id="global-help-btn" title="Ayuda (F1)">
-                        <i class="fas fa-question-circle"></i> <span>Ayuda</span>
-                    </a>
-                </li>
-            </ul>
-
-            <?php if (isAdmin()): ?>
-            <li class="nav-item nav-section">
-                <span>Administration</span>
-            </li>
-            <li class="nav-item">
-                <a href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/users' : 'index.php?page=users'; ?>" class="nav-link <?php echo ($page == 'users') ? 'active' : ''; ?>">
-                    <i class="fas fa-users"></i> <span>User management</span>
-                </a>
-            </li>
-            <?php endif; ?>
-                
-
-            <?php if (!empty($user_organizations)): ?>
-            <div class="organization-selector mt-3 p-3">
-                <small class="text-muted d-block mb-2">Current organization</small>
-                <div class="dropdown w-100">
-                    <button class="btn btn-sm btn-outline-light dropdown-toggle w-100 text-start" type="button" id="orgDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-building me-1"></i> 
-                        <?php 
-                        $current_org = isset($_SESSION['current_organization_id']) ? 
-                            getOrganizationById($pdo, $_SESSION['current_organization_id']) : null;
-                        echo sanitize_output($current_org ? $current_org['name'] : 'Select organization');
-                        ?>
-                    </button>
-                    <ul class="dropdown-menu w-100" aria-labelledby="orgDropdown">
-                        <li>
-                            <a class="dropdown-item <?php echo (!isset($_SESSION['current_organization_id'])) ? 'active' : ''; ?>" 
-                               href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) 
-                                      ? '/' . ($page != 'dashboard' ? $page : '') . '?set_organization=-1' 
-                                      : 'index.php?page=' . $page . '&set_organization=-1'; ?>">
-                                All organizations
-                            </a>
-                        </li>
-                        <?php foreach ($user_organizations as $org): ?>
-                        <li>
-                            <a class="dropdown-item <?php echo (isset($_SESSION['current_organization_id']) && $_SESSION['current_organization_id'] == $org['id']) ? 'active' : ''; ?>" 
-                               href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) 
-                                      ? '/' . ($page != 'dashboard' ? $page : '') . '?set_organization=' . $org['id'] 
-                                      : 'index.php?page=' . $page . '&set_organization=' . $org['id']; ?>">
-                                <?php echo sanitize_output($org['name']); ?>
-                                <?php if ($org['is_admin']): ?>
-                                    <span class="badge bg-primary ms-1">Admin</span>
-                                <?php endif; ?>
-                            </a>
-                        </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
+                <!-- Subscription Status -->
+                <?php if (isset($_SESSION['current_organization_id'])): ?>
+                    <?php 
+                    $current_plan = getOrganizationPlan($_SESSION['current_organization_id']);
+                    if ($current_plan): 
+                    ?>
+                        <div class="subscription-status mt-3 p-3 border-top">
+                            <small class="text-muted d-block mb-2">Current Plan</small>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="fw-bold text-light"><?php echo htmlspecialchars($current_plan['name']); ?></div>
+                                    <small class="text-muted">€<?php echo number_format($current_plan['price'], 2); ?>/month</small>
+                                </div>
+                                <div>
+                                    <span class="badge bg-<?php 
+                                        echo $current_plan['subscription_status'] === 'active' ? 'success' : 
+                                            ($current_plan['subscription_status'] === 'trial' ? 'warning' : 'secondary'); 
+                                    ?> small">
+                                        <?php echo ucfirst($current_plan['subscription_status']); ?>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <?php if ($current_plan['subscription_status'] === 'trial' && $current_plan['trial_ends_at']): ?>
+                                <div class="mt-2">
+                                    <small class="text-warning">
+                                        <i class="fas fa-clock me-1"></i>
+                                        Trial ends: <?php echo date('M j', strtotime($current_plan['trial_ends_at'])); ?>
+                                    </small>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <?php if ($current_plan['name'] === 'Free'): ?>
+                                <div class="mt-2">
+                                    <a href="<?php echo route_url('subscription'); ?>" class="btn btn-primary btn-sm w-100">
+                                        <i class="fas fa-arrow-up me-1"></i>Upgrade
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                <?php endif; ?>
             </div>
-            <?php endif; ?>
+            
+            <!-- Fixed bottom navigation items -->
+            <div class="sidebar-nav-fixed">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="<?php echo function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) ? '/settings' : 'index.php?page=settings'; ?>" class="nav-link <?php echo ($page == 'settings') ? 'active' : ''; ?>">
+                            <i class="fas fa-cog"></i> <span>Settings</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="global-help-btn" title="Ayuda (F1)">
+                            <i class="fas fa-question-circle"></i> <span>Ayuda</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="logout" class="nav-link">
+                            <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content" id="main-content">
         <div class="content-wrapper">
+            <!-- Trial Expiration Warning -->
+            <?php if (isset($_SESSION['current_organization_id']) && isTrialExpiringSoon($_SESSION['current_organization_id'])): ?>
+                <?php $days_left = getTrialDaysRemaining($_SESSION['current_organization_id']); ?>
+                <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Trial Expiring Soon!</strong> 
+                    Your trial period expires in <?php echo $days_left; ?> day<?php echo $days_left != 1 ? 's' : ''; ?>. 
+                    <a href="<?php echo route_url('subscription'); ?>" class="alert-link">Upgrade now</a> to continue using premium features.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+            
             <?php if (isset($_GET['success'])): ?>
                 <div class="alert alert-success"><?php echo htmlspecialchars($_GET['success']); ?></div>
             <?php endif; ?>

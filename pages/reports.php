@@ -35,6 +35,10 @@ $end_date = date('Y-m-t');
 // Get current organization ID
 $organization_id = isset($_SESSION['current_organization_id']) ? $_SESSION['current_organization_id'] : null;
 
+// Check subscription permissions for advanced features
+$canAccessAdvancedReports = $organization_id ? canPerformAction($organization_id, 'advanced_reports') : false;
+$currentPlan = $organization_id ? getOrganizationPlan($organization_id) : null;
+
 // Process date filter and other filters
 if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
    $start_date = $_GET['start_date'];
@@ -103,6 +107,30 @@ echo $breadcrumb->render(current_route());
 <div class="d-flex justify-content-between align-items-center mb-4">
    <h1 class="h3 mb-0">Reports & Analytics</h1>
 </div>
+
+<!-- Subscription upgrade prompt for advanced reports -->
+<?php if (!$canAccessAdvancedReports && $currentPlan): ?>
+    <div class="card border-warning mb-4">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h5 class="text-warning mb-2">
+                        <i class="fas fa-star me-2"></i>Unlock Advanced Reports
+                    </h5>
+                    <p class="mb-0">
+                        Get detailed analytics, project comparisons, and exportable reports with a Pro or Enterprise plan.
+                        You're currently on the <strong><?php echo htmlspecialchars($currentPlan['name']); ?></strong> plan.
+                    </p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="<?php echo route_url('subscription'); ?>" class="btn btn-warning">
+                        <i class="fas fa-arrow-up me-2"></i>Upgrade Plan
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
 
 <!-- Filter Card -->
 <div class="card mb-4">
@@ -219,9 +247,15 @@ echo $breadcrumb->render(current_route());
    <div class="card">
        <div class="card-header d-flex justify-content-between align-items-center">
            <h5 class="mb-0">Detailed Traballa</h5>
-           <button type="button" class="btn btn-sm btn-outline-primary no-print" onclick="exportTableToCSV('work_hours_report.csv')">
-               <i class="fas fa-download me-1"></i> Export CSV
-           </button>
+           <?php if ($canAccessAdvancedReports): ?>
+               <button type="button" class="btn btn-sm btn-outline-primary no-print" onclick="exportTableToCSV('work_hours_report.csv')">
+                   <i class="fas fa-download me-1"></i> Export CSV
+               </button>
+           <?php else: ?>
+               <button type="button" class="btn btn-sm btn-outline-secondary no-print" disabled title="Upgrade to Pro or Enterprise to export data">
+                   <i class="fas fa-lock me-1"></i> Export CSV (Pro Feature)
+               </button>
+           <?php endif; ?>
        </div>
        <div class="card-body">
            <div class="table-responsive">

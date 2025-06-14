@@ -277,7 +277,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             
             <div class="text-center">
-                <p class="mb-0">Already have an account? <a href="login.php" class="text-decoration-none fw-semibold">Sign in here</a></p>
+                <p class="mb-0">Already have an account? <a href="login" class="text-decoration-none fw-semibold">Sign in here</a></p>
             </div>
         </form>
     </div>
@@ -781,7 +781,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Auto-redirect to login after 3 seconds
         setTimeout(() => {
-            window.location.href = 'login.php';
+            window.location.href = 'login';
         }, 3000);
     }
 

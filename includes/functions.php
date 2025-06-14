@@ -180,6 +180,7 @@ function check_csrf() {
             die('CSRF token mismatch. Please refresh the page and try again.');
         }
     }
+    return true;
 }
 
 /**
@@ -243,7 +244,7 @@ function getDashboardUrl($fallback_url = 'index.php') {
  * @param string $fallback_url Default URL to use if SYSTEM_URL is not defined or is 'none'
  * @return string The login URL to use
  */
-function getLoginUrl($fallback_url = 'login.php') {
+function getLoginUrl($fallback_url = 'login') {
     // Check if SYSTEM_URL is defined and not 'none'
     if (defined('SYSTEM_URL') && SYSTEM_URL !== 'none' && !empty(trim(SYSTEM_URL))) {
         $system_url = trim(SYSTEM_URL);
@@ -255,7 +256,7 @@ function getLoginUrl($fallback_url = 'login.php') {
         }
         
         // Append login.php to the system URL
-        return rtrim($system_url, '/') . '/login.php';
+        return rtrim($system_url, '/') . '/login';
     }
     
     // Return fallback URL if SYSTEM_URL is not configured or is 'none'
@@ -1200,5 +1201,83 @@ function createDefaultKanbanColumnsForTab($pdo, $project_id, $tab_id) {
     }
     
     return true;
+}
+
+// Include subscription manager
+require_once __DIR__ . '/SubscriptionManager.php';
+
+// Function to get subscription manager
+function getSubscriptionManager() {
+    global $pdo;
+    static $subscriptionManager = null;
+    
+    if ($subscriptionManager === null && isset($pdo)) {
+        $subscriptionManager = new SubscriptionManager($pdo);
+    }
+    
+    return $subscriptionManager;
+}
+
+// Function to check if organization can perform action
+function canPerformAction($organization_id, $action) {
+    $subscriptionManager = getSubscriptionManager();
+    if (!$subscriptionManager) {
+        return true; // Fallback to allow if no subscription manager
+    }
+    
+    return $subscriptionManager->canPerformAction($organization_id, $action);
+}
+
+// Function to get current plan for organization
+function getOrganizationPlan($organization_id) {
+    $subscriptionManager = getSubscriptionManager();
+    if (!$subscriptionManager) {
+        return null;
+    }
+    
+    return $subscriptionManager->getOrganizationPlan($organization_id);
+}
+
+// Function to get usage stats for organization
+function getUsageStats($organization_id) {
+    $subscriptionManager = getSubscriptionManager();
+    if (!$subscriptionManager) {
+        return ['users_count' => 0, 'projects_count' => 0];
+    }
+    
+    return $subscriptionManager->getUsageStats($organization_id);
+}
+
+// Function to check if trial is expiring soon (within 3 days)
+function isTrialExpiringSoon($organization_id) {
+    $plan = getOrganizationPlan($organization_id);
+    
+    if (!$plan || $plan['subscription_status'] !== 'trial' || !$plan['trial_ends_at']) {
+        return false;
+    }
+    
+    $trial_end = new DateTime($plan['trial_ends_at']);
+    $now = new DateTime();
+    $days_left = $now->diff($trial_end)->days;
+    
+    return $days_left <= 3 && $trial_end > $now;
+}
+
+// Function to get trial days remaining
+function getTrialDaysRemaining($organization_id) {
+    $plan = getOrganizationPlan($organization_id);
+    
+    if (!$plan || $plan['subscription_status'] !== 'trial' || !$plan['trial_ends_at']) {
+        return 0;
+    }
+    
+    $trial_end = new DateTime($plan['trial_ends_at']);
+    $now = new DateTime();
+    
+    if ($trial_end <= $now) {
+        return 0;
+    }
+    
+    return $now->diff($trial_end)->days;
 }
 

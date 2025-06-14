@@ -62,6 +62,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                }
            }
            
+           // Check subscription limits
+           if (!canPerformAction($organization_id, 'create_project')) {
+               $error = "You have reached the project limit for your current plan. Please upgrade your subscription to create more projects.";
+               goto skip_processing;
+           }
+           
            // Insert new project with organization_id
            $stmt = $pdo->prepare("INSERT INTO projects (name, description, status, organization_id) VALUES (?, ?, ?, ?)");
            if ($stmt->execute([$name, $description, $status, $organization_id])) {
@@ -117,6 +123,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
            
            // Check if user has permission to add members to this project
            if (isAdmin() || isProjectManagerOf($pdo, $_SESSION['user_id'], $project_id)) {
+               // Get project's organization
+               $org_stmt = $pdo->prepare("SELECT organization_id FROM projects WHERE id = ?");
+               $org_stmt->execute([$project_id]);
+               $organization_id = $org_stmt->fetchColumn();
+               
                // Check if user exists
                $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
                $stmt->execute([$email]);
@@ -147,26 +158,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                    }
                } else {
                    // User doesn't exist, create a new user account
-                   $name = isset($_POST['name']) ? sanitize($_POST['name']) : "New User";
-                   $role = $is_manager ? 'user' : 'employee';
                    
-                   // Generate a random password
-                   $random_password = bin2hex(random_bytes(8));
-                   $hashed_password = password_hash($random_password, PASSWORD_DEFAULT);
-                   
-                   // Insert new user
-                   $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
-                   if ($stmt->execute([$name, $email, $hashed_password, $role])) {
-                       $user_id = $pdo->lastInsertId();
+                   // Check subscription limits for adding users
+                   if (!canPerformAction($organization_id, 'add_user')) {
+                       $error = "You have reached the user limit for your current plan. Please upgrade your subscription to add more users.";
+                   } else {
+                       $name = isset($_POST['name']) ? sanitize($_POST['name']) : "New User";
+                       $role = $is_manager ? 'user' : 'employee';
                        
-                       // Get project's organization
-                       $org_stmt = $pdo->prepare("SELECT organization_id FROM projects WHERE id = ?");
-                       $org_stmt->execute([$project_id]);
-                       $organization_id = $org_stmt->fetchColumn();
+                       // Generate a random password
+                       $random_password = bin2hex(random_bytes(8));
+                       $hashed_password = password_hash($random_password, PASSWORD_DEFAULT);
                        
-                       // Add user to organization
-                       $org_member_stmt = $pdo->prepare("INSERT INTO organization_members (organization_id, user_id, is_admin) VALUES (?, ?, 0)");
-                       $org_member_stmt->execute([$organization_id, $user_id]);
+                       // Insert new user
+                       $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
+                       if ($stmt->execute([$name, $email, $hashed_password, $role])) {
+                           $user_id = $pdo->lastInsertId();
+                           
+                           // Add user to organization
+                           $org_member_stmt = $pdo->prepare("INSERT INTO organization_members (organization_id, user_id, is_admin) VALUES (?, ?, 0)");
+                           $org_member_stmt->execute([$organization_id, $user_id]);
                        
                        // Add to project
                        $project_member_stmt = $pdo->prepare("INSERT INTO project_members (project_id, user_id, is_manager) VALUES (?, ?, ?)");
@@ -238,6 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                    } else {
                        $error = "Error creating user account";
                    }
+                   } // Close the subscription validation else block
                }
            } else {
                $error = "You do not have permission to add members to this project";
@@ -268,6 +280,10 @@ skip_processing:
 // Get projects based on user role and organization
 $organization_id = isset($_SESSION['current_organization_id']) ? $_SESSION['current_organization_id'] : null;
 
+// Get subscription information for limit warnings
+$currentPlan = $organization_id ? getOrganizationPlan($organization_id) : null;
+$usageStats = $organization_id ? getUsageStats($organization_id) : null;
+
 if (isAdmin()) {
    $projects = $organization_id ? getAllProjects($pdo, $organization_id) : getAllProjects($pdo);
 } else {
@@ -282,6 +298,54 @@ global $router;
 $breadcrumb = new Breadcrumb($router);
 echo $breadcrumb->render(current_route());
 ?>
+
+<!-- Project Limits Warning -->
+<?php if ($currentPlan && $usageStats): ?>
+    <?php
+    $projectLimitReached = ($currentPlan['max_projects'] != -1 && $usageStats['projects_count'] >= $currentPlan['max_projects']);
+    $projectLimitNearLimit = ($currentPlan['max_projects'] != -1 && $usageStats['projects_count'] >= ($currentPlan['max_projects'] * 0.8));
+    ?>
+    
+    <?php if ($projectLimitReached): ?>
+        <div class="alert alert-danger mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h6 class="mb-1">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Project Limit Reached
+                    </h6>
+                    <p class="mb-0">
+                        You've reached your project limit (<?php echo $usageStats['projects_count']; ?>/<?php echo $currentPlan['max_projects']; ?>). 
+                        Upgrade your plan to create more projects.
+                    </p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="<?php echo route_url('subscription'); ?>" class="btn btn-warning">
+                        <i class="fas fa-arrow-up me-2"></i>Upgrade Plan
+                    </a>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($projectLimitNearLimit): ?>
+        <div class="alert alert-warning mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h6 class="mb-1">
+                        <i class="fas fa-exclamation-circle me-2"></i>Approaching Project Limit
+                    </h6>
+                    <p class="mb-0">
+                        You're using <?php echo $usageStats['projects_count']; ?> of <?php echo $currentPlan['max_projects']; ?> available projects. 
+                        Consider upgrading to avoid interruptions.
+                    </p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="<?php echo route_url('subscription'); ?>" class="btn btn-outline-warning">
+                        <i class="fas fa-eye me-2"></i>View Plans
+                    </a>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
    <h1 class="h3 mb-0">Project management</h1>
