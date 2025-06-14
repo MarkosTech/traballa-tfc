@@ -8,6 +8,9 @@
     <h2 class="section-title">
         <i class="fas fa-tools me-2"></i>Herramientas de productividad
     </h2>
+    <div class="section-description">
+        <p>Esta sección presenta las diversas herramientas de productividad disponibles en Traballa, diseñadas para ayudarte a optimizar tu tiempo, mejorar el enfoque y maximizar la eficiencia en tu trabajo diario.</p>
+    </div>
     
     <div class="row">
         <div class="col-md-12">

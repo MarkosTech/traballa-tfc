@@ -8,6 +8,9 @@
     <h2 class="section-title">
         <i class="fas fa-question-circle me-2"></i>Solución de problemas y preguntas frecuentes
     </h2>
+    <div class="section-description">
+        <p>Esta sección proporciona respuestas a las preguntas más frecuentes, soluciones a problemas comunes y consejos para resolver incidencias que puedas encontrar mientras utilizas Traballa.</p>
+    </div>
     
     <div class="row">
         <div class="col-md-12">

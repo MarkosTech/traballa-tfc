@@ -1,0 +1,2 @@
+[14-Jun-2025 17:16:55 Europe/Madrid] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/gianhost/domains/traballa.me/includes/sidebar-layout.php:129) in /home/gianhost/domains/traballa.me/includes/cookie-banner.php on line 62
+[14-Jun-2025 17:16:55 Europe/Madrid] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/gianhost/domains/traballa.me/includes/sidebar-layout.php:129) in /home/gianhost/domains/traballa.me/includes/cookie-banner.php on line 80

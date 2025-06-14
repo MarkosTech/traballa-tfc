@@ -1,4 +1,4 @@
-# 📊 Traballa - Work Tracking & Project Management System
+# 📊 Traballa - Work tracking & project management system
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PHP Version](https://img.shields.io/badge/PHP-8.0%2B-blue.svg)](https://php.net)

@@ -8,12 +8,18 @@
     <h2 class="section-title">
         <i class="fas fa-columns me-2"></i>Tableros kanban
     </h2>
+    <div class="section-description">
+        <p>Esta sección explica cómo utilizar los tableros kanban para organizar y visualizar tareas, gestionar flujos de trabajo y colaborar con su equipo de forma eficiente.</p>
+    </div>
     
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-warning">
-                <h5><i class="fas fa-tasks me-2"></i>Gestión visual de tareas</h5>
-                <p class="mb-0">Organiza el trabajo con tableros kanban interactivos que incluyen funcionalidad de arrastrar y soltar, colaboración en tiempo real, flujos de trabajo personalizables y gestión de tareas optimizada para móviles.</p>
+    <div id="kanban-overview">
+        <h3>Visión general</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning">
+                    <h5><i class="fas fa-tasks me-2"></i>Gestión visual de tareas</h5>
+                    <p class="mb-0">Organiza el trabajo con tableros kanban interactivos que incluyen funcionalidad de arrastrar y soltar, colaboración en tiempo real, flujos de trabajo personalizables y gestión de tareas optimizada para móviles.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -198,11 +204,28 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0"><i class="fas fa-check-double me-2"></i>Gestión de tareas completadas</h5>
+    <div id="kanban-columns">
+        <h3>Columnas</h3>
+        <p>Las columnas representan las diferentes etapas del flujo de trabajo y forman la estructura principal de su tablero kanban.</p>
+    
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <p><i class="fas fa-info-circle me-2"></i>Un buen diseño de columnas es esencial para crear un flujo de trabajo eficiente. Comience con columnas básicas como "Por hacer", "En progreso" y "Completado", y ajuste según sus necesidades específicas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="kanban-tasks">
+        <h3>Tareas</h3>
+        <p>Las tareas son los elementos individuales de trabajo que se mueven a través de su flujo de trabajo kanban.</p>
+    
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-check-double me-2"></i>Gestión de tareas completadas</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">

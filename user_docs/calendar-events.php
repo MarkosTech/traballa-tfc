@@ -8,6 +8,9 @@
     <h2 class="section-title">
         <i class="fas fa-calendar-alt me-2"></i>Calendario y eventos
     </h2>
+    <div class="section-description">
+        <p>Esta sección explica cómo utilizar el calendario integrado para programar eventos, gestionar reuniones y mantener un seguimiento de fechas importantes relacionadas con tus proyectos y tareas.</p>
+    </div>
     
     <div class="row">
         <div class="col-md-12">

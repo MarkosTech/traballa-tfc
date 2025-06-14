@@ -29,6 +29,7 @@
             <li><strong>Uso del tablero Kanban:</strong> Organización de tareas, cambio de estados, filtros</li>
             <li><strong>Calendario:</strong> Visualización y programación de actividades</li>
             <li><strong>Generación de informes:</strong> Configuración, visualización y exportación de reportes</li>
+            <li><strong>Planes de suscripción:</strong> Tipos de planes, características y proceso de actualización</li>
             <li><strong>Administración:</strong> Gestión de usuarios, permisos y configuraciones del sistema</li>
         </ul>
         <p>El manual incluye capturas de pantalla y ejemplos prácticos para facilitar el aprendizaje de los usuarios.</p>

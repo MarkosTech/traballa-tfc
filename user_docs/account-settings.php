@@ -8,6 +8,9 @@
     <h2 class="section-title">
         <i class="fas fa-user-cog me-2"></i>Cuenta y configuración
     </h2>
+    <div class="section-description">
+        <p>Esta sección describe cómo gestionar tu perfil de usuario, personalizar la configuración de la aplicación, administrar preferencias de privacidad y ajustar las notificaciones para adaptar Traballa a tus necesidades específicas.</p>
+    </div>
     
     <div class="row">
         <div class="col-md-12">

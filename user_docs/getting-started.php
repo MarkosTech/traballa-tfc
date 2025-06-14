@@ -8,6 +8,9 @@
     <h2 class="section-title">
         <i class="fas fa-rocket me-2"></i>Primeros pasos
     </h2>
+    <div class="section-description">
+        <p>Esta sección le guiará a través de la configuración inicial de Traballa, incluyendo la creación de cuenta, configuración del perfil y navegación por la interfaz de usuario.</p>
+    </div>
     
     <div class="row">
         <div class="col-md-12">

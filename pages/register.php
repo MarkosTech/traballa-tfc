@@ -47,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $privacy_consent = isset($_POST['privacy_consent']) ? 1 : 0;
     $data_processing_consent = isset($_POST['data_processing_consent']) ? 1 : 0;
     $work_tracking_consent = isset($_POST['work_tracking_consent']) ? 1 : 0;
+    $marketing_consent = isset($_POST['marketing_consent']) ? 1 : 0;
     
     // Validation
     if (empty($name) || empty($email) || empty($password) || empty($confirm_password)) {
@@ -81,9 +82,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $registration_data = [
                     'privacy_consent' => $privacy_consent,
                     'data_processing_consent' => $data_processing_consent,
-                    'work_tracking_consent' => $work_tracking_consent
+                    'work_tracking_consent' => $work_tracking_consent,
+                    'marketing_consent' => $marketing_consent,
+                    'consent_timestamp' => date('Y-m-d H:i:s'),
+                    'ip_address' => $_SERVER['REMOTE_ADDR'],
+                    'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown'
                 ];
                 
+                // Store GDPR consent information in the session
+                $session->set('user_gdpr_consent', $registration_data);
+                
+                // Log GDPR consent if GdprManager is available
+                if (file_exists(__DIR__ . '/../includes/GdprManager.php')) {
+                    require_once __DIR__ . '/../includes/GdprManager.php';
+                    $gdprManager = new GdprManager($pdo);
+                    
+                    // Log each type of consent separately for better auditing
+                    if ($privacy_consent) {
+                        $gdprManager->logGdprAction($user_id, 'consent_given', 'Privacy Policy consent during registration');
+                    }
+                    if ($data_processing_consent) {
+                        $gdprManager->logGdprAction($user_id, 'consent_given', 'Data processing consent during registration');
+                    }
+                    if ($work_tracking_consent) {
+                        $gdprManager->logGdprAction($user_id, 'consent_given', 'Work tracking consent during registration');
+                    }
+                    if ($marketing_consent) {
+                        $gdprManager->logGdprAction($user_id, 'consent_given', 'Marketing communications consent during registration');
+                    }
+                }
                 
                 $success = "Account created successfully! You can now log in.";
                 // Auto-login the user
@@ -247,24 +274,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <i class="fas fa-shield-alt me-2"></i>Privacy & data protection
                 </h6>
                 
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" id="privacy_consent" name="privacy_consent" required>
-                    <label class="form-check-label" for="privacy_consent">
-                        I have read and accept the 
-                        <a href="privacy-policy" target="_blank" class="text-primary text-decoration-none">
-                            <strong>privacy policy</strong>
-                        </a> <span class="text-danger">*</span>
-                    </label>
-                    <div class="invalid-feedback" id="privacyError"></div>
-                </div>
-                
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" id="data_processing_consent" name="data_processing_consent" required>
-                    <label class="form-check-label" for="data_processing_consent">
-                        I accept the <a href="terms-of-service" target="_blank" class="text-primary text-decoration-none"> <strong>terms of service</strong></a> and consent to the processing of my data for account creation and management purposes.
-                        <span class="text-danger">*</span>
-                    </label>
-                    <div class="invalid-feedback" id="dataProcessingError"></div>
+                <div class="card mb-4 border-light">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Consentimientos para el tratamiento de datos</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="small text-muted mb-3">
+                            De acuerdo con el Reglamento General de Protección de Datos (RGPD), necesitamos su consentimiento explícito
+                            para procesar sus datos personales. Puede modificar estas preferencias en cualquier momento desde su perfil.
+                        </p>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="privacy_consent" name="privacy_consent" required>
+                            <label class="form-check-label" for="privacy_consent">
+                                <strong>Política de privacidad</strong>: He leído y acepto la 
+                                <a href="privacy-policy" target="_blank" class="text-primary text-decoration-none">
+                                    política de privacidad
+                                </a> de Traballa TFC. <span class="text-danger">*</span>
+                                <div class="form-text">Necesario para el registro. Explica cómo tratamos sus datos personales.</div>
+                            </label>
+                            <div class="invalid-feedback" id="privacyError"></div>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="data_processing_consent" name="data_processing_consent" required>
+                            <label class="form-check-label" for="data_processing_consent">
+                                <strong>Procesamiento de datos</strong>: Acepto los <a href="terms-of-service" target="_blank" class="text-primary text-decoration-none">términos de servicio</a> 
+                                y doy mi consentimiento para que mis datos personales sean procesados con la finalidad de crear y gestionar mi cuenta.
+                                <span class="text-danger">*</span>
+                                <div class="form-text">Necesario para el registro. Sus datos se utilizarán solo para los fines indicados.</div>
+                            </label>
+                            <div class="invalid-feedback" id="dataProcessingError"></div>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="work_tracking_consent" name="work_tracking_consent">
+                            <label class="form-check-label" for="work_tracking_consent">
+                                <strong>Seguimiento de trabajo</strong>: Doy mi consentimiento para que Traballa TFC recopile y procese datos sobre mi 
+                                actividad laboral para proporcionar análisis y estadísticas sobre mi productividad.
+                                <div class="form-text">Opcional. Necesario para utilizar las funciones de seguimiento de tiempo y productividad.</div>
+                            </label>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="marketing_consent" name="marketing_consent">
+                            <label class="form-check-label" for="marketing_consent">
+                                <strong>Comunicaciones de marketing</strong>: Acepto recibir comunicaciones comerciales sobre nuevas funcionalidades, 
+                                ofertas y novedades de Traballa TFC.
+                                <div class="form-text">Opcional. Puede cancelar este consentimiento en cualquier momento.</div>
+                            </label>
+                        </div>
+                    </div>
                 </div>
                 
             </div>

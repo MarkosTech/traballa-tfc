@@ -239,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             
             <div class="text-center">
-                <p class="mb-0">Don't have an account? <a href="register.php" class="text-decoration-none fw-semibold">Sign up here</a></p>
+                <p class="mb-0">Don't have an account? <a href="register" class="text-decoration-none fw-semibold">Sign up here</a></p>
             </div>
         </form>
     </div>

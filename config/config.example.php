@@ -17,6 +17,8 @@ define('APP_VERSION', '1.0.0');
 define('TIMEZONE', 'America/New_York'); // Set your timezone
 define('MAIN_WEBSITE_URL', 'example.com'); // Main website URL (without protocol)
 define('SYSTEM_URL', 'none'); // System URL for dashboard redirects (without protocol) or none
+define('SITE_NAME', 'Traballa');
+define('ADMIN_EMAIL', 'admin@example.com'); // Admin email for notifications
 
 // URL configuration - set to subfolder if installed in one
 define('BASE_PATH', ''); // e.g., '/traballa' if installed in a subfolder
@@ -34,6 +36,7 @@ define('SMTP_PASSWORD', 'your-app-password');
 define('SMTP_ENCRYPTION', 'tls'); // 'tls', 'ssl', or ''
 define('SMTP_FROM_EMAIL', 'noreply@example.com');
 define('SMTP_FROM_NAME', 'Traballa');
+
 
 // Debug mode (set to false in production)
 define('DEBUG_MODE', false);

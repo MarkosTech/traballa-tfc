@@ -8,6 +8,9 @@
     <h2 class="section-title">
         <i class="fas fa-project-diagram me-2"></i>Gestión de proyectos
     </h2>
+    <div class="section-description">
+        <p>Esta sección describe cómo crear y gestionar proyectos en Traballa, incluyendo la configuración de proyectos, asignación de miembros, seguimiento del progreso y obtención de datos analíticos.</p>
+    </div>
     
     <div class="row">
         <div class="col-md-12">

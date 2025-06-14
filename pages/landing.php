@@ -129,7 +129,7 @@ if ($session->get('user_id')) {
                         <a class="nav-link text-white" href="<?php echo getLoginUrl('login'); ?>">Log in</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-light rounded-pill ms-lg-3" href="register.php">Sign up free</a>
+                        <a class="btn btn-light rounded-pill ms-lg-3" href="register">Sign up free</a>
                     </li>
                 </ul>
             </div>
@@ -144,7 +144,7 @@ if ($session->get('user_id')) {
                     <h1 class="animate__animated animate__fadeIn">Track your work time & boost productivity</h1>
                     <p class="animate__animated animate__fadeIn animate__delay-1s">Traballa helps teams track time, manage projects, and visualize productivity with powerful analytics. Perfect for remote workers, freelancers, and organizations of all sizes looking to optimize their workflow.</p>
                     <div class="animate__animated animate__fadeIn animate__delay-2s">
-                        <a href="register.php" class="btn btn-light btn-lg rounded-pill me-3 mb-2 mb-sm-0">Start for free</a>
+                        <a href="register" class="btn btn-light btn-lg rounded-pill me-3 mb-2 mb-sm-0">Start for free</a>
                         <a href="#features" class="btn btn-outline-light btn-lg rounded-pill">Learn more</a>
                     </div>
                     <div class="mt-4 animate__animated animate__fadeIn animate__delay-2s">
@@ -307,7 +307,7 @@ if ($session->get('user_id')) {
             </div>
             
             <div class="text-center mt-5 animate-on-scroll">
-                <a href="register.php" class="btn btn-primary rounded-pill">Get started now</a>
+                <a href="register" class="btn btn-primary rounded-pill">Get started now</a>
             </div>
         </div>
     </section>
@@ -340,7 +340,7 @@ if ($session->get('user_id')) {
                                 <li><i class="fas fa-times"></i> Advanced reports</li>
                                 <li><i class="fas fa-times"></i> API access</li>
                             </ul>
-                            <a href="register.php" class="btn btn-outline-primary rounded-pill w-100">Start free</a>
+                            <a href="register" class="btn btn-outline-primary rounded-pill w-100">Start free</a>
                         </div>
                     </div>
                 </div>
@@ -364,7 +364,7 @@ if ($session->get('user_id')) {
                                 <li><i class="fas fa-check"></i> Calendar integration</li>
                                 <li><i class="fas fa-times"></i> API access</li>
                             </ul>
-                            <a href="register.php" class="btn btn-accent rounded-pill w-100 text-white">Start 14-day trial</a>
+                            <a href="register" class="btn btn-accent rounded-pill w-100 text-white">Start 14-day trial</a>
                         </div>
                     </div>
                 </div>
@@ -388,7 +388,7 @@ if ($session->get('user_id')) {
                                 <li><i class="fas fa-check"></i> Priority support</li>
                                 <li><i class="fas fa-check"></i> API access</li>
                             </ul>
-                            <a href="register.php" class="btn btn-primary rounded-pill w-100">Contact sales</a>
+                            <a href="register" class="btn btn-primary rounded-pill w-100">Contact sales</a>
                         </div>
                     </div>
                 </div>
@@ -540,7 +540,7 @@ if ($session->get('user_id')) {
                     <div class="animate-on-scroll">
                         <h2 class="fw-bold text-white mb-3">Ready to transform your productivity?</h2>
                         <p class="text-white mb-4">Join thousands of teams already using Traballa to track time, manage projects, and boost productivity.</p>
-                        <a href="register.php" class="btn btn-light btn-lg rounded-pill me-3 mb-3 mb-md-0">Start for free</a>
+                        <a href="register" class="btn btn-light btn-lg rounded-pill me-3 mb-3 mb-md-0">Start for free</a>
                         <a href="<?php echo getLoginUrl('login'); ?>" class="btn btn-outline-light btn-lg rounded-pill">Sign in</a>
                     </div>
                 </div>

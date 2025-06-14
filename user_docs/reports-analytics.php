@@ -8,6 +8,9 @@
     <h2 class="section-title">
         <i class="fas fa-chart-line me-2"></i>Informes y análisis
     </h2>
+    <div class="section-description">
+        <p>Esta sección detalla cómo generar y personalizar informes para analizar la productividad, el progreso de proyectos, el rendimiento del equipo y otras métricas importantes para optimizar tu trabajo.</p>
+    </div>
     
     <div class="row">
         <div class="col-md-12">

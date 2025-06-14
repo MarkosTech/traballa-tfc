@@ -71,7 +71,8 @@ $standalonePage = isset($routeInfo['page']) && in_array($routeInfo['page'], [
     'privacy-policy',
     'user-docs',
     'documentation',
-    'logout'
+    'logout',
+    'cookie-banner',
 ]);
 
 if ($standalonePage) {

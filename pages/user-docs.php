@@ -38,7 +38,12 @@ if (!defined('INDEX_EXEC')) {
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
     
+    <!-- Mermaid for diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js"></script>
+    
     <!-- Custom CSS -->
+    <link href="assets/documentation/estilos_unificados.css" rel="stylesheet">
+    <link href="assets/documentation/diagram-styles.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
     
     <!-- Favicon -->
@@ -48,28 +53,18 @@ if (!defined('INDEX_EXEC')) {
 
 <div class="container-fluid">
         
-        <!-- Header -->
-        <div class="row mb-4 print-hidden">
-            <div class="col-12">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h1 class="h3 mb-1">
-                            Documentación de usuario
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
+        <!-- Add back button similar to documentation page -->
+        <a href="index.php" id="backButton" class="print-hidden">
+            <i class="fas fa-arrow-left me-2"></i>Volver
+        </a>
+        
+        <!-- Add spacer to prevent content overlap with back button -->
+        <div class="back-button-spacer" style="height: 60px;"></div>
+            
+        <div class="row mt-4">
             <!-- Table of Contents Sidebar -->
             <div class="col-lg-3 col-md-4 print-hidden" id="tableOfContents">
-                <div class="card sticky-top" style="top: 20px;">
-                    <div class="card-header">
-                        <h6 class="mb-0">
-                            <i class="fas fa-list me-2"></i>Tabla de contenidos
-                        </h6>
-                    </div>
+                <div class="card toc-fixed">
                     <div class="card-body p-0">
                         <nav class="nav flex-column">
                             <a class="nav-link" href="#getting-started">
@@ -81,9 +76,23 @@ if (!defined('INDEX_EXEC')) {
                             <a class="nav-link" href="#project-management">
                                 <i class="fas fa-project-diagram me-2"></i>Gestión de proyectos
                             </a>
-                            <a class="nav-link" href="#kanban-boards">
+                            <a class="nav-link main-section" href="#kanban-boards" data-bs-toggle="collapse" data-bs-target="#kanban-submenu" aria-expanded="false">
                                 <i class="fas fa-columns me-2"></i>Tableros kanban
+                                <i class="fas fa-chevron-down ms-auto toggle-icon"></i>
                             </a>
+                            <div class="collapse" id="kanban-submenu">
+                                <div class="submenu">
+                                    <a class="nav-link submenu-item" href="#kanban-overview">
+                                        <i class="fas fa-th me-2"></i>Visión general
+                                    </a>
+                                    <a class="nav-link submenu-item" href="#kanban-columns">
+                                        <i class="fas fa-table-columns me-2"></i>Columnas
+                                    </a>
+                                    <a class="nav-link submenu-item" href="#kanban-tasks">
+                                        <i class="fas fa-tasks me-2"></i>Tareas
+                                    </a>
+                                </div>
+                            </div>
                             <a class="nav-link" href="#calendar-events">
                                 <i class="fas fa-calendar-alt me-2"></i>Calendario y eventos
                             </a>
@@ -96,6 +105,9 @@ if (!defined('INDEX_EXEC')) {
                             <a class="nav-link" href="#account-settings">
                                 <i class="fas fa-cogs me-2"></i>Cuenta y configuración
                             </a>
+                            <a class="nav-link" href="#subscription-plans">
+                                <i class="fas fa-star me-2"></i>Planes de suscripción
+                            </a>
                             <a class="nav-link" href="#troubleshooting-faq">
                                 <i class="fas fa-question-circle me-2"></i>Solución de problemas y FAQ
                             </a>
@@ -106,7 +118,7 @@ if (!defined('INDEX_EXEC')) {
 
             <!-- Documentation Content -->
             <div class="col-lg-9 col-md-8" id="documentationContent">
-                <div class="documentation-container">
+                <div class="documentation-container px-4">
 
                 <!-- Print-only elements that will be dynamically created -->
                 <div class="print-only" style="display: none;">
@@ -206,6 +218,16 @@ if (!defined('INDEX_EXEC')) {
                                     <li>• Gestión de organizaciones</li>
                                 </ul>
                             </div>
+                            
+                            <div class="index-section">
+                                <h4>9. Planes de suscripción</h4>
+                                <ul style="margin-left: 1rem; list-style: none;">
+                                    <li>• Planes disponibles</li>
+                                    <li>• Características por plan</li>
+                                    <li>• Actualizar suscripción</li>
+                                    <li>• Período de prueba</li>
+                                </ul>
+                            </div>
                         </div>
                         <hr style="margin: 2rem 0; border-top: 1px solid #333;">
                     </div>
@@ -251,6 +273,11 @@ if (!defined('INDEX_EXEC')) {
                     
                     <hr class="my-5">
                     
+                    <!-- Subscription Plans -->
+                    <?php include __DIR__ . '/../user_docs/subscription-plans.php'; ?>
+                    
+                    <hr class="my-5">
+                    
                     <!-- Troubleshooting & FAQ -->
                     <?php include __DIR__ . '/../user_docs/troubleshooting-faq.php'; ?>
                 </div>
@@ -264,29 +291,114 @@ if (!defined('INDEX_EXEC')) {
 </button>
 
 <style>
-/* Básico */
-body {
-    background-color: #f8f9fa;
+/* Estilos para tabla de contenidos basados en documentacion.php */
+#tableOfContents .card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-.container-fluid {
-    background: white;
-    margin: 1rem auto;
-    max-width: 95%;
+#tableOfContents .nav-link {
+    padding: 0.75rem 1.2rem;
+    color: #495057;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
 }
 
-/* Header */
-.row.mb-4 {
-    background-color: #007bff;
-    color: white;
-    margin: 0 -15px 2rem -15px;
-    padding: 2rem;
-}
-
-/* Tabla de contenidos */
 #tableOfContents .nav-link:hover {
     background-color: #f8f9fa;
-    color: #007bff;
+    color: #0d6efd;
+    border-left-color: #0d6efd;
+}
+
+#tableOfContents .nav-link.active {
+    background-color: #e7f3ff;
+    color: #0d6efd;
+    border-left-color: #0d6efd;
+    font-weight: 600;
+}
+
+#tableOfContents .toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+#tableOfContents .main-section[aria-expanded="true"] .toggle-icon {
+    transform: rotate(180deg);
+}
+
+#tableOfContents .submenu {
+    margin-left: 1.25rem;
+    border-left: 1px dashed #dee2e6;
+}
+
+#tableOfContents .submenu-item {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+#tableOfContents .submenu-item:hover {
+    background-color: #f8f9fa;
+    color: #0d6efd;
+}
+
+#tableOfContents .submenu-item.active {
+    background-color: #e7f3ff;
+    color: #0d6efd;
+    font-weight: 600;
+}
+
+/* Layout y estructura */
+.documentation-container {
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-top: 20px; /* Add margin at the top */
+}
+
+/* Main content position to avoid overlap */
+#documentationContent {
+    padding-left: 30px; /* Add more padding on the left */
+    margin-top: 20px; /* Add some top margin */
+}
+
+.toc-fixed {
+    position: fixed;
+    top: 20px;
+    left: 15px;
+    width: calc(25% - 30px); /* More responsive width */
+    max-width: 280px;
+    height: 90vh;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+/* Botón de volver */
+#backButton {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1010;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    background-color: #6c757d;
+    border: none;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    margin-bottom: 20px; /* Add margin to prevent overlap with content */
+}
+
+#backButton:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
 }
 
 /* Responsive */
@@ -294,11 +406,45 @@ body {
     #tableOfContents {
         position: relative !important;
         width: 100% !important;
+        height: auto !important;
         margin-bottom: 2rem;
+        left: auto !important;
+        top: auto !important;
     }
     
-    .sticky-top {
+    .toc-fixed {
         position: relative !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: 300px !important;
+    }
+    
+    #tableOfContents .card { 
+        height: auto !important; 
+        position: relative !important;
+    }
+    
+    #tableOfContents .card-body { 
+        max-height: 50vh !important; 
+    }
+    
+    #documentationContent { 
+        margin-left: 0 !important; 
+        width: 100% !important;
+        padding-left: 0 !important;
+    }
+    
+    .container-fluid { 
+        margin: 0; 
+        padding: 1rem; 
+    }
+    
+    #backButton {
+        top: 10px !important;
+        right: 10px !important;
+        padding: 0.5rem 1rem !important;
+        font-size: 0.8rem !important;
     }
 }
 
@@ -417,6 +563,40 @@ body {
         margin-bottom: 0.2rem !important;
         padding-left: 0 !important;
         color: #555 !important;
+    }
+    
+    /* Estilos para secciones de documentación */
+    .documentation-section {
+        margin-bottom: 3rem;
+    }
+
+    .documentation-section h2,
+    .section-title {
+        font-family: 'Roboto Slab', serif;
+        color: #2980b9;
+        font-size: 2em;
+        border-bottom: 1px solid #e1e1e1;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+    }
+
+    .documentation-section h3 {
+        font-family: 'Roboto Slab', serif;
+        color: #34495e;
+        font-size: 1.5em;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .section-description {
+        background-color: #f8f9fa;
+        border-left: 4px solid #6c757d;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        color: #495057;
+        border-radius: 0.25rem;
     }
     
     /* Layout */
@@ -874,7 +1054,6 @@ body {
     /* Optimización de memoria y rendimiento */
     * {
         -webkit-print-color-adjust: exact !important;
-        color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
     
@@ -1492,7 +1671,7 @@ button:focus,
         }
     });
     
-    // Funcionalidad del botón volver arriba
+    // Funcionalidad del botón volver arriba y navegación
     document.addEventListener('DOMContentLoaded', function() {
         const backToTopButton = document.getElementById('backToTop');
         if (backToTopButton) {
@@ -1503,6 +1682,71 @@ button:focus,
                 });
             });
         }
+        
+        // Inicializar Mermaid para diagramas si hay alguno
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'default',
+                securityLevel: 'loose'
+            });
+        }
+
+        // Smooth scrolling para enlaces de navegación
+        document.querySelectorAll('#tableOfContents .nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Para enlaces principales con submenús, no activar scroll automático
+                if (this.classList.contains('main-section')) {
+                    // Solo ejecutar lógica de scroll si no tiene un target de collapse
+                    if (!this.hasAttribute('data-bs-target')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 20,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                } else {
+                    // Para enlaces normales o submenú
+                    const targetId = this.getAttribute('href');
+                    // Solo ejecutar si es un enlace de anclaje
+                    if (targetId.startsWith('#')) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 20,
+                                behavior: 'smooth'
+                            });
+                        }
+                        
+                        // Marcar como activo
+                        document.querySelectorAll('#tableOfContents .nav-link').forEach(lnk => {
+                            lnk.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Alternar iconos de expandir/colapsar
+        document.querySelectorAll('.main-section').forEach(section => {
+            section.addEventListener('click', function() {
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                const icon = this.querySelector('.toggle-icon');
+                if (icon) {
+                    if (isExpanded) {
+                        icon.classList.add('fa-rotate-180');
+                    } else {
+                        icon.classList.remove('fa-rotate-180');
+                    }
+                }
+            });
+        });
         
         // Abrir todos los acordeones por defecto
         const accordionCollapses = document.querySelectorAll('.accordion-collapse');
@@ -1518,6 +1762,36 @@ button:focus,
             button.classList.remove('collapsed');
             button.setAttribute('aria-expanded', 'true');
         });
+        
+        // Adjust table of contents positioning
+        function adjustTableOfContents() {
+            const tocFixed = document.querySelector('.toc-fixed');
+            const backButton = document.querySelector('#backButton');
+            const windowWidth = window.innerWidth;
+            
+            if (windowWidth < 768) {
+                // Mobile view
+                if (tocFixed) {
+                    tocFixed.style.position = 'relative';
+                    tocFixed.style.top = '0';
+                    tocFixed.style.height = 'auto';
+                    tocFixed.style.maxHeight = '300px';
+                }
+            } else {
+                // Desktop view
+                if (tocFixed) {
+                    tocFixed.style.position = 'fixed';
+                    tocFixed.style.top = '20px';
+                    tocFixed.style.height = '90vh';
+                }
+            }
+        }
+        
+        // Initial call to set positions
+        adjustTableOfContents();
+        
+        // Update on window resize
+        window.addEventListener('resize', adjustTableOfContents);
     });
     </script>
 </body>

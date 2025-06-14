@@ -99,6 +99,9 @@ if (!defined('INDEX_EXEC')) {
                                     <a class="nav-link submenu-item" href="#interfaces-usuario">
                                         <i class="fas fa-desktop me-2"></i>Interfaces de usuario
                                     </a>
+                                    <a class="nav-link submenu-item" href="#sistema-suscripciones">
+                                        <i class="fas fa-star me-2"></i>Sistema de suscripciones
+                                    </a>
                                     <a class="nav-link submenu-item" href="#diagramas-sistema">
                                         <i class="fas fa-project-diagram me-2"></i>Diagramas del sistema
                                     </a>
@@ -181,6 +184,9 @@ if (!defined('INDEX_EXEC')) {
                     
                     <!-- Diseño -->
                     <?php include __DIR__ . '/../documentation/diseno.php'; ?>
+                    
+                    <!-- Sistema de suscripciones -->
+                    <?php include __DIR__ . '/../documentation/sistema-suscripciones.php'; ?>
                     
                     <hr class="my-5">
                     

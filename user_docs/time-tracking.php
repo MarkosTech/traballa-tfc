@@ -8,6 +8,9 @@
     <h2 class="section-title">
         <i class="fas fa-clock me-2"></i>Seguimiento de tiempo
     </h2>
+    <div class="section-description">
+        <p>Esta sección explica cómo utilizar las funciones de seguimiento de tiempo de Traballa para registrar y monitorizar sus horas de trabajo, gestionar descansos y analizar el tiempo dedicado a diferentes proyectos.</p>
+    </div>
     
     <div class="row">
         <div class="col-md-12">
